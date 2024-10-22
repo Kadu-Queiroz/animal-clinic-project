@@ -1,0 +1,17 @@
+{
+  "name": "animal-clinic-project",
+  "version": "1.0.0",
+  "description": "Projeto da clínica de animais",
+  "main": "index.js",
+  "type": "module",  
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
+    "axios": "^0.21.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  }
+}
