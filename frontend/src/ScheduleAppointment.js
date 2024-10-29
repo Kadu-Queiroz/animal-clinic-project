@@ -7,10 +7,13 @@ const ScheduleAppointment = () => {
   const [phone, setPhone] = useState('');
   const [appointmentDate, setAppointmentDate] = useState('');
   const [service, setService] = useState('');
-  const [message, setMessage] = useState('');  // Estado para mensagem de sucesso ou erro
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setMessage('');
+    setError('');
 
     try {
       const response = await axios.post('http://localhost:5000/appointments', {
@@ -18,10 +21,19 @@ const ScheduleAppointment = () => {
       });
 
       if (response.data.message) {
-        setMessage('Consulta agendada com sucesso!');  // Mensagem de sucesso
+        setMessage(response.data.message);
+        setName('');
+        setEmail('');
+        setPhone('');
+        setAppointmentDate('');
+        setService('');
       }
     } catch (error) {
-      setMessage('Erro ao agendar a consulta. Por favor, tente novamente.');  // Mensagem de erro
+      if (error.response && error.response.data && error.response.data.error) {
+        setError(error.response.data.error); // Usar a mensagem de erro do backend
+      } else {
+        setError('Erro ao agendar a consulta. Por favor, tente novamente.');
+      }
     }
   };
 
@@ -29,17 +41,45 @@ const ScheduleAppointment = () => {
     <div>
       <h2>Agendar Consulta</h2>
       <form onSubmit={handleSubmit}>
-        {/* Campos do formulário */}
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Nome" required />
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
-        <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Telefone" required />
-        <input type="datetime-local" value={appointmentDate} onChange={(e) => setAppointmentDate(e.target.value)} required />
-        <input type="text" value={service} onChange={(e) => setService(e.target.value)} placeholder="Serviço" required />
-
+        <input 
+          type="text" 
+          value={name} 
+          onChange={(e) => setName(e.target.value)} 
+          placeholder="Nome" 
+          required 
+        />
+        <input 
+          type="email" 
+          value={email} 
+          onChange={(e) => setEmail(e.target.value)} 
+          placeholder="Email" 
+          required 
+        />
+        <input 
+          type="tel" 
+          value={phone} 
+          onChange={(e) => setPhone(e.target.value)} 
+          placeholder="Telefone" 
+          required 
+        />
+        <input 
+          type="datetime-local" 
+          value={appointmentDate} 
+          onChange={(e) => setAppointmentDate(e.target.value)} 
+          required 
+        />
+        <input 
+          type="text" 
+          value={service} 
+          onChange={(e) => setService(e.target.value)} 
+          placeholder="Serviço" 
+          required 
+        />
         <button type="submit">Agendar</button>
       </form>
 
-      {message && <p>{message}</p>}  {/* Exibir mensagem de sucesso ou erro */}
+      {message && <p style={{ color: 'green' }}>{message}</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   );
 };
