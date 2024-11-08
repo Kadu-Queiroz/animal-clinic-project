@@ -7,19 +7,51 @@ const ScheduleAppointment = () => {
   const [phone, setPhone] = useState('');
   const [appointmentDate, setAppointmentDate] = useState('');
   const [service, setService] = useState('');
+  const [availableTimes, setAvailableTimes] = useState([]); // Estado para horários disponíveis
+  const [selectedTime, setSelectedTime] = useState(''); // Estado para o horário selecionado
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+
+  // Função para buscar horários disponíveis no backend
+  const fetchAvailableTimes = async (date) => {
+    try {
+      const response = await axios.get(`http://localhost:5000/appointments/available-times?date=${date}`);
+      setAvailableTimes(response.data.availableTimes);
+      setError('');
+    } catch (error) {
+      console.error('Erro ao buscar horários disponíveis:', error);
+      setError('Não foi possível carregar os horários disponíveis.');
+    }
+  };
+
+  // Manipulador para mudança na data
+  const handleDateChange = (e) => {
+    const date = e.target.value;
+    setAppointmentDate(date);
+
+    // Converte a data para DD-MM-YYYY antes de buscar horários
+    const [year, month, day] = date.split('-');
+    const formattedDate = `${day}-${month}-${year}`;
+
+    fetchAvailableTimes(formattedDate); // Buscar horários disponíveis para a data selecionada
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage('');
     setError('');
-
+  
     try {
+      const appointmentDateTime = `${appointmentDate} ${selectedTime}:00`; // Ajuste de formato
+  
       const response = await axios.post('http://localhost:5000/appointments', {
-        name, email, phone, appointmentDate, service
+        name,
+        email,
+        phone,
+        appointmentDate: appointmentDateTime,
+        service,
       });
-
+  
       if (response.data.message) {
         setMessage(response.data.message);
         setName('');
@@ -27,12 +59,16 @@ const ScheduleAppointment = () => {
         setPhone('');
         setAppointmentDate('');
         setService('');
+        setSelectedTime('');
+        setAvailableTimes([]);
       }
     } catch (error) {
+      console.error('Erro ao agendar consulta:', error);
+    
       if (error.response && error.response.data && error.response.data.error) {
-        setError(error.response.data.error); // Usar a mensagem de erro do backend
+        setError(error.response.data.error);
       } else {
-        setError('Erro ao agendar a consulta. Por favor, tente novamente.');
+        setError(`Erro ao agendar a consulta. Detalhes: ${error.message || 'Erro desconhecido'}`);
       }
     }
   };
@@ -63,11 +99,19 @@ const ScheduleAppointment = () => {
           required 
         />
         <input 
-          type="datetime-local" 
+          type="date" 
           value={appointmentDate} 
-          onChange={(e) => setAppointmentDate(e.target.value)} 
+          onChange={handleDateChange} 
           required 
         />
+        {availableTimes.length > 0 && (
+          <select value={selectedTime} onChange={(e) => setSelectedTime(e.target.value)} required>
+            <option value="">Selecione um horário</option>
+            {availableTimes.map((time) => (
+              <option key={time} value={time}>{time}</option>
+            ))}
+          </select>
+        )}
         <input 
           type="text" 
           value={service} 

@@ -5,7 +5,7 @@ const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '!K@du3836', // Altere conforme necessário
-  database: 'clinicDB'
+  database: 'clinicdb'
 });
 
 // Conectar ao banco de dados
