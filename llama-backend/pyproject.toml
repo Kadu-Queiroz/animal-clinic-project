@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "llama-backend"
+version = "0.1.0"
+description = "Backend para integração com o Llama e FastAPI no projeto ANIMAL-CLINIC-PROJECT."
+authors = ["Carlos Eduardo Queiroz <carlosequeiroz@hotmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "app"}]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.115.5"
+uvicorn = "^0.32.1"
+llama-stack = "^0.0.54"
+torch = "^2.5.1"
+transformers = "^4.46.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
