@@ -1,4 +1,5 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, APIRouter
+from pydantic import BaseModel
 from app.llama_integration.model_loader import load_model, generate_response
 
 app = FastAPI()
@@ -12,7 +13,7 @@ async def startup_event():
     try:
         print("Iniciando a aplicação...")
         print("Carregando o modelo...")
-        load_model()
+        load_model()  # Carrega o modelo durante a inicialização
         print("Modelo carregado com sucesso!")
     except Exception as e:
         print(f"Erro durante o carregamento do modelo: {e}")
@@ -26,6 +27,11 @@ async def shutdown_event():
     """
     print("Encerrando a aplicação e liberando recursos...")
 
+# Definindo o modelo de entrada para a previsão
+class Query(BaseModel):
+    input: str
+
+# Rota principal para testar a API
 @app.get("/")
 async def read_root():
     """
@@ -33,13 +39,15 @@ async def read_root():
     """
     return {"message": "Llama-backend API está em funcionamento"}
 
-@app.get("/generate/")
-async def get_response(prompt: str):
+# Rota de previsão, utilizando o modelo carregado
+@app.post("/predict/")
+async def predict(query: Query):
     """
-    Gera uma resposta para o prompt fornecido.
+    Endpoint para gerar previsão a partir de um prompt.
     """
     try:
-        response = generate_response(prompt)
-        return {"response": response}
-    except RuntimeError as e:
+        # Gerando a resposta utilizando o modelo carregado
+        response = generate_response(query.input)
+        return {"prediction": response}
+    except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro ao gerar resposta: {e}")

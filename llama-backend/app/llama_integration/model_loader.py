@@ -45,9 +45,23 @@ def generate_response(prompt: str):
         print("Preparando o prompt para geração...")
         inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
         print("Gerando resposta...")
-        outputs = model.generate(**inputs, max_new_tokens=50, temperature=0.7)
+        outputs = model.generate(
+            **inputs, 
+            max_new_tokens=100,   # Aumenta a quantidade de tokens gerados
+            temperature=0.8,     # Diminui a aleatoriedade para respostas mais precisas
+            top_p=0.9,            # Controla a diversidade dos tokens
+            top_k=50,             # Limita os tokens mais prováveis
+            no_repeat_ngram_size=3  # Evita repetições de n-grams
+        )
         response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+        
+        # Limite o tamanho da resposta, se necessário
+        response = response.strip()  # Remove espaços extras no início/fim
+        if len(response) > 500:
+            response = response[:500]  # Trunca a resposta, se for muito longa
+        
         return response
     except Exception as e:
         print(f"Erro durante a geração de resposta: {e}")
         raise RuntimeError(f"Erro ao gerar resposta: {e}")
+
