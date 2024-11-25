@@ -2,10 +2,33 @@ from transformers import LlamaForCausalLM, PreTrainedTokenizerFast
 from app.config import settings
 import os
 import torch
-import shutil
+from huggingface_hub import login
 
 # Caminho do modelo obtido do config.py
 MODEL_PATH = settings.LLAMA_MODEL_PATH
+HUGGINGFACE_TOKEN = "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"  # Substitua com seu token
+
+def download_model_if_missing(model_id, local_path, auth_token):
+    """
+    Baixa o modelo da Hugging Face caso esteja faltando arquivos necessários.
+    Utiliza o token de autenticação para garantir acesso.
+    """
+    # Autenticar utilizando o token
+    login(token=auth_token)
+
+    if not os.path.exists(local_path):
+        print(f"Diretório {local_path} não encontrado. Criando e iniciando download do modelo...")
+        os.makedirs(local_path, exist_ok=True)
+        os.system(f"huggingface-cli download {model_id} --include 'original/*' --local-dir {local_path} --token {auth_token}")
+    else:
+        print(f"Diretório {local_path} encontrado. Validando arquivos...")
+
+    required_files = ["config.json", "tokenizer.model", "pytorch_model.bin"]
+    missing_files = [file for file in required_files if not os.path.exists(os.path.join(local_path, file))]
+    
+    if missing_files:
+        print(f"Arquivos ausentes: {', '.join(missing_files)}. Iniciando novo download...")
+        os.system(f"huggingface-cli download {model_id} --include 'original/*' --local-dir {local_path} --token {auth_token}")
 
 def load_model():
     """
@@ -15,7 +38,7 @@ def load_model():
     model_id = "meta-llama/Llama-3.2-3B"
     try:
         print(f"Validando e baixando modelo: {model_id}")
-        
+        download_model_if_missing(model_id, MODEL_PATH, HUGGINGFACE_TOKEN)
 
         print(f"Carregando tokenizador do caminho: {MODEL_PATH}")
         # Usando o PreTrainedTokenizerFast em vez do LlamaTokenizer

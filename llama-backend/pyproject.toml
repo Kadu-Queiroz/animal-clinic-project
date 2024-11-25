@@ -5,18 +5,27 @@ description = "Backend para integração com o Llama e FastAPI no projeto ANIMAL
 authors = ["Carlos Eduardo Queiroz <carlosequeiroz@hotmail.com>"]
 license = "MIT"
 readme = "README.md"
-packages = [{include = "app"}]
+packages = [
+    { include = "app" },
+    { include = "app/llama_integration" }
+]
 
 [tool.poetry.dependencies]
 python = "^3.12"
-fastapi = "^0.115.5"
+fastapi = ">=0.100.0,<0.200.0"
 uvicorn = "^0.32.1"
-llama-stack = "^0.0.54"
 torch = "^2.5.1"
-transformers = "^4.46.3"
+transformers = {extras = ["torch"], version = "^4.46.3"}
+starlette = "^0.41.3"
+sentencepiece = "^0.2.0"
+datasets = "^3.1.0"
+huggingface-hub = "^0.26.2"
+pydantic = "^2.10.1"
+protobuf = "^5.28.3"
 
+[tool.poetry.dev-dependencies]
+pytest = "^7.4.0"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
-
