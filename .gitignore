@@ -134,4 +134,4 @@ venv/
 llama-backend/venv/
 
 # Ignorar a pasta do modelo de IA 
-Llama3.2-3B-Instruct/
+models/
