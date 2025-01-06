@@ -2,8 +2,13 @@ const express = require('express');
 const cors = require('cors');
 const db = require('./config/db'); // Conexão com o banco de dados
 const appointmentsRoutes = require('./routes/appointments'); // Rotas de agendamento
+const admAppointments = require('./routes/api/admin/admAppointments');
+
 
 const app = express();
+
+// Administração de agendamentos
+app.use('/api/admin/appointments', admAppointments);
 
 // Habilitar CORS para permitir requisições do frontend
 app.use(cors({
