@@ -19,6 +19,7 @@ backend/.env
 backend/.env.local
 backend/prisma/migrations/
 backend/.cache
+backend/src/llama-backend/app/models
 
 # Logs
 npm-debug.log*
@@ -61,3 +62,10 @@ build/
 *.swp
 *.bak
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+#Dependências da AI
+DependenciasAI
+llama-backend/app/models
+
+#Python
+.venv
