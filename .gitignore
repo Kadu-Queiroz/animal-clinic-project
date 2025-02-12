@@ -17,6 +17,7 @@ frontend/coverage
 # Backend
 backend/.env
 backend/.env.local
+backend/.env.prod
 backend/prisma/migrations/
 backend/.cache
 backend/src/llama-backend/app/models
@@ -32,6 +33,8 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 .env.local
+.env.prod
+
 
 # Temp folders
 .temp
@@ -69,3 +72,4 @@ llama-backend/app/models
 
 #Python
 .venv
+venv
