@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.bg-grid-pattern {
+  background-image: linear-gradient(#ffffff 1px, transparent 1px),
+    linear-gradient(90deg, #ffffff 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Swiper Customization */
+.convenios-carousel .swiper-pagination {
+  bottom: -30px !important;
+}
+
+.convenios-carousel .swiper-pagination-bullet {
+  background: white !important;
+  opacity: 0.5;
+}
+
+.convenios-carousel .swiper-pagination-bullet-active {
+  opacity: 1;
+}
+
+/* Aspect Ratio Utility */
+.aspect-w-16 {
+  position: relative;
+  padding-bottom: 56.25%;
+}
+
+.aspect-w-16 > * {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}

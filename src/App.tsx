@@ -1,0 +1,469 @@
+import { useState, useEffect } from 'react';
+import { 
+  Phone, 
+  Mail, 
+  MapPin, 
+  Clock, 
+  Facebook, 
+  Instagram, 
+  MessageCircle,
+  Syringe,
+  Stethoscope,
+  Microscope,
+  Scissors,
+  Menu,
+  X,
+  ChevronRight
+} from 'lucide-react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Pagination } from 'swiper/modules';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/autoplay';
+
+function App() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState(0);
+
+  const services = [
+    {
+      title: "Consultas e Especialidades",
+      icon: <Stethoscope className="w-12 h-12 text-[#002B3D]" />,
+      items: ["Animais Silvestres", "Animais Exóticos", "Felinos", "Oftalmologia", "Dermatologia", "Ortopedia", "Nutricionista"]
+    },
+    {
+      title: "Cirurgias",
+      icon: <Syringe className="w-12 h-12 text-[#002B3D]" />,
+      items: ["Cirurgias Gerais", "Oftalmologia", "Odontologia", "Ortopedia", "Silvestres e Exóticos"]
+    },
+    {
+      title: "Exames Clínicos",
+      icon: <Microscope className="w-12 h-12 text-[#002B3D]" />,
+      items: ["Exames Oftalmológicos"]
+    },
+    {
+      title: "Demais Serviços",
+      icon: <Scissors className="w-12 h-12 text-[#002B3D]" />,
+      items: ["Banho e Tosa", "Banhos Terapêuticos", "Cromaterapia", "Vendas de Produtos e Acessórios", "Farmácia"]
+    }
+  ];
+
+  const convenios = [
+    "src/assets/img/convenios/IMG_Comvet.webp",
+    "src/assets/img/convenios/IMG_DogLife.webp",
+    "src/assets/img/convenios/IMG_DrPet.webp",
+    "src/assets/img/convenios/IMG_HealthForPet.webp",
+    "src/assets/img/convenios/IMG_Lifepet.webp",
+    "src/assets/img/convenios/IMG_MIsterDog.webp",
+    "src/assets/img/convenios/IMG_Nofaro.webp",
+    "src/assets/img/convenios/IMG_Pelove.webp",
+    "src/assets/img/convenios/IMG_PetMaisVida.webp"
+  ];
+
+  const galleryImages = [
+    {
+      url: "https://images.unsplash.com/photo-1548767797-d8c844163c4c",
+      title: "Consulta Veterinária",
+      category: "Atendimento"
+    },
+    {
+      url: "https://images.unsplash.com/photo-1576201836106-db1758fd1c97",
+      title: "Cirurgia",
+      category: "Procedimentos"
+    },
+    {
+      url: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba",
+      title: "Felinos",
+      category: "Especialidades"
+    },
+    {
+      url: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d",
+      title: "Exames",
+      category: "Diagnóstico"
+    },
+    {
+      url: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee",
+      title: "Banho e Tosa",
+      category: "Cuidados"
+    },
+    {
+      url: "https://images.unsplash.com/photo-1587764379873-97837921fd44",
+      title: "Farmácia",
+      category: "Produtos"
+    }
+  ];
+
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1
+  });
+
+  return (
+    <div className="font-['Open_Sans']">
+      {/* Header */}
+      <header className="fixed w-full bg-white/90 backdrop-blur-sm z-50 shadow-sm">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center gap-2">
+              <img src="src\assets\img\logos\Logo_icon2.png" alt="Toka dos Pets" className="h-16" />
+            </div>
+            
+            {/* Desktop Menu */}
+            <nav className="hidden lg:flex items-center gap-8">
+              <a href="#inicio" className="text-gray-600 hover:text-[#002B3D] transition">Início</a>
+              <a href="#sobre" className="text-gray-600 hover:text-[#002B3D] transition">Sobre Nós</a>
+              <a href="#servicos" className="text-gray-600 hover:text-[#002B3D] transition">Serviços</a>
+              <a href="#galeria" className="text-gray-600 hover:text-[#002B3D] transition">Galeria</a>
+              <a href="#contato" className="text-gray-600 hover:text-[#002B3D] transition">Contato</a>
+              <button className="bg-[#002B3D] text-white px-6 py-2 rounded-full hover:bg-blue-900 transition"
+              onClick={() => window.open("https://wa.me/5511963551131", "_blank")}>
+                Agende uma Consulta
+              </button>
+            </nav>
+
+            {/* Mobile Menu Button */}
+            <button 
+              className="lg:hidden text-[#002B3D]"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="lg:hidden bg-white border-t"
+            >
+              <nav className="container mx-auto px-4 py-4 flex flex-col gap-4">
+                <a href="#inicio" className="text-gray-600 hover:text-[#002B3D] transition">Início</a>
+                <a href="#sobre" className="text-gray-600 hover:text-[#002B3D] transition">Sobre Nós</a>
+                <a href="#servicos" className="text-gray-600 hover:text-[#002B3D] transition">Serviços</a>
+                <a href="#galeria" className="text-gray-600 hover:text-[#002B3D] transition">Galeria</a>
+                <a href="#contato" className="text-gray-600 hover:text-[#002B3D] transition">Contato</a>
+                <button className="bg-[#002B3D] text-white px-6 py-2 rounded-full hover:bg-blue-900 transition w-full">
+                  Agende uma Consulta
+                </button>
+              </nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </header>
+
+      {/* Hero Section */}
+      <section 
+        id="inicio" 
+        className="min-h-screen flex items-center relative overflow-hidden"
+        style={{
+          background: 'linear-gradient(135deg, #002B3D 0%, #004B6B 100%)'
+        }}
+      >
+        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+        <div className="container mx-auto px-4 py-32">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              {/* Logo com contorno branco e redimensionado */}
+              <img 
+                src="src/assets/img/logos/logo_principal.png" 
+                alt="Toka dos Pets" 
+                style={{ maxWidth: '100%', height: 'auto' }} // Redimensiona o logo
+              />
+              <h1 className="text-5xl lg:text-6xl font-bold mb-6 text-white">
+                Onde o amor e a expertise se encontram!
+              </h1>
+              <p className="text-xl text-blue-100 mb-8">
+                Cuidados excepcionais para cães, gatos e animais silvestres
+              </p>
+              <div className="flex gap-4">
+                <button className="bg-white text-[#002B3D] px-8 py-3 rounded-full text-lg hover:bg-blue-50 transition">
+                  Conheça Nossos Serviços
+                </button>
+                <button className="border-2 border-white text-white px-8 py-3 rounded-full text-lg hover:bg-white/10 transition">
+                  Agende uma Consulta
+                </button>
+              </div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
+              className="hidden lg:block"
+            >
+              <img 
+                src="https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def"
+                alt="Veterinário com animal"
+                className="rounded-2xl shadow-2xl"
+              />
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Convênios Carousel */}
+        <div className="absolute bottom-0 left-0 right-0 bg-white/5 backdrop-blur-sm py-8">
+          <div className="container mx-auto px-4">
+            <h3 className="text-center text-white text-xl mb-6">Convênios Aceitos</h3>
+            <Swiper
+              modules={[Autoplay, Pagination]}
+              spaceBetween={30}
+              slidesPerView={2}
+              autoplay={{ delay: 3000 }}
+              pagination={{ clickable: true }}
+              breakpoints={{
+                640: { slidesPerView: 3 },
+                768: { slidesPerView: 4 },
+                1024: { slidesPerView: 5 },
+              }}
+              className="convenios-carousel"
+            >
+              {convenios.map((convenio, index) => (
+                <SwiperSlide key={index}>
+                  <div className="bg-white rounded-lg p-4 h-24 flex items-center justify-center">
+                    <img src={convenio} alt={`Convênio ${index + 1}`} className="max-h-full" />
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section id="servicos" className="py-20">
+        <div className="container mx-auto px-4">
+          <motion.div
+            ref={ref}
+            initial={{ opacity: 0, y: 50 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 className="text-4xl font-bold text-center mb-16 text-[#002B3D]">Nossos Serviços</h2>
+            <div className="grid lg:grid-cols-4 gap-8">
+              {services.map((service, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.8, delay: index * 0.2 }}
+                  className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition group"
+                >
+                  <div className="flex justify-center mb-6 transform group-hover:scale-110 transition">
+                    {service.icon}
+                  </div>
+                  <h3 className="text-xl font-bold text-center mb-4 text-[#002B3D]">{service.title}</h3>
+                  <ul className="space-y-2">
+                    {service.items.map((item, idx) => (
+                      <li key={idx} className="text-gray-600 flex items-center">
+                        <ChevronRight className="w-4 h-4 text-[#002B3D] mr-2" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Sessão Gallery */}
+      <section id="galeria" className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl font-bold text-center mb-16 text-[#002B3D]">Galeria</h2>
+          
+          {/* Gallery Grid with Hover Effects */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {galleryImages.map((image, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="relative group overflow-hidden rounded-xl"
+              >
+                <div className="aspect-w-16 aspect-h-9">
+                  <img
+                    src={`${image.url}?auto=format&fit=crop&w=800&q=80`}
+                    alt={image.title}
+                    className="object-cover w-full h-full transform group-hover:scale-110 transition duration-500"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                  <h3 className="text-white text-xl font-bold">{image.title}</h3>
+                  <p className="text-blue-200">{image.category}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Sessão de contato */}
+      <section id="contato" className="py-20">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl font-bold text-center mb-16 text-[#002B3D]">Entre em Contato</h2>
+          <div className="grid lg:grid-cols-2 gap-12">
+            <div className="space-y-8">
+              <div className="bg-white p-8 rounded-xl shadow-lg">
+                <div className="space-y-6">
+                  <div className="flex items-start gap-4">
+                    <MapPin className="w-6 h-6 text-[#002B3D] flex-shrink-0" />
+                    <div>
+                      <h3 className="font-bold mb-1">Endereço</h3>
+                      <p className="text-gray-600">Rua Cerro Corá, 569/577, Alto Pinheiros, São Paulo</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <Phone className="w-6 h-6 text-[#002B3D] flex-shrink-0" />
+                    <div>
+                      <h3 className="font-bold mb-1">Telefones</h3>
+                      <p className="text-gray-600">(11) 3205-2390 | (11) 96355-1131</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <Mail className="w-6 h-6 text-[#002B3D] flex-shrink-0" />
+                    <div>
+                      <h3 className="font-bold mb-1">E-mail</h3>
+                      <p className="text-gray-600">contato@tokadospets.com.br</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <Clock className="w-6 h-6 text-[#002B3D] flex-shrink-0" />
+                    <div>
+                      <h3 className="font-bold mb-1">Horário de Funcionamento</h3>
+                      <p className="text-gray-600">Seg - Sáb: 9:00 am – 10:00 pm</p>
+                      <p className="text-gray-600">Domingo: Fechado</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white p-8 rounded-xl shadow-lg">
+                <h3 className="text-xl font-bold mb-4 text-[#002B3D]">Redes Sociais</h3>
+                <div className="flex gap-4">
+                  <a href="#" className="bg-[#002B3D] text-white p-3 rounded-full hover:bg-blue-900 transition">
+                    <Facebook className="w-6 h-6" />
+                  </a>
+                  <a href="#" className="bg-[#002B3D] text-white p-3 rounded-full hover:bg-blue-900 transition">
+                    <Instagram className="w-6 h-6" />
+                  </a>
+                  <a href="#" className="bg-[#002B3D] text-white p-3 rounded-full hover:bg-blue-900 transition">
+                    <MessageCircle className="w-6 h-6" />
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <form className="bg-white p-8 rounded-xl shadow-lg space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Nome</label>
+                <input 
+                  type="text" 
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#002B3D] focus:border-transparent transition" 
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+                <input 
+                  type="email" 
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#002B3D] focus:border-transparent transition" 
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
+                <input 
+                  type="tel" 
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#002B3D] focus:border-transparent transition" 
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Mensagem</label>
+                <textarea 
+                  rows={4} 
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#002B3D] focus:border-transparent transition"
+                ></textarea>
+              </div>
+              <button 
+                type="submit" 
+                className="w-full bg-[#002B3D] text-white px-6 py-3 rounded-lg hover:bg-blue-900 transition flex items-center justify-center gap-2"
+              >
+                <span>Enviar Mensagem</span>
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-[#002B3D] text-white py-12">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <img src="src\assets\img\logos\Logo_icon.png" alt="Toka dos Pets" className="h-16" />
+              </div>
+              <p className="text-blue-200">Cuidando com amor e expertise dos seus melhores amigos.</p>
+            </div>
+            <div>
+              <h3 className="font-bold mb-4">Links Rápidos</h3>
+              <ul className="space-y-2">
+                <li><a href="#inicio" className="text-blue-200 hover:text-white transition">Início</a></li>
+                <li><a href="#sobre" className="text-blue-200 hover:text-white transition">Sobre Nós</a></li>
+                <li><a href="#servicos" className="text-blue-200 hover:text-white transition">Serviços</a></li>
+                <li><a href="#galeria" className="text-blue-200 hover:text-white transition">Galeria</a></li>
+                <li><a href="#contato" className="text-blue-200 hover:text-white transition">Contato</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-bold mb-4">Contato</h3>
+              <ul className="space-y-2 text-blue-200">
+                <li>Rua Cerro Corá, 569/577</li>
+                <li>Alto Pinheiros, São Paulo</li>
+                <li>(11) 3205-2390</li>
+                <li>(11) 96355-1131</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-bold mb-4">Horário de Atendimento</h3>
+              <ul className="space-y-2 text-blue-200">
+                <li>Segunda a Sábado</li>
+                <li>9:00 - 22:00</li>
+                <li>Domingo</li>
+                <li>Fechado</li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t border-blue-800 mt-8 pt-8 text-center text-blue-200">
+            © 2024 Toka dos Pets. Todos os direitos reservados.
+          </div>
+        </div>
+      </footer>
+
+      {/* WhatsApp Float Button */}
+      <motion.a
+        href="https://wa.me/5511963551131"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition z-50"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+      >
+        <MessageCircle className="w-6 h-6" />
+      </motion.a>
+    </div>
+  );
+}
+
+export default App;
