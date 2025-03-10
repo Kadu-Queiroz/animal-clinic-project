@@ -25,6 +25,20 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
 
+// Importe as imagens
+import logoIcon from './assets/img/logos/Logo_icon.png';
+import logoIcon2 from './assets/img/logos/Logo_icon2.png';
+import logoPrincipal from './assets/img/logos/logo_principal.png';
+import convenio1 from './assets/img/convenios/IMG_Comvet.webp';
+import convenio2 from './assets/img/convenios/IMG_DogLife.webp';
+import convenio3 from './assets/img/convenios/IMG_DrPet.webp';
+import convenio4 from './assets/img/convenios/IMG_HealthForPet.webp';
+import convenio5 from './assets/img/convenios/IMG_Lifepet.webp';
+import convenio6 from './assets/img/convenios/IMG_MIsterDog.webp';
+import convenio7 from './assets/img/convenios/IMG_Nofaro.webp';
+import convenio8 from './assets/img/convenios/IMG_Pelove.webp';
+import convenio9 from './assets/img/convenios/IMG_PetMaisVida.webp';
+
 function ContactForm() {
   const [formData, setFormData] = useState({
     name: "",
@@ -150,15 +164,15 @@ function App() {
   ];
 
   const convenios = [
-    "src/assets/img/convenios/IMG_Comvet.webp",
-    "src/assets/img/convenios/IMG_DogLife.webp",
-    "src/assets/img/convenios/IMG_DrPet.webp",
-    "src/assets/img/convenios/IMG_HealthForPet.webp",
-    "src/assets/img/convenios/IMG_Lifepet.webp",
-    "src/assets/img/convenios/IMG_MIsterDog.webp",
-    "src/assets/img/convenios/IMG_Nofaro.webp",
-    "src/assets/img/convenios/IMG_Pelove.webp",
-    "src/assets/img/convenios/IMG_PetMaisVida.webp"
+    convenio1,
+    convenio2,
+    convenio3,
+    convenio4,
+    convenio5,
+    convenio6,
+    convenio7,
+    convenio8,
+    convenio9
   ];
 
   const galleryImages = [
@@ -206,7 +220,7 @@ function App() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
-              <img src="src\assets\img\logos\Logo_icon2.png" alt="Toka dos Pets" className="h-16" />
+              <img src={logoIcon2} alt="Toka dos Pets" className="h-16" />
             </div>
             
             {/* Desktop Menu */}
@@ -284,7 +298,7 @@ function App() {
             >
               {/* Logo com contorno branco e redimensionado */}
               <img 
-                src="src/assets/img/logos/logo_principal.png" 
+                src={logoPrincipal}
                 alt="Toka dos Pets" 
                 style={{ maxWidth: '100%', height: 'auto' }} // Redimensiona o logo
               />
@@ -485,7 +499,7 @@ function App() {
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <img src="src\assets\img\logos\Logo_icon.png" alt="Toka dos Pets" className="h-16" />
+                <img src={logoIcon} alt="Toka dos Pets" className="h-16" />
               </div>
               <p className="text-blue-200">Cuidando com amor e expertise dos seus melhores amigos.</p>
             </div>

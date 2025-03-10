@@ -3,13 +3,14 @@ import { Autoplay, Navigation } from "swiper/modules";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import "swiper/css";
 import "swiper/css/navigation";
+import imgGuilhermeCugini from "../assets/img/institucional/DrGuilhermeCugini.webp";
 
 // Dados dos profissionais (exemplo)
 const professionals = [
   {
     name: "Dr. Guilherme Cugini",
     role: "Veterinário Chefe Oftamologia",
-    image: "src/assets/img/institucional/DrGuilhermeCugini.webp",
+    image: imgGuilhermeCugini,
   },
   {
     name: "Dra. Maria Oliveira",
