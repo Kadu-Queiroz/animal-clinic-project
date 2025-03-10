@@ -1,24 +1,74 @@
-# Logs
-logs
+# Node.js
+node_modules
+dist
 *.log
+*.tmp
+*.pid
+*.seed
+*.pid.lock
+
+# React e frontend
+frontend/.env.local
+frontend/public/static/
+frontend/build
+frontend/.parcel-cache
+frontend/coverage
+
+# Backend
+backend/node_modules
+backend/.env
+backend/.env.local
+backend/.env.prod
+backend/prisma/migrations/
+backend/.cache
+backend/src/llama-backend/app/models
+
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# Configurações de ambiente
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+.env.prod
 
-# Editor directories and files
-.vscode/*
+
+# Temp folders
+.temp
+.tmp
+
+# VSCode
+.vscode/
 !.vscode/extensions.json
-.idea
+
+# Sistema operacional
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+Thumbs.db
+
+# Prisma
+prisma/migrations/
+
+# Cobertura de testes
+coverage/
+
+# Produção
+build/
+
+# Outras ferramentas de cache e build
+.cache/
+.parcel-cache/
+
+# Arquivos diversos
+*.swp
+*.bak
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+#Dependências da AI
+#Não possui dependências de IA
+
+#Python
+#Não possui dependências de Python

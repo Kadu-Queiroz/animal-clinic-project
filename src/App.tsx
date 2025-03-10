@@ -24,6 +24,101 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
 
+function ContactForm() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Crie um objeto FormData com os dados do formulário
+    const formDataToSend = new FormData(e.currentTarget as HTMLFormElement);
+    formDataToSend.append("service_id", import.meta.env.VITE_EMAILJS_SERVICE_ID);
+    formDataToSend.append("template_id", import.meta.env.VITE_EMAILJS_TEMPLATE_ID);
+    formDataToSend.append("user_id", import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
+
+    try {
+      const response = await fetch("https://api.emailjs.com/api/v1.0/email/send-form", {
+        method: "POST",
+        body: formDataToSend,
+      });
+
+      if (response.ok) {
+        console.log("E-mail enviado com sucesso!");
+        alert("Mensagem enviada com sucesso!");
+        setFormData({ name: "", email: "", phone: "", message: "" }); // Limpa o formulário
+      } else {
+        const errorText = await response.text();
+        console.error("Erro ao enviar e-mail:", errorText);
+        alert("Erro ao enviar mensagem.");
+      }
+    } catch (error) {
+      console.error("Erro ao enviar e-mail:", error);
+      alert("Erro ao enviar mensagem.");
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="bg-white p-8 rounded-xl shadow-lg space-y-6">
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Nome</label>
+        <input 
+          type="text" 
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#002B3D] focus:border-transparent transition" 
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+        <input 
+          type="email" 
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#002B3D] focus:border-transparent transition" 
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
+        <input 
+          type="tel" 
+          name="phone"
+          value={formData.phone}
+          onChange={handleChange}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#002B3D] focus:border-transparent transition" 
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Mensagem</label>
+        <textarea 
+          rows={4} 
+          name="message"
+          value={formData.message}
+          onChange={handleChange}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#002B3D] focus:border-transparent transition"
+        ></textarea>
+      </div>
+      <button 
+        type="submit" 
+        className="w-full bg-[#002B3D] text-white px-6 py-3 rounded-lg hover:bg-blue-900 transition flex items-center justify-center gap-2"
+      >
+        <span>Enviar Mensagem</span>
+        <ChevronRight className="w-5 h-5" />
+      </button>
+    </form>
+  );
+}
+
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
@@ -309,102 +404,67 @@ function App() {
         </div>
       </section>
 
-      {/* Sessão de contato */}
-      <section id="contato" className="py-20">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-16 text-[#002B3D]">Entre em Contato</h2>
-          <div className="grid lg:grid-cols-2 gap-12">
-            <div className="space-y-8">
-              <div className="bg-white p-8 rounded-xl shadow-lg">
-                <div className="space-y-6">
-                  <div className="flex items-start gap-4">
-                    <MapPin className="w-6 h-6 text-[#002B3D] flex-shrink-0" />
-                    <div>
-                      <h3 className="font-bold mb-1">Endereço</h3>
-                      <p className="text-gray-600">Rua Cerro Corá, 569/577, Alto Pinheiros, São Paulo</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <Phone className="w-6 h-6 text-[#002B3D] flex-shrink-0" />
-                    <div>
-                      <h3 className="font-bold mb-1">Telefones</h3>
-                      <p className="text-gray-600">(11) 3205-2390 | (11) 96355-1131</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <Mail className="w-6 h-6 text-[#002B3D] flex-shrink-0" />
-                    <div>
-                      <h3 className="font-bold mb-1">E-mail</h3>
-                      <p className="text-gray-600">contato@tokadospets.com.br</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <Clock className="w-6 h-6 text-[#002B3D] flex-shrink-0" />
-                    <div>
-                      <h3 className="font-bold mb-1">Horário de Funcionamento</h3>
-                      <p className="text-gray-600">Seg - Sáb: 9:00 am – 10:00 pm</p>
-                      <p className="text-gray-600">Domingo: Fechado</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-white p-8 rounded-xl shadow-lg">
-                <h3 className="text-xl font-bold mb-4 text-[#002B3D]">Redes Sociais</h3>
-                <div className="flex gap-4">
-                  <a href="#" className="bg-[#002B3D] text-white p-3 rounded-full hover:bg-blue-900 transition">
-                    <Facebook className="w-6 h-6" />
-                  </a>
-                  <a href="#" className="bg-[#002B3D] text-white p-3 rounded-full hover:bg-blue-900 transition">
-                    <Instagram className="w-6 h-6" />
-                  </a>
-                  <a href="#" className="bg-[#002B3D] text-white p-3 rounded-full hover:bg-blue-900 transition">
-                    <MessageCircle className="w-6 h-6" />
-                  </a>
-                </div>
+{/* Sessão de contato */}
+<section id="contato" className="py-20">
+  <div className="container mx-auto px-4">
+    <h2 className="text-4xl font-bold text-center mb-16 text-[#002B3D]">Entre em Contato</h2>
+    <div className="grid lg:grid-cols-2 gap-12">
+      <div className="space-y-8">
+        <div className="bg-white p-8 rounded-xl shadow-lg">
+          <div className="space-y-6">
+            <div className="flex items-start gap-4">
+              <MapPin className="w-6 h-6 text-[#002B3D] flex-shrink-0" />
+              <div>
+                <h3 className="font-bold mb-1">Endereço</h3>
+                <p className="text-gray-600">Rua Cerro Corá, 569/577, Alto Pinheiros, São Paulo</p>
               </div>
             </div>
-
-            <form className="bg-white p-8 rounded-xl shadow-lg space-y-6">
+            <div className="flex items-start gap-4">
+              <Phone className="w-6 h-6 text-[#002B3D] flex-shrink-0" />
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Nome</label>
-                <input 
-                  type="text" 
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#002B3D] focus:border-transparent transition" 
-                />
+                <h3 className="font-bold mb-1">Telefones</h3>
+                <p className="text-gray-600">(11) 3205-2390 | (11) 96355-1131</p>
               </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <Mail className="w-6 h-6 text-[#002B3D] flex-shrink-0" />
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
-                <input 
-                  type="email" 
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#002B3D] focus:border-transparent transition" 
-                />
+                <h3 className="font-bold mb-1">E-mail</h3>
+                <p className="text-gray-600">contato@tokadospets.com.br</p>
               </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <Clock className="w-6 h-6 text-[#002B3D] flex-shrink-0" />
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
-                <input 
-                  type="tel" 
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#002B3D] focus:border-transparent transition" 
-                />
+                <h3 className="font-bold mb-1">Horário de Funcionamento</h3>
+                <p className="text-gray-600">Seg - Sáb: 9:00 am – 10:00 pm</p>
+                <p className="text-gray-600">Domingo: Fechado</p>
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Mensagem</label>
-                <textarea 
-                  rows={4} 
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#002B3D] focus:border-transparent transition"
-                ></textarea>
-              </div>
-              <button 
-                type="submit" 
-                className="w-full bg-[#002B3D] text-white px-6 py-3 rounded-lg hover:bg-blue-900 transition flex items-center justify-center gap-2"
-              >
-                <span>Enviar Mensagem</span>
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </form>
+            </div>
           </div>
         </div>
-      </section>
+
+        <div className="bg-white p-8 rounded-xl shadow-lg">
+          <h3 className="text-xl font-bold mb-4 text-[#002B3D]">Redes Sociais</h3>
+          <div className="flex gap-4">
+            <a href="#" className="bg-[#002B3D] text-white p-3 rounded-full hover:bg-blue-900 transition">
+              <Facebook className="w-6 h-6" />
+            </a>
+            <a href="#" className="bg-[#002B3D] text-white p-3 rounded-full hover:bg-blue-900 transition">
+              <Instagram className="w-6 h-6" />
+            </a>
+            <a href="#" className="bg-[#002B3D] text-white p-3 rounded-full hover:bg-blue-900 transition">
+              <MessageCircle className="w-6 h-6" />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* Formulário de Contato */}
+      <ContactForm />
+    </div>
+  </div>
+</section>
 
       {/* Footer */}
       <footer className="bg-[#002B3D] text-white py-12">

@@ -4,10 +4,7 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 5173, // Define uma porta fixa para evitar conflitos
-    proxy: {
-      "/api": "http://localhost:5000", // Proxy para backend Express
-    },
+    port: 5173
   },
   optimizeDeps: {
     exclude: ["lucide-react"],
