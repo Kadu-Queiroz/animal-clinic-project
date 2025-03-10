@@ -39,6 +39,8 @@ import convenio7 from './assets/img/convenios/IMG_Nofaro.webp';
 import convenio8 from './assets/img/convenios/IMG_Pelove.webp';
 import convenio9 from './assets/img/convenios/IMG_PetMaisVida.webp';
 
+<meta name="robots" content="noindex, nofollow"></meta>
+
 function ContactForm() {
   const [formData, setFormData] = useState({
     name: "",
