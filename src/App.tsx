@@ -19,6 +19,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { SobreNosModal } from './components/sobreNosModals';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -121,7 +122,9 @@ function ContactForm() {
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
+  
 
   const services = [
     {
@@ -209,7 +212,12 @@ function App() {
             {/* Desktop Menu */}
             <nav className="hidden lg:flex items-center gap-8">
               <a href="#inicio" className="text-gray-600 hover:text-[#002B3D] transition">Início</a>
-              <a href="#sobre" className="text-gray-600 hover:text-[#002B3D] transition">Sobre Nós</a>
+              <button
+                onClick={() => setIsAboutModalOpen(true)}
+                className="text-gray-600 hover:text-[#002B3D] transition"
+              >
+                Sobre Nós
+              </button>
               <a href="#servicos" className="text-gray-600 hover:text-[#002B3D] transition">Serviços</a>
               <a href="#galeria" className="text-gray-600 hover:text-[#002B3D] transition">Galeria</a>
               <a href="#contato" className="text-gray-600 hover:text-[#002B3D] transition">Contato</a>
@@ -240,7 +248,12 @@ function App() {
             >
               <nav className="container mx-auto px-4 py-4 flex flex-col gap-4">
                 <a href="#inicio" className="text-gray-600 hover:text-[#002B3D] transition">Início</a>
-                <a href="#sobre" className="text-gray-600 hover:text-[#002B3D] transition">Sobre Nós</a>
+                <button
+                  onClick={() => setIsAboutModalOpen(true)}
+                  className="text-gray-600 hover:text-[#002B3D] transition"
+                >
+                  Sobre Nós
+                </button>
                 <a href="#servicos" className="text-gray-600 hover:text-[#002B3D] transition">Serviços</a>
                 <a href="#galeria" className="text-gray-600 hover:text-[#002B3D] transition">Galeria</a>
                 <a href="#contato" className="text-gray-600 hover:text-[#002B3D] transition">Contato</a>
@@ -522,6 +535,11 @@ function App() {
       >
         <MessageCircle className="w-6 h-6" />
       </motion.a>
+      {/* Modal "Sobre Nós" */}
+      <SobreNosModal
+        isOpen={isAboutModalOpen}
+        onClose={() => setIsAboutModalOpen(false)}
+      />
     </div>
   );
 }
