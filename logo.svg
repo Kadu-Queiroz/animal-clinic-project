@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="800" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+  <!-- Grid de animais -->
+  <g transform="translate(100, 100)">
+    <!-- Cachorro -->
+    <rect x="0" y="0" width="200" height="200" fill="#002B3D" rx="20"/>
+    <path d="M50 50 L150 50 L150 150 L50 150 Z" fill="white"/>
+    
+    <!-- Coelho -->
+    <rect x="220" y="0" width="200" height="200" fill="#002B3D" rx="20"/>
+    <path d="M270 50 L370 50 L370 150 L270 150 Z" fill="white"/>
+    
+    <!-- Calopsita -->
+    <rect x="0" y="220" width="200" height="200" fill="#002B3D" rx="20"/>
+    <path d="M50 270 L150 270 L150 370 L50 370 Z" fill="white"/>
+    
+    <!-- Gato -->
+    <rect x="220" y="220" width="200" height="200" fill="#002B3D" rx="20"/>
+    <path d="M270 270 L370 270 L370 370 L270 370 Z" fill="white"/>
+  </g>
+  
+  <!-- Texto -->
+  <g transform="translate(450, 150)">
+    <text x="0" y="0" font-family="Arial" font-size="120" font-weight="bold" fill="#002B3D">TOKA</text>
+    <text x="0" y="120" font-family="Arial" font-size="120" font-weight="bold" fill="#002B3D">DOS</text>
+    <text x="0" y="240" font-family="Arial" font-size="120" font-weight="bold" fill="#002B3D">PETS</text>
+  </g>
+  
+  <!-- Subtítulo -->
+  <text x="100" y="650" font-family="Arial" font-size="48" fill="#002B3D">CENTRO DE CUIDADOS VETERINÁRIOS</text>
+</svg>
