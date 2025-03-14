@@ -12,13 +12,19 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
+/* Garantir que os botões sejam clicáveis e tenham cursor pointer */
+button, a {
+  cursor: pointer;
+}
+
+/* Estilo personalizado para o grid pattern */
 .bg-grid-pattern {
   background-image: linear-gradient(#ffffff 1px, transparent 1px),
     linear-gradient(90deg, #ffffff 1px, transparent 1px);
   background-size: 20px 20px;
 }
 
-/* Swiper Customization */
+/* Customização do Swiper */
 .convenios-carousel .swiper-pagination {
   bottom: -30px !important;
 }
@@ -32,7 +38,7 @@ body {
   opacity: 1;
 }
 
-/* Aspect Ratio Utility */
+/* Utilidade para aspect ratio */
 .aspect-w-16 {
   position: relative;
   padding-bottom: 56.25%;
@@ -46,4 +52,31 @@ body {
   right: 0;
   bottom: 0;
   left: 0;
+}
+
+/* Estilo para o contorno do logo */
+.logo-outline {
+  filter: drop-shadow(0 0 2px white) drop-shadow(0 0 2px white);
+}
+
+/* Estilo adicional para garantir que os botões dentro do motion.div funcionem */
+motion.button, motion.a {
+  cursor: pointer;
+}
+
+/* Reset para garantir que os botões não tenham estilos indesejados */
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* Estilo para garantir que os botões dentro do motion.div sejam clicáveis */
+motion.button {
+  cursor: pointer;
+  user-select: none; /* Evita seleção de texto ao clicar */
 }
