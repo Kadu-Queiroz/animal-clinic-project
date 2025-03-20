@@ -26,6 +26,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
 
 // Importe as imagens
+import logoWhasapp from './assets/img/logos/logo_whatsapp.svg';
 import logoIcon from './assets/img/logos/Logo_icon.png';
 import logoIcon2 from './assets/img/logos/Logo_icon2.png';
 import logoPrincipal2 from './assets/img/logos/logo_principal2.png';
@@ -227,26 +228,26 @@ function App() {
   return (
     <div className="font-['Open_Sans']">
       {/* Header */}
-      <header className="fixed w-full bg-white/90 backdrop-blur-sm z-50 shadow-sm">
+      <header className="fixed w-full bg-[#002B3D] z-50 shadow-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
-              <img src={logoIcon2} alt="Toka dos Pets" className="h-16" />
+              <img src={logoIcon} alt="Toka dos Pets" className="h-16" />
             </div>
 
             {/* Desktop Menu */}
             <nav className="hidden lg:flex items-center gap-8">
-              <a href="#inicio" className="text-gray-600 hover:text-[#002B3D] transition">Início</a>
+              <a href="#inicio" className="text-white hover:text-blue-200 transition">Início</a>
               <button
                 onClick={() => setIsAboutModalOpen(true)}
-                className="text-gray-600 hover:text-[#002B3D] transition"
+                className="text-white hover:text-blue-200 transition"
               >
                 Sobre Nós
               </button>
-              <a href="#servicos" className="text-gray-600 hover:text-[#002B3D] transition">Serviços</a>
-              <a href="#galeria" className="text-gray-600 hover:text-[#002B3D] transition">Galeria</a>
-              <a href="#contato" className="text-gray-600 hover:text-[#002B3D] transition">Contato</a>
-              <button className="bg-[#002B3D] text-white px-6 py-2 rounded-full hover:bg-blue-900 transition"
+              <a href="#servicos" className="text-white hover:text-blue-200 transition">Serviços</a>
+              <a href="#galeria" className="text-white hover:text-blue-200 transition">Galeria</a>
+              <a href="#contato" className="text-white hover:text-blue-200 transition">Contato</a>
+              <button className="bg-white text-[#002B3D] px-6 py-2 rounded-full hover:bg-blue-200 transition"
                 onClick={() => window.open("https://wa.me/5511963551131", "_blank")}>
                 Agende uma Consulta
               </button>
@@ -254,7 +255,7 @@ function App() {
 
             {/* Mobile Menu Button */}
             <button
-              className="lg:hidden text-[#002B3D]"
+              className="lg:hidden text-white"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -269,20 +270,20 @@ function App() {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              className="lg:hidden bg-white border-t"
+              className="lg:hidden bg-[#002B3D] border-t"
             >
               <nav className="container mx-auto px-4 py-4 flex flex-col gap-4">
-                <a href="#inicio" className="text-gray-600 hover:text-[#002B3D] transition">Início</a>
+                <a href="#inicio" className="text-white hover:text-blue-200 transition">Início</a>
                 <button
                   onClick={() => setIsAboutModalOpen(true)}
-                  className="text-gray-600 hover:text-[#002B3D] transition"
+                  className="text-white hover:text-blue-200 transition"
                 >
                   Sobre Nós
                 </button>
-                <a href="#servicos" className="text-gray-600 hover:text-[#002B3D] transition">Serviços</a>
-                <a href="#galeria" className="text-gray-600 hover:text-[#002B3D] transition">Galeria</a>
-                <a href="#contato" className="text-gray-600 hover:text-[#002B3D] transition">Contato</a>
-                <button className="bg-[#002B3D] text-white px-6 py-2 rounded-full hover:bg-blue-900 transition w-full"
+                <a href="#servicos" className="text-white hover:text-blue-200 transition">Serviços</a>
+                <a href="#galeria" className="text-white hover:text-blue-200 transition">Galeria</a>
+                <a href="#contato" className="text-white hover:text-blue-200 transition">Contato</a>
+                <button className="bg-white text-[#002B3D] px-6 py-2 rounded-full hover:bg-blue-200 transition w-full"
                   onClick={() => window.open("https://wa.me/5511963551131", "_blank")}>
                   Agende uma Consulta
                 </button>
@@ -295,12 +296,8 @@ function App() {
       {/* Hero Section */}
       <section
         id="inicio"
-        className="min-h-screen flex items-center relative overflow-hidden"
-        style={{
-          background: 'linear-gradient(135deg, #002B3D 0%, #004B6B 100%)'
-        }}
+        className="min-h-screen flex items-center relative overflow-hidden bg-white"
       >
-        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
         <div className="container mx-auto px-4 py-32">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -314,15 +311,15 @@ function App() {
                 alt="Toka dos Pets"
                 className="w-3/4 md:w-3/4 lg:w-full h-auto"
               />
-              <h1 className="text-5xl lg:text-6xl font-bold mb-6 text-white">
+              <h1 className="text-5xl lg:text-6xl font-bold mb-6 text-[#002B3D]">
                 Onde o amor e a expertise se encontram!
               </h1>
-              <p className="text-xl text-blue-100 mb-8">
+              <p className="text-xl text-[#004B6B] mb-8">
                 Cuidados excepcionais para cães, gatos e animais silvestres
               </p>
               <div className="flex gap-4">
                 <motion.button
-                  className="bg-white text-[#002B3D] px-8 py-3 rounded-full text-lg hover:bg-blue-50 transition cursor-pointer"
+                  className="bg-[#002B3D] text-white px-8 py-3 rounded-full text-lg hover:bg-[#004B6B] transition cursor-pointer"
                   onClick={scrollToServicos}
                   whileHover={{ scale: 1.05 }} // Efeito de hover com Framer Motion
                   whileTap={{ scale: 0.95 }} // Efeito de clique com Framer Motion
@@ -330,7 +327,7 @@ function App() {
                   Conheça Nossos Serviços
                 </motion.button>
                 <motion.button
-                  className="border-2 border-white text-white px-8 py-3 rounded-full text-lg hover:bg-white/10 transition cursor-pointer"
+                  className="border-2 border-[#002B3D] text-[#002B3D] px-8 py-3 rounded-full text-lg hover:bg-[#002B3D] hover:text-white transition cursor-pointer"
                   onClick={() => window.open("https://wa.me/5511963551131", "_blank")}
                   whileHover={{ scale: 1.05 }} // Efeito de hover com Framer Motion
                   whileTap={{ scale: 0.95 }} // Efeito de clique com Framer Motion
@@ -355,9 +352,9 @@ function App() {
         </div>
 
         {/* Convênios Carousel */}
-        <div className="absolute bottom-0 left-0 right-0 bg-white/5 backdrop-blur-sm py-8">
+        <div className="absolute bottom-0 left-0 right-0 bg-[#002B3D]/20 backdrop-blur-sm py-8">
           <div className="container mx-auto px-4">
-            <h3 className="text-center text-white text-xl mb-6">Convênios Aceitos</h3>
+            <h3 className="text-center text-[#002B3D] text-xl mb-6">Convênios Aceitos</h3>
             <Swiper
               modules={[Autoplay, Pagination]}
               spaceBetween={30}
@@ -373,7 +370,7 @@ function App() {
             >
               {convenios.map((convenio, index) => (
                 <SwiperSlide key={index}>
-                  <div className="bg-white rounded-lg p-4 h-24 flex items-center justify-center">
+                  <div className="bg-white/90 rounded-lg p-4 h-24 flex items-center justify-center backdrop-blur-sm">
                     <img src={convenio} alt={`Convênio ${index + 1}`} className="max-h-full" />
                   </div>
                 </SwiperSlide>
@@ -565,11 +562,17 @@ function App() {
         href="https://wa.me/5511963551131"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition z-50"
+        className="fixed bottom-6 right-6 z-50"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
       >
-        <MessageCircle className="w-6 h-6" />
+        <div className="p-1 bg-green-500 rounded-full shadow-lg hover:shadow-xl transition-all">
+          <img
+            src={logoWhasapp}
+            alt="WhatsApp"
+            className="w-40 h-40"
+          />
+        </div>
       </motion.a>
       {/* Modal "Sobre Nós" */}
       <SobreNosModal
