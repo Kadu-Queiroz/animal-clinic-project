@@ -300,57 +300,42 @@ function App() {
       {/* Hero Section */}
       <section
         id="inicio"
-        className="min-h-screen flex items-center relative overflow-hidden bg-white"
+        className="min-h-screen flex items-center relative overflow-hidden bg-cover bg-center"
+        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def')" }}
       >
-        <div className="container mx-auto px-4 py-32">
+        <div className="absolute inset-0 bg-black/30"></div> {/* Overlay para escurecer a imagem e melhorar a legibilidade do texto */}
+        <div className="container mx-auto px-4 py-32 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              {/* Logo com contorno branco e redimensionado */}
-              <img
-                src={logoPrincipal2}
-                alt="Toka dos Pets"
-                className="w-3/4 md:w-3/4 lg:w-full h-auto"
-              />
-              <h1 className="text-5xl lg:text-6xl font-bold mb-6 text-[#002B3D]">
+              {/* Título e descrição */}
+              <h1 className="text-5xl lg:text-6xl font-bold mb-6 text-white">
                 Onde o amor e a expertise se encontram!
               </h1>
-              <p className="text-xl text-[#004B6B] mb-8">
+              <p className="text-xl text-white/90 mb-8">
                 Cuidados excepcionais para cães, gatos e animais silvestres
               </p>
               <div className="flex gap-4">
                 <motion.button
                   className="bg-[#002B3D] text-white px-8 py-3 rounded-full text-lg hover:bg-[#004B6B] transition cursor-pointer"
                   onClick={scrollToServicos}
-                  whileHover={{ scale: 1.05 }} // Efeito de hover com Framer Motion
-                  whileTap={{ scale: 0.95 }} // Efeito de clique com Framer Motion
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   Conheça Nossos Serviços
                 </motion.button>
                 <motion.button
-                  className="border-2 border-[#002B3D] text-[#002B3D] px-8 py-3 rounded-full text-lg hover:bg-[#002B3D] hover:text-white transition cursor-pointer"
+                  className="border-2 border-white text-white px-8 py-3 rounded-full text-lg hover:bg-white hover:text-[#002B3D] transition cursor-pointer"
                   onClick={() => window.open("https://wa.me/5511963551131", "_blank")}
-                  whileHover={{ scale: 1.05 }} // Efeito de hover com Framer Motion
-                  whileTap={{ scale: 0.95 }} // Efeito de clique com Framer Motion
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   Agende uma Consulta
                 </motion.button>
               </div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8 }}
-              className="hidden lg:block"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def"
-                alt="Veterinário com animal"
-                className="rounded-2xl shadow-2xl"
-              />
             </motion.div>
           </div>
         </div>
@@ -358,7 +343,7 @@ function App() {
         {/* Convênios Carousel */}
         <div className="absolute bottom-0 left-0 right-0 bg-[#002B3D]/20 backdrop-blur-sm py-4 md:py-8">
           <div className="container mx-auto px-4">
-            <h3 className="text-center text-[#002B3D] text-lg md:text-xl mb-4 md:mb-6">Convênios Aceitos</h3>
+            <h3 className="text-center text-white text-lg md:text-xl mb-4 md:mb-6">Convênios Aceitos</h3>
             <Swiper
               modules={[Autoplay, Pagination]}
               spaceBetween={30}
