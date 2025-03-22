@@ -12,6 +12,7 @@ import {
   Microscope,
   Scissors,
   Menu,
+  Package,
   X,
   ChevronRight
 } from 'lucide-react';
@@ -169,7 +170,7 @@ function App() {
     },
     {
       title: "Demais Serviços",
-      icon: <Scissors className="w-12 h-12 text-[#002B3D]" />,
+      icon: <Package className="w-12 h-12 text-[#002B3D]" />,
       items: ["Vendas de Produtos e Acessórios", "Farmácia"]
     }
   ];
@@ -232,11 +233,13 @@ function App() {
         <div className="container mx-auto px-5 py-5">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
+            <a href="#" className="focus:outline-none">
               <img
-                src={logoPrincipal2}
+                src={logoPrincipal2} 
                 alt="Toka dos Pets"
-                className="h-12 md:h-16 lg:h-40"
+                className="h-20 md:h-20 lg:h-40"
               />
+            </a>
             </div>
 
             {/* Desktop Menu */}
@@ -268,6 +271,7 @@ function App() {
         </div>
 
         {/* Mobile Menu */}
+{/* Mobile Menu */}
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
@@ -277,18 +281,28 @@ function App() {
               className="lg:hidden bg-[#002B3D] border-t"
             >
               <nav className="container mx-auto px-4 py-4 flex flex-col gap-4">
-                <a href="#inicio" className="text-white hover:text-blue-200 transition">Início</a>
+                <a href="#inicio" className="text-white hover:text-blue-200 transition text-left">
+                  Início
+                </a>
                 <button
                   onClick={() => setIsAboutModalOpen(true)}
-                  className="text-white hover:text-blue-200 transition"
+                  className="text-white hover:text-blue-200 transition text-left"
                 >
                   Sobre Nós
                 </button>
-                <a href="#servicos" className="text-white hover:text-blue-200 transition">Serviços</a>
-                <a href="#galeria" className="text-white hover:text-blue-200 transition">Galeria</a>
-                <a href="#contato" className="text-white hover:text-blue-200 transition">Contato</a>
-                <button className="bg-white text-[#002B3D] px-6 py-2 rounded-full hover:bg-blue-200 transition w-full"
-                  onClick={() => window.open("https://wa.me/5511963551131", "_blank")}>
+                <a href="#servicos" className="text-white hover:text-blue-200 transition text-left">
+                  Serviços
+                </a>
+                <a href="#galeria" className="text-white hover:text-blue-200 transition text-left">
+                  Galeria
+                </a>
+                <a href="#contato" className="text-white hover:text-blue-200 transition text-left">
+                  Contato
+                </a>
+                <button
+                  className="bg-white text-[#002B3D] px-6 py-2 rounded-full hover:bg-blue-200 transition w-full"
+                  onClick={() => window.open("https://wa.me/5511963551131", "_blank")}
+                >
                   Agende uma Consulta
                 </button>
               </nav>
@@ -482,14 +496,12 @@ function App() {
               <div className="bg-white p-8 rounded-xl shadow-lg">
                 <h3 className="text-xl font-bold mb-4 text-[#002B3D]">Redes Sociais</h3>
                 <div className="flex gap-4">
-                  <a href="#" className="bg-[#002B3D] text-white p-3 rounded-full hover:bg-blue-900 transition">
+                  <a href="https://www.facebook.com/tokadospetsoficial" className="bg-[#002B3D] text-white p-3 rounded-full hover:bg-blue-900 transition">
                     <Facebook className="w-6 h-6" />
                   </a>
-                  <a href="#" className="bg-[#002B3D] text-white p-3 rounded-full hover:bg-blue-900 transition">
+                  <a href="https://www.instagram.com/tokadospetsoficial?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                  className="bg-[#002B3D] text-white p-3 rounded-full hover:bg-blue-900 transition">
                     <Instagram className="w-6 h-6" />
-                  </a>
-                  <a href="#" className="bg-[#002B3D] text-white p-3 rounded-full hover:bg-blue-900 transition">
-                    <MessageCircle className="w-6 h-6" />
                   </a>
                 </div>
               </div>
