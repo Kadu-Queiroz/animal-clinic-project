@@ -73,7 +73,7 @@ function ContactForm() {
       if (response.ok) {
         console.log("E-mail enviado com sucesso!");
         alert("Mensagem enviada com sucesso!");
-        setFormData({ name: "", email: "", phone: "", message: "" }); // Limpa o formulário
+        setFormData({ name: "", email: "", phone: "", message: "" });
       } else {
         const errorText = await response.text();
         console.error("Erro ao enviar e-mail:", errorText);
@@ -229,10 +229,14 @@ function App() {
     <div className="font-['Open_Sans']">
       {/* Header */}
       <header className="fixed w-full bg-[#002B3D] z-50 shadow-sm">
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-5 py-5">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
-              <img src={logoIcon} alt="Toka dos Pets" className="h-16" />
+              <img
+                src={logoPrincipal2}
+                alt="Toka dos Pets"
+                className="h-12 md:h-16 lg:h-40"
+              />
             </div>
 
             {/* Desktop Menu */}
@@ -352,9 +356,9 @@ function App() {
         </div>
 
         {/* Convênios Carousel */}
-        <div className="absolute bottom-0 left-0 right-0 bg-[#002B3D]/20 backdrop-blur-sm py-8">
+        <div className="absolute bottom-0 left-0 right-0 bg-[#002B3D]/20 backdrop-blur-sm py-4 md:py-8">
           <div className="container mx-auto px-4">
-            <h3 className="text-center text-[#002B3D] text-xl mb-6">Convênios Aceitos</h3>
+            <h3 className="text-center text-[#002B3D] text-lg md:text-xl mb-4 md:mb-6">Convênios Aceitos</h3>
             <Swiper
               modules={[Autoplay, Pagination]}
               spaceBetween={30}
@@ -370,7 +374,7 @@ function App() {
             >
               {convenios.map((convenio, index) => (
                 <SwiperSlide key={index}>
-                  <div className="bg-white/90 rounded-lg p-4 h-24 flex items-center justify-center backdrop-blur-sm">
+                  <div className="bg-white/90 rounded-lg p-4 h-20 md:h-24 flex items-center justify-center backdrop-blur-sm">
                     <img src={convenio} alt={`Convênio ${index + 1}`} className="max-h-full" />
                   </div>
                 </SwiperSlide>
@@ -552,7 +556,7 @@ function App() {
             </div>
           </div>
           <div className="border-t border-blue-800 mt-8 pt-8 text-center text-blue-200">
-            © 2024 Toka dos Pets. Todos os direitos reservados.
+            © 2025 Toka dos Pets. Todos os direitos reservados.
           </div>
         </div>
       </footer>
@@ -570,7 +574,7 @@ function App() {
           <img
             src={logoWhasapp}
             alt="WhatsApp"
-            className="w-40 h-40"
+            className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20"
           />
         </div>
       </motion.a>
