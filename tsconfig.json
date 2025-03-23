@@ -18,9 +18,15 @@
     "noFallthroughCasesInSwitch": true,
 
     // Configurações para compatibilidade com Node.js (usado pelo Vite)
-    "esModuleInterop": true, 
-    "skipLibCheck": true, 
-    "resolveJsonModule": true 
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+
+    // Configurações para aliases
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
-  "include": ["src", "vite.config.ts"] 
+  "include": ["src", "vite.config.ts"]
 }

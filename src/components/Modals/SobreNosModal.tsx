@@ -3,7 +3,9 @@ import { Autoplay, Navigation } from "swiper/modules";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import "swiper/css";
 import "swiper/css/navigation";
-import imgGuilhermeCugini from "../assets/img/institucional/DrGuilhermeCugini.webp";
+
+// Caminho relativo corrigido
+import imgGuilhermeCugini from "@/assets/img/institucional/Staff/DrGuilhermeCugini.webp";
 
 // Dados dos profissionais (exemplo)
 const professionals = [

@@ -1,10 +1,16 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import path from "path"; // Importe o módulo path
 
 export default defineConfig({
   plugins: [react()],
   server: {
     port: 5173, // Porta do servidor de desenvolvimento
+  },
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"), // Alias para o diretório src
+    },
   },
   optimizeDeps: {
     exclude: ["lucide-react"],
@@ -15,5 +21,5 @@ export default defineConfig({
     assetsDir: "assets",
     emptyOutDir: true,
   },
-  base: "/animal-clinic-project/", 
+  base: "/animal-clinic-project/",
 });
