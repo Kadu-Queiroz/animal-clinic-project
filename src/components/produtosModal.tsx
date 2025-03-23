@@ -1,0 +1,84 @@
+import { X } from "lucide-react";
+
+// Dados dos produtos (exemplo)
+const produtos = [
+  {
+    nome: "Ração Premium para Cães",
+    descricao: "Ração de alta qualidade para cães adultos.",
+    preco: "R$ 120,00",
+    imagem: "https://via.placeholder.com/150", // Substitua pelo caminho da imagem
+  },
+  {
+    nome: "Shampoo para Gatos",
+    descricao: "Shampoo suave para gatos de todos os tipos de pelagem.",
+    preco: "R$ 35,00",
+    imagem: "https://via.placeholder.com/150", // Substitua pelo caminho da imagem
+  },
+  {
+    nome: "Brinquedo para Pássaros",
+    descricao: "Brinquedo interativo para pássaros de pequeno porte.",
+    preco: "R$ 25,00",
+    imagem: "https://via.placeholder.com/150", // Substitua pelo caminho da imagem
+  },
+];
+
+interface ProdutosModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export function ProdutosModal({ isOpen, onClose }: ProdutosModalProps) {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-lg shadow-lg w-full max-w-4xl overflow-hidden">
+        {/* Cabeçalho do Modal */}
+        <div className="flex justify-between items-center p-6 border-b">
+          <h2 className="text-2xl font-bold text-[#002B3D]">Nossos Produtos</h2>
+          <button
+            onClick={onClose}
+            className="text-gray-600 hover:text-[#002B3D] transition"
+          >
+            <X size={24} />
+          </button>
+        </div>
+
+        {/* Conteúdo do Modal */}
+        <div className="p-6">
+          <p className="text-gray-600 mb-6">
+            Confira nossa seleção de produtos de alta qualidade para o cuidado do seu pet.
+          </p>
+
+          {/* Lista de Produtos */}
+          <div className="space-y-4">
+            {produtos.map((produto, index) => (
+              <div key={index} className="flex items-center gap-4 border-b pb-4">
+                <img
+                  src={produto.imagem}
+                  alt={produto.nome}
+                  className="w-16 h-16 object-cover rounded-lg"
+                />
+                <div>
+                  <h3 className="text-lg font-semibold text-[#002B3D]">{produto.nome}</h3>
+                  <p className="text-gray-600">{produto.descricao}</p>
+                  <p className="text-lg font-bold text-[#002B3D]">{produto.preco}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Rodapé do Modal */}
+        <div className="p-6 border-t">
+          <button
+            onClick={onClose}
+            className="w-full bg-[#002B3D] text-white px-6 py-3 rounded-lg hover:bg-blue-900 transition"
+          >
+            Fechar
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}

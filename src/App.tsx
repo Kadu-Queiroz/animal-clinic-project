@@ -20,7 +20,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { SobreNosModal } from './components/sobreNosModals';
+import { SobreNosModal } from './components/sobreNosModal';
+import { ProdutosModal } from './components/produtosModal';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -30,6 +31,7 @@ import 'swiper/css/autoplay';
 import logoWhasapp from './assets/img/logos/logo_whatsapp.svg';
 import logoIcon from './assets/img/logos/Logo_icon.png';
 import logoIcon2 from './assets/img/logos/Logo_icon2.png';
+import logoPrincipalColorido from './assets/img/logos/logo_principal_colorido.png';
 import logoPrincipal2 from './assets/img/logos/logo_principal2.png';
 import convenio1 from './assets/img/convenios/IMG_Anilife.png';
 import convenio2 from './assets/img/convenios/IMG_DogLife.webp';
@@ -41,6 +43,8 @@ import convenio7 from './assets/img/convenios/IMG_CartaoAmigao.png';
 import convenio8 from './assets/img/convenios/IMG_Pelove.webp';
 import convenio9 from './assets/img/convenios/IMG_PetMaisVida.webp';
 import convenio10 from './assets/img/convenios/IMG_Pethealth.jpg';
+// Importe de imagens da galeria
+import produtos1 from './assets/img/institucional/galeria/produtos/IMG_Produtos.webp';
 
 <meta name="robots" content="noindex, nofollow"></meta>
 
@@ -142,6 +146,7 @@ function ContactForm() {
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
+  const [isProdutosModalOpen, setIsProdutosModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
 
   // Função para rolar até a seção de serviços
@@ -215,10 +220,10 @@ function App() {
       category: "Cuidados"
     },
     {
-      url: "https://images.unsplash.com/photo-1587764379873-97837921fd44",
+      url: produtos1,
       title: "Farmácia",
       category: "Produtos"
-    }
+    },
   ];
 
   const [ref, inView] = useInView({
@@ -235,7 +240,7 @@ function App() {
             <div className="flex items-center gap-2">
             <a href="#" className="focus:outline-none">
               <img
-                src={logoPrincipal2} 
+                src={logoPrincipalColorido} 
                 alt="Toka dos Pets"
                 className="h-20 md:h-20 lg:h-40"
               />
@@ -254,7 +259,7 @@ function App() {
               <a href="#servicos" className="text-white hover:text-blue-200 transition">Serviços</a>
               <a href="#galeria" className="text-white hover:text-blue-200 transition">Galeria</a>
               <a href="#contato" className="text-white hover:text-blue-200 transition">Contato</a>
-              <button className="bg-white text-[#002B3D] px-6 py-2 rounded-full hover:bg-blue-200 transition"
+              <button className="bg-white text-[#002B3D] px-6 py-2 rounded-full hover:bg-[#D96E30] transition"
                 onClick={() => window.open("https://wa.me/5511963551131", "_blank")}>
                 Agende uma Consulta
               </button>
@@ -300,7 +305,7 @@ function App() {
                   Contato
                 </a>
                 <button
-                  className="bg-white text-[#002B3D] px-6 py-2 rounded-full hover:bg-blue-200 transition w-full"
+                  className="bg-white text-[#002B3D] px-6 py-2 rounded-full hover:bg-[#D96E30] transition w-full"
                   onClick={() => window.open("https://wa.me/5511963551131", "_blank")}
                 >
                   Agende uma Consulta
@@ -342,7 +347,7 @@ function App() {
                   Conheça Nossos Serviços
                 </motion.button>
                 <motion.button
-                  className="border-2 border-white text-white px-8 py-3 rounded-full text-lg hover:bg-white hover:text-[#002B3D] transition cursor-pointer"
+                  className="bg-[#ffffff] text-black px-8 py-3 rounded-full text-lg hover:bg-[#D96E30] transition cursor-pointer"
                   onClick={() => window.open("https://wa.me/5511963551131", "_blank")}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -428,13 +433,19 @@ function App() {
 
           {/* Gallery Grid with Hover Effects */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
             {galleryImages.map((image, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
-                className="relative group overflow-hidden rounded-xl"
+                className="relative group overflow-hidden rounded-xl cursor-pointer"
+                onClick={() => {
+                  if (image.title === "Farmácia") {
+                    setIsProdutosModalOpen(true);
+                  }
+                }}
               >
                 <div className="aspect-w-16 aspect-h-9">
                   <img
@@ -580,6 +591,12 @@ function App() {
         isOpen={isAboutModalOpen}
         onClose={() => setIsAboutModalOpen(false)}
       />
+      {/* Modal Produtos */}
+      <ProdutosModal
+        isOpen={isProdutosModalOpen}
+        onClose={() => setIsProdutosModalOpen(false)}
+      />
+      
     </div>
   );
 }
