@@ -22,6 +22,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { SobreNosModal } from './components/sobreNosModal';
 import { ProdutosModal } from './components/produtosModal';
+import { Galeria } from './components/galeria'; 
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -192,7 +193,7 @@ function App() {
     convenio9,
     convenio10
   ];
-
+  // Lista de imagens da galeria
   const galleryImages = [
     {
       url: "https://images.unsplash.com/photo-1548767797-d8c844163c4c",
@@ -216,8 +217,8 @@ function App() {
     },
     {
       url: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee",
-      title: "Banho e Tosa",
-      category: "Cuidados"
+      title: "Adicionar algo",
+      category: "Não existe mais banho e tosa"
     },
     {
       url: produtos1,
@@ -225,6 +226,13 @@ function App() {
       category: "Produtos"
     },
   ];
+
+  // Função para lidar com o clique na imagem
+  const handleImageClick = (title: string) => {
+    if (title === "Farmácia") {
+      setIsProdutosModalOpen(true); // Abre o modal de produtos
+    }
+  };
 
   const [ref, inView] = useInView({
     triggerOnce: true,
@@ -430,37 +438,7 @@ function App() {
       <section id="galeria" className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-16 text-[#002B3D]">Galeria</h2>
-
-          {/* Gallery Grid with Hover Effects */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-            {galleryImages.map((image, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-                className="relative group overflow-hidden rounded-xl cursor-pointer"
-                onClick={() => {
-                  if (image.title === "Farmácia") {
-                    setIsProdutosModalOpen(true);
-                  }
-                }}
-              >
-                <div className="aspect-w-16 aspect-h-9">
-                  <img
-                    src={`${image.url}?auto=format&fit=crop&w=800&q=80`}
-                    alt={image.title}
-                    className="object-cover w-full h-full transform group-hover:scale-110 transition duration-500"
-                  />
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                  <h3 className="text-white text-xl font-bold">{image.title}</h3>
-                  <p className="text-blue-200">{image.category}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          <Galeria images={galleryImages} onImageClick={handleImageClick} />
         </div>
       </section>
 
