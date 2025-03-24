@@ -1,16 +1,19 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import path from "path"; // Importe o módulo path
+import path from "path";
+
+const isGitHubPages = process.env.NODE_ENV === "production";
 
 export default defineConfig({
+  root: "./",
   plugins: [react()],
   server: {
-    port: 5173, // Porta do servidor de desenvolvimento
+    port: 5173,
   },
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"), // Alias para o diretório src
-      "@assets": path.resolve(__dirname, "./src/assets"), // Alias para o diretório assets
+      "@": path.resolve(__dirname, "./src"),
+      "@assets": path.resolve(__dirname, "./src/assets"),
     },
   },
   optimizeDeps: {
@@ -22,5 +25,6 @@ export default defineConfig({
     assetsDir: "assets",
     emptyOutDir: true,
   },
-  base: "/animal-clinic-project/",
+  publicDir: "public",
+  base: isGitHubPages ? "/animal-clinic-project/" : "./",
 });
