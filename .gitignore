@@ -35,6 +35,7 @@ yarn-error.log*
 .env.production.local
 .env.local
 .env.prod
+.env.production
 
 
 # Temp folders

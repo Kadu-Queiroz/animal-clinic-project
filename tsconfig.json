@@ -25,7 +25,8 @@
     // Configurações para aliases
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@assets/*": ["src/assets/*"] // Adicione este alias
     }
   },
   "include": ["src", "vite.config.ts"]

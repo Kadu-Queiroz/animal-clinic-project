@@ -10,6 +10,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"), // Alias para o diretório src
+      "@assets": path.resolve(__dirname, "./src/assets"), // Alias para o diretório assets
     },
   },
   optimizeDeps: {
