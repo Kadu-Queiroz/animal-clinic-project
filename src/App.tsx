@@ -8,7 +8,7 @@ import { GallerySection } from './components/GalelerySection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { SobreNosModal, ProdutosModal, DetalhesServicoModal } from './components/Modals';
-
+import { SmartChatbot } from './components/SmartChatbot'
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -53,6 +53,7 @@ function App() {
         title={selectedService?.title || ''}
         items={selectedService?.items || []}
       />
+      <SmartChatbot />
     </div>
   );
 }

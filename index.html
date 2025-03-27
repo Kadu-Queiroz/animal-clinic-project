@@ -9,5 +9,22 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <script>
+      document.write('<link rel="preconnect" href="https://interfaces.zapier.com" crossorigin>');
+      
+      window.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+          const existing = document.querySelector('zapier-interfaces-chatbot-embed');
+          if (!existing) {
+            const script = document.createElement('script');
+            script.src = 'https://interfaces.zapier.com/assets/web-components/zapier-interfaces/zapier-interfaces.esm.js';
+            script.async = true;
+            script.type = 'module';
+            document.body.appendChild(script);
+          }
+        }, 1000);
+      });
+    </script>
   </body>
 </html>

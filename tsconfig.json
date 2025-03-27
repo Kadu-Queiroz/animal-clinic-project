@@ -10,24 +10,25 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
+    
+    // Configurações de paths
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@assets/*": ["src/assets/*"]
+    },
+    "typeRoots": ["node_modules/@types", "src/types"],
 
-    // Configurações de linting e verificação
+    // Configurações de verificação
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
-    // Configurações para compatibilidade com Node.js (usado pelo Vite)
+    // Compatibilidade
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "resolveJsonModule": true,
-
-    // Configurações para aliases
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"],
-      "@assets/*": ["src/assets/*"] // Adicione este alias
-    }
+    "resolveJsonModule": true
   },
   "include": ["src", "vite.config.ts"]
 }

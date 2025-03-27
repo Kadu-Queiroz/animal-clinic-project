@@ -4,27 +4,96 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ==================== */
+/* Configurações Base */
+/* ==================== */
+:root {
+  --chatbot-size: 64px;
+  --chatbot-spacing: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --chatbot-size: 80px;
+    --chatbot-spacing: 2.5rem;
+  }
+}
+
+/* ============== */
+/* Estilos Globais */
+/* ============== */
 html {
   scroll-behavior: smooth;
 }
 
 body {
   font-family: 'Open Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Garantir que os botões sejam clicáveis e tenham cursor pointer */
-button, a {
+/* ================== */
+/* Elementos Interativos */
+/* ================== */
+button, a, [role="button"] {
   cursor: pointer;
 }
 
-/* Estilo personalizado para o grid pattern */
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+}
+
+/* Framer Motion */
+motion.button, motion.a {
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ============== */
+/* Componentes Customizados */
+/* ============== */
+/* Grid Pattern */
 .bg-grid-pattern {
-  background-image: linear-gradient(#ffffff 1px, transparent 1px),
+  background-image: 
+    linear-gradient(#ffffff 1px, transparent 1px),
     linear-gradient(90deg, #ffffff 1px, transparent 1px);
   background-size: 20px 20px;
 }
 
-/* Customização do Swiper */
+/* Logo */
+.logo-outline {
+  filter: drop-shadow(0 0 2px white) drop-shadow(0 0 2px white);
+}
+
+/* Aspect Ratio */
+.aspect-w-16 {
+  position: relative;
+  padding-bottom: 56.25%;
+}
+
+.aspect-w-16 > * {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ============== */
+/* Swiper Carousel */
+/* ============== */
+.convenios-carousel {
+  position: relative;
+  z-index: 100;
+}
+
 .convenios-carousel .swiper-pagination {
   bottom: -30px !important;
 }
@@ -38,45 +107,59 @@ button, a {
   opacity: 1;
 }
 
-/* Utilidade para aspect ratio */
-.aspect-w-16 {
-  position: relative;
-  padding-bottom: 56.25%;
-}
+/* ============== */
+/* Chatbot IA - Versão Estável */
+/* ============== */
 
-.aspect-w-16 > * {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
+  .chatbot-container {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 9999;
+    width: 72px;
+    height: 72px;
+  }
 
-/* Estilo para o contorno do logo */
-.logo-outline {
-  filter: drop-shadow(0 0 2px white) drop-shadow(0 0 2px white);
-}
-
-/* Estilo adicional para garantir que os botões dentro do motion.div funcionem */
-motion.button, motion.a {
-  cursor: pointer;
-}
-
-/* Reset para garantir que os botões não tenham estilos indesejados */
-button {
-  background: none;
-  border: none;
-  padding: 0;
-  margin: 0;
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
-}
-
-/* Estilo para garantir que os botões dentro do motion.div sejam clicáveis */
-motion.button {
-  cursor: pointer;
-  user-select: none; /* Evita seleção de texto ao clicar */
-}
+  zapier-interfaces-chatbot-embed {
+    all: initial !important;
+    display: block !important;
+    position: fixed !important;
+    right: 24px !important;
+    bottom: 24px !important;
+    width: 72px !important;
+    height: 72px !important;
+    z-index: 9999 !important;
+  }
+  
+  /* Posiciona o popup no TOPO à DIREITA */
+  zapier-interfaces-chatbot-embed::part(popup) {
+    max-width: min(90vw, 400px) !important;
+    bottom: auto !important;
+    top: 24px !important;
+    right: 24px !important;
+    left: auto !important;
+    margin: 0 !important;
+    z-index: 10000 !important;
+  }
+  
+  /* Garante que o carrossel tenha prioridade */
+  .convenios-carousel {
+    z-index: 100 !important;
+    position: relative !important;
+  }
+  
+  /* Mobile */
+  @media (max-width: 767px) {
+    .chatbot-container,
+    zapier-interfaces-chatbot-embed {
+      right: 16px !important;
+      bottom: 16px !important;
+      width: 64px !important;
+      height: 64px !important;
+    }
+    
+    zapier-interfaces-chatbot-embed::part(popup) {
+      top: 16px !important;
+      right: 16px !important;
+    }
+  }
