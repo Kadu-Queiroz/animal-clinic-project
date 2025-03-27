@@ -5,10 +5,27 @@
     <link rel="icon" type="image/x-icon" href="/animal-clinic-project/assets/favicon-DADHcuMq.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Toka dos Pets</title>
-    <script type="module" crossorigin src="/animal-clinic-project/assets/index-BybBIE0n.js"></script>
-    <link rel="stylesheet" crossorigin href="/animal-clinic-project/assets/index-BgmGLJ8U.css">
+    <script type="module" crossorigin src="/animal-clinic-project/assets/index-CAMMHLIo.js"></script>
+    <link rel="stylesheet" crossorigin href="/animal-clinic-project/assets/index-DtUvGfwq.css">
   </head>
   <body>
     <div id="root"></div>
+    
+    <script>
+      document.write('<link rel="preconnect" href="https://interfaces.zapier.com" crossorigin>');
+      
+      window.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+          const existing = document.querySelector('zapier-interfaces-chatbot-embed');
+          if (!existing) {
+            const script = document.createElement('script');
+            script.src = 'https://interfaces.zapier.com/assets/web-components/zapier-interfaces/zapier-interfaces.esm.js';
+            script.async = true;
+            script.type = 'module';
+            document.body.appendChild(script);
+          }
+        }, 1000);
+      });
+    </script>
   </body>
 </html>
