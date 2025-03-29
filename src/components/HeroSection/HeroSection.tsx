@@ -27,14 +27,12 @@ export function HeroSection() {
   ];
 
   return (
-    <section
-      id="inicio"
-      className="min-h-screen flex items-center relative overflow-hidden bg-cover bg-center"
-      style={{ backgroundImage: "url('https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def')" }}
-    >
-      <div className="absolute inset-0 bg-black/30"></div>
-      <div className="container mx-auto px-4 py-32 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+    <section id="inicio" className="hero-section" style={{ 
+      backgroundImage: "url('https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def')" 
+    }}>
+      <div className="hero-overlay"></div>
+      <div className="hero-container">
+        <div className="hero-content-wrapper">
           <HeroContent />
         </div>
       </div>

@@ -13,53 +13,55 @@ export function Header({ isMenuOpen, setIsMenuOpen, scrollToServicos, openAboutM
   return (
     <header className="fixed w-full bg-white z-50 shadow-sm">
       {/* Header Principal */}
-      <div className="container mx-auto px-5 py-4">
+      <div className="container mx-auto px-4 xl:px-6 py-3 lg:py-4">
         <div className="flex justify-between items-center">
-          {/* Logo */}
-          <div className="flex items-center gap-2">
+          {/* Logo - Tamanhos ajustados */}
+          <div className="flex items-center">
             <a href="#" className="focus:outline-none">
               <img
                 src={logoPrincipalColorido}
                 alt="Toka dos Pets"
-                className="h-16 md:h-20 lg:h-40"
+                className="h-12 md:h-14 lg:h-16 xl:h-20 2xl:h-24 transition-all duration-300"
               />
             </a>
           </div>
 
-          {/* Menu Desktop */}
-          <nav className="hidden lg:flex items-center gap-8">
-            <a href="#inicio" className="text-[#002B3D] hover:text-[#D96E30] transition text-lg font-bold">
-              Início
-            </a>
+          {/* Menu Desktop - Layout compacto */}
+          <nav className="hidden lg:flex items-center space-x-4 xl:space-x-6">
+            <div className="flex items-center space-x-4 xl:space-x-6">
+              <a href="#inicio" className="text-[#002B3D] hover:text-[#D96E30] transition text-sm xl:text-base font-semibold whitespace-nowrap">
+                Início
+              </a>
+              <button
+                onClick={openAboutModal}
+                className="text-[#002B3D] hover:text-[#D96E30] transition text-sm xl:text-base font-semibold whitespace-nowrap"
+              >
+                Sobre Nós
+              </button>
+              <button
+                onClick={scrollToServicos}
+                className="text-[#002B3D] hover:text-[#D96E30] transition text-sm xl:text-base font-semibold whitespace-nowrap"
+              >
+                Serviços
+              </button>
+              <a href="#galeria" className="text-[#002B3D] hover:text-[#D96E30] transition text-sm xl:text-base font-semibold whitespace-nowrap">
+                Galeria
+              </a>
+              <a href="#contato" className="text-[#002B3D] hover:text-[#D96E30] transition text-sm xl:text-base font-semibold whitespace-nowrap">
+                Contato
+              </a>
+            </div>
             <button
-              onClick={openAboutModal}
-              className="text-[#002B3D] hover:text-[#D96E30] transition text-lg font-bold"
-            >
-              Sobre Nós
-            </button>
-            <button
-              onClick={scrollToServicos}
-              className="text-[#002B3D] hover:text-[#D96E30] transition text-lg font-bold"
-            >
-              Serviços
-            </button>
-            <a href="#galeria" className="text-[#002B3D] hover:text-[#D96E30] transition text-lg font-bold">
-              Galeria
-            </a>
-            <a href="#contato" className="text-[#002B3D] hover:text-[#D96E30] transition text-lg font-bold">
-              Contato
-            </a>
-            <button
-              className="bg-[#002B3D] text-white px-6 py-2 rounded-full hover:bg-[#D96E30] transition text-lg font-bold"
+              className="bg-[#002B3D] text-white px-4 py-1.5 xl:px-5 xl:py-2 rounded-full hover:bg-[#D96E30] transition text-sm xl:text-base font-semibold whitespace-nowrap"
               onClick={() => window.open('https://wa.me/5511963551131', '_blank')}
             >
-              Agende uma Consulta
+              Agendar Consulta
             </button>
           </nav>
 
           {/* Botão do Menu Mobile */}
           <button
-            className="lg:hidden text-[#002B3D]"
+            className="lg:hidden text-[#002B3D] p-1"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label={isMenuOpen ? 'Fechar menu' : 'Abrir menu'}
           >
@@ -68,8 +70,8 @@ export function Header({ isMenuOpen, setIsMenuOpen, scrollToServicos, openAboutM
         </div>
       </div>
 
-      {/* Divisão Azul */}
-      <div className="h-3 md:h-6 lg:h-10 bg-[#002B3D]"></div>
+      {/* Divisão Azul - Altura reduzida */}
+      <div className="h-2 md:h-3 lg:h-4 bg-[#002B3D]"></div>
 
       {/* Menu Mobile */}
       <AnimatePresence>
@@ -78,35 +80,48 @@ export function Header({ isMenuOpen, setIsMenuOpen, scrollToServicos, openAboutM
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="lg:hidden bg-white border-t"
+            transition={{ duration: 0.3 }}
+            className="lg:hidden bg-white border-t overflow-hidden"
           >
-            <nav className="container mx-auto px-4 py-4 flex flex-col gap-4">
-              <a href="#inicio" className="text-[#002B3D] hover:text-[#D96E30] transition text-left font-bold">
+            <nav className="container mx-auto px-4 py-3 flex flex-col gap-3">
+              <a 
+                href="#inicio" 
+                className="text-[#002B3D] hover:text-[#D96E30] transition py-2 font-semibold border-b border-gray-100"
+                onClick={() => setIsMenuOpen(false)}
+              >
                 Início
               </a>
               <button
-                onClick={openAboutModal}
-                className="text-[#002B3D] hover:text-[#D96E30] transition text-left font-bold"
+                onClick={() => { openAboutModal(); setIsMenuOpen(false); }}
+                className="text-[#002B3D] hover:text-[#D96E30] transition py-2 font-semibold border-b border-gray-100 text-left"
               >
                 Sobre Nós
               </button>
               <button
-                onClick={scrollToServicos}
-                className="text-[#002B3D] hover:text-[#D96E30] transition text-left font-bold"
+                onClick={() => { scrollToServicos(); setIsMenuOpen(false); }}
+                className="text-[#002B3D] hover:text-[#D96E30] transition py-2 font-semibold border-b border-gray-100 text-left"
               >
                 Serviços
               </button>
-              <a href="#galeria" className="text-[#002B3D] hover:text-[#D96E30] transition text-left font-bold">
+              <a 
+                href="#galeria" 
+                className="text-[#002B3D] hover:text-[#D96E30] transition py-2 font-semibold border-b border-gray-100"
+                onClick={() => setIsMenuOpen(false)}
+              >
                 Galeria
               </a>
-              <a href="#contato" className="text-[#002B3D] hover:text-[#D96E30] transition text-left font-bold">
+              <a 
+                href="#contato" 
+                className="text-[#002B3D] hover:text-[#D96E30] transition py-2 font-semibold border-b border-gray-100"
+                onClick={() => setIsMenuOpen(false)}
+              >
                 Contato
               </a>
               <button
-                className="bg-[#002B3D] text-white px-6 py-2 rounded-full hover:bg-[#D96E30] transition w-full font-bold"
+                className="bg-[#002B3D] text-white px-4 py-2 rounded-full hover:bg-[#D96E30] transition mt-2 font-semibold"
                 onClick={() => window.open('https://wa.me/5511963551131', '_blank')}
               >
-                Agende uma Consulta
+                Agendar Consulta
               </button>
             </nav>
           </motion.div>

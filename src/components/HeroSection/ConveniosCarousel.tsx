@@ -12,50 +12,61 @@ interface ConveniosCarouselProps {
 
 export function ConveniosCarousel({ convenios }: ConveniosCarouselProps) {
   return (
-    <div className="absolute bottom-0 left-0 right-0 bg-[#002B3D]/20 backdrop-blur-sm py-4 md:py-8">
-      <div className="container mx-auto px-4">
-        <h3 className="text-center text-white text-lg md:text-xl mb-4 md:mb-6">Convênios Aceitos</h3>
+    <div className="convenios-wrapper">
+      <div className="convenios-container">
+        <h3 className="convenios-title">Convênios Aceitos</h3>
         
-        {/* Container do Carrossel com Setas Externas */}
-        <div className="relative">
-          {/* Seta Esquerda */}
-          <button className="swiper-button-prev hidden lg:flex absolute -left-12 top-1/2 -translate-y-1/2 bg-white/90 rounded-full w-10 h-10 items-center justify-center shadow-lg hover:bg-white transition-all z-10">
+        <div className="convenios-carousel-container">
+          <button 
+            className="convenios-button convenios-prev -left-12"
+            aria-label="Slide anterior"
+          >
             <ChevronLeft className="w-6 h-6 text-[#002B3D]" />
           </button>
 
-          {/* Carrossel */}
           <Swiper
             modules={[Autoplay, Pagination, Navigation]}
-            spaceBetween={30}
-            slidesPerView={2}
-            autoplay={{ delay: 3000, pauseOnMouseEnter: true, disableOnInteraction: false }}
-            pagination={{ clickable: true }}
+            spaceBetween={24}
+            slidesPerView="auto"
+            autoplay={{ 
+              delay: 3000, 
+              pauseOnMouseEnter: true,
+              disableOnInteraction: false 
+            }}
+            pagination={{ 
+              clickable: true,
+              dynamicBullets: true
+            }}
             navigation={{
-              nextEl: '.swiper-button-next',
-              prevEl: '.swiper-button-prev',
+              nextEl: '.convenios-next',
+              prevEl: '.convenios-prev',
             }}
             breakpoints={{
-              640: { slidesPerView: 3 },
-              768: { slidesPerView: 4 },
-              1024: { slidesPerView: 5 },
+              320: { slidesPerView: 2 },
+              640: { slidesPerView: 3, spaceBetween: 24 },
+              768: { slidesPerView: 4, spaceBetween: 28 },
+              1024: { slidesPerView: 5, spaceBetween: 32 }
             }}
             className="convenios-carousel"
           >
             {convenios.map((convenio, index) => (
-              <SwiperSlide key={index}>
-                <div className="bg-white/90 rounded-lg p-4 h-32 md:h-40 flex items-center justify-center backdrop-blur-sm">
+              <SwiperSlide key={index} className="w-auto px-4 md:px-6">
+                <div className="convenios-slide">
                   <img
                     src={convenio}
                     alt={`Convênio ${index + 1}`}
-                    className="w-full h-full object-contain" // Ajuste para ocupar o card
+                    loading="lazy"
+                    className="max-w-full max-h-full object-contain w-auto h-auto"
                   />
                 </div>
               </SwiperSlide>
             ))}
           </Swiper>
 
-          {/* Seta Direita */}
-          <button className="swiper-button-next hidden lg:flex absolute -right-12 top-1/2 -translate-y-1/2 bg-white/90 rounded-full w-10 h-10 items-center justify-center shadow-lg hover:bg-white transition-all z-10">
+          <button 
+            className="convenios-button convenios-next -right-12"
+            aria-label="Próximo slide"
+          >
             <ChevronRight className="w-6 h-6 text-[#002B3D]" />
           </button>
         </div>

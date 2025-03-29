@@ -8,18 +8,12 @@
 /* Variáveis Globais */
 /* ==================== */
 :root {
-  /* Cores */
-  --primary-color: #3b82f6;
-  --secondary-color: #10b981;
-  
-  /* Chatbot */
-  --chatbot-size-mobile: 64px;
-  --chatbot-size-desktop: 80px;
-  --chatbot-spacing-mobile: 16px;
-  --chatbot-spacing-desktop: 24px;
-  
-  /* Carrossel */
-  --carrossel-spacing: 40px;
+  --primary: #3b82f6;
+  --secondary: #10b981;  
+  --chatbot-size-sm: 64px;
+  --chatbot-size-lg: 80px;
+  --chatbot-spacing-sm: 16px;
+  --chatbot-spacing-lg: 24px;
 }
 
 /* ============== */
@@ -45,7 +39,12 @@ button, a, [role="button"] {
 }
 
 button {
-  @apply bg-transparent border-0 p-0 m-0 font-inherit text-inherit;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
 }
 
 /* Framer Motion */
@@ -56,23 +55,19 @@ motion.button, motion.a {
 /* ============== */
 /* Componentes Customizados */
 /* ============== */
-/* Grid Pattern */
 .bg-grid-pattern {
   background-image: 
-    linear-gradient(#ffffff 1px, transparent 1px),
-    linear-gradient(90deg, #ffffff 1px, transparent 1px);
+    linear-gradient(#fff 1px, transparent 1px),
+    linear-gradient(90deg, #fff 1px, transparent 1px);
   background-size: 20px 20px;
 }
 
-/* Logo */
 .logo-outline {
-  filter: drop-shadow(0 0 2px white) drop-shadow(0 0 2px white);
+  filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 2px #fff);
 }
 
-/* Aspect Ratio */
 .aspect-w-16 {
-  @apply relative;
-  padding-bottom: 56.25%;
+  @apply relative pb-[56.25%];
   
   > * {
     @apply absolute inset-0 w-full h-full;
@@ -80,32 +75,79 @@ motion.button, motion.a {
 }
 
 /* ============== */
-/* Swiper Carousel - Versão Otimizada */
+/* Hero Section */
 /* ============== */
-.convenios-carousel {
-  @apply relative z-[100] mx-auto;
-  max-width: 90vw;
-  margin-top: var(--carrossel-spacing);
-  padding-bottom: calc(var(--carrossel-spacing) + 60px);
+.hero-section {
+  @apply min-h-screen flex items-center relative overflow-hidden bg-cover bg-center;
+}
 
+.hero-overlay {
+  @apply absolute inset-0 bg-black/30 z-0;
+}
+
+.hero-container {
+  @apply container mx-auto px-4 py-32 relative z-10;
+}
+
+.hero-content-wrapper {
+  @apply grid lg:grid-cols-2 gap-12 items-center;
+}
+
+/* ============== */
+/* Convenios Carousel - Versão Compacta */
+/* ============== */
+.convenios-wrapper {
+  @apply absolute bottom-0 left-0 right-0 z-20;
+  height: auto;
+}
+
+.convenios-container {
+  @apply bg-[rgba(0,43,61,0.15)] backdrop-blur-[4px];
+  padding: 0.5rem 0 2.5rem;
+}
+
+.convenios-title {
+  @apply text-center text-white text-base mb-3;
+}
+
+.convenios-carousel-container {
+  @apply relative max-w-[90vw] mx-auto;
+}
+
+.convenios-button {
+  @apply hidden md:flex absolute top-1/2 -translate-y-1/2 bg-white/90 rounded-full w-8 h-8 items-center justify-center shadow-md hover:bg-white transition-all z-10;
+}
+
+.convenios-slide {
+  @apply bg-white/90 rounded-lg p-3 h-28 md:h-32 flex items-center justify-center backdrop-blur-sm;
+}
+
+.convenios-carousel {
+  @apply mx-auto;
+  max-width: 90vw;
+  padding-bottom: 1.5rem;
+  
   .swiper-wrapper {
-    @apply items-center;
-    padding: 20px 0;
+    @apply items-center py-1;
   }
 
   .swiper-slide {
-    @apply w-auto px-[15px] transition-transform duration-300;
+    @apply w-auto px-2;
+    transition: transform 0.2s ease;
     
     &:hover {
-      @apply scale-[1.05];
+      transform: scale(1.03);
     }
   }
 
   .swiper-pagination {
-    @apply !-bottom-[30px];
+    bottom: 0.25rem !important;
     
     &-bullet {
       @apply !bg-white !opacity-50;
+      width: 6px !important;
+      height: 6px !important;
+      margin: 0 3px !important;
       
       &-active {
         @apply !opacity-100;
@@ -114,18 +156,16 @@ motion.button, motion.a {
   }
 }
 
-/* Container dos Botões Motion */
+/* Botões Motion */
 .motion-button-container {
-  @apply relative z-[110] flex justify-center gap-8;
-  margin-top: -40px;
-  padding-bottom: 60px;
+  @apply relative z-[110] flex justify-center gap-8 -mt-8 pb-[40px];
   
   motion-button {
-    @apply relative transition-all duration-300;
+    @apply relative transition-all duration-300 hover:-translate-y-[3px];
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,0));
     
     &:hover {
-      @apply -translate-y-[5px];
-      filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+      filter: drop-shadow(0 3px 6px rgba(0,0,0,0.15));
     }
   }
 }
@@ -135,19 +175,19 @@ motion.button, motion.a {
 /* ============== */
 .chatbot-container {
   @apply fixed z-[9999];
-  right: var(--chatbot-spacing-mobile);
-  bottom: var(--chatbot-spacing-mobile);
-  width: var(--chatbot-size-mobile);
-  height: var(--chatbot-size-mobile);
+  right: var(--chatbot-spacing-sm);
+  bottom: var(--chatbot-spacing-sm);
+  width: var(--chatbot-size-sm);
+  height: var(--chatbot-size-sm);
 }
 
 zapier-interfaces-chatbot-embed {
   @apply !fixed !z-[9999] !block;
   all: initial !important;
-  width: var(--chatbot-size-mobile) !important;
-  height: var(--chatbot-size-mobile) !important;
-  right: var(--chatbot-spacing-mobile) !important;
-  bottom: var(--chatbot-spacing-mobile) !important;
+  width: var(--chatbot-size-sm) !important;
+  height: var(--chatbot-size-sm) !important;
+  right: var(--chatbot-spacing-sm) !important;
+  bottom: var(--chatbot-spacing-sm) !important;
   
   &::part(popup) {
     @apply !max-w-[min(90vw,400px)] !z-[10000];
@@ -158,40 +198,66 @@ zapier-interfaces-chatbot-embed {
 }
 
 /* ============== */
-/* Breakpoints Responsivos */
+/* Breakpoints */
 /* ============== */
+@media (min-width: 640px) {
+  .convenios-container {
+    padding: 0.75rem 0 3rem;
+  }
+  
+  .convenios-slide {
+    @apply h-32 md:h-36;
+  }
+}
+
 @media (min-width: 768px) {
   .chatbot-container,
   zapier-interfaces-chatbot-embed {
-    right: var(--chatbot-spacing-desktop) !important;
-    bottom: var(--chatbot-spacing-desktop) !important;
-    width: var(--chatbot-size-desktop) !important;
-    height: var(--chatbot-size-desktop) !important;
+    right: var(--chatbot-spacing-lg) !important;
+    bottom: var(--chatbot-spacing-lg) !important;
+    width: var(--chatbot-size-lg) !important;
+    height: var(--chatbot-size-lg) !important;
+  }
+  
+  .convenios-container {
+    padding: 1rem 0 3.5rem;
+  }
+  
+  .convenios-title {
+    @apply text-lg mb-4;
+  }
+  
+  .convenios-slide {
+    @apply p-4 h-36 md:h-40;
   }
   
   .convenios-carousel {
-    max-width: 85vw;
-    padding-bottom: calc(var(--carrossel-spacing) + 80px);
+    padding-bottom: 2rem;
     
     .swiper-slide {
-      @apply px-[25px];
+      @apply px-4;
     }
   }
   
   .motion-button-container {
     @apply gap-10;
-    padding-bottom: 80px;
+    padding-bottom: 60px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .convenios-carousel {
+    max-width: 85vw;
   }
 }
 
 @media (min-width: 1280px) {
   .convenios-carousel {
     max-width: 80vw;
-    padding-bottom: calc(var(--carrossel-spacing) + 100px);
   }
   
   .motion-button-container {
-    padding-bottom: 100px;
+    padding-bottom: 70px;
   }
 }
 
