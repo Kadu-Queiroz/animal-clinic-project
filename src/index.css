@@ -5,53 +5,52 @@
 @tailwind utilities;
 
 /* ==================== */
-/* Configurações Base */
+/* Variáveis Globais */
 /* ==================== */
 :root {
-  --chatbot-size: 64px;
-  --chatbot-spacing: 1.5rem;
-}
-
-@media (min-width: 768px) {
-  :root {
-    --chatbot-size: 80px;
-    --chatbot-spacing: 2.5rem;
-  }
+  /* Cores */
+  --primary-color: #3b82f6;
+  --secondary-color: #10b981;
+  
+  /* Chatbot */
+  --chatbot-size-mobile: 64px;
+  --chatbot-size-desktop: 80px;
+  --chatbot-spacing-mobile: 16px;
+  --chatbot-spacing-desktop: 24px;
+  
+  /* Carrossel */
+  --carrossel-spacing: 40px;
 }
 
 /* ============== */
-/* Estilos Globais */
+/* Estilos Base */
 /* ============== */
 html {
   scroll-behavior: smooth;
+  @apply bg-white;
 }
 
 body {
   font-family: 'Open Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  @apply text-gray-800;
 }
 
 /* ================== */
 /* Elementos Interativos */
 /* ================== */
 button, a, [role="button"] {
-  cursor: pointer;
+  @apply cursor-pointer transition-all duration-200;
 }
 
 button {
-  background: none;
-  border: none;
-  padding: 0;
-  margin: 0;
-  font: inherit;
-  color: inherit;
+  @apply bg-transparent border-0 p-0 m-0 font-inherit text-inherit;
 }
 
 /* Framer Motion */
 motion.button, motion.a {
-  cursor: pointer;
-  user-select: none;
+  @apply cursor-pointer select-none;
 }
 
 /* ============== */
@@ -72,94 +71,132 @@ motion.button, motion.a {
 
 /* Aspect Ratio */
 .aspect-w-16 {
-  position: relative;
+  @apply relative;
   padding-bottom: 56.25%;
-}
-
-.aspect-w-16 > * {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  
+  > * {
+    @apply absolute inset-0 w-full h-full;
+  }
 }
 
 /* ============== */
-/* Swiper Carousel */
+/* Swiper Carousel - Versão Otimizada */
 /* ============== */
 .convenios-carousel {
-  position: relative;
-  z-index: 100;
-}
+  @apply relative z-[100] mx-auto;
+  max-width: 90vw;
+  margin-top: var(--carrossel-spacing);
+  padding-bottom: calc(var(--carrossel-spacing) + 60px);
 
-.convenios-carousel .swiper-pagination {
-  bottom: -30px !important;
-}
-
-.convenios-carousel .swiper-pagination-bullet {
-  background: white !important;
-  opacity: 0.5;
-}
-
-.convenios-carousel .swiper-pagination-bullet-active {
-  opacity: 1;
-}
-
-/* ============== */
-/* Chatbot IA - Versão Estável */
-/* ============== */
-
-  .chatbot-container {
-    position: fixed;
-    right: 24px;
-    bottom: 24px;
-    z-index: 9999;
-    width: 72px;
-    height: 72px;
+  .swiper-wrapper {
+    @apply items-center;
+    padding: 20px 0;
   }
 
-  zapier-interfaces-chatbot-embed {
-    all: initial !important;
-    display: block !important;
-    position: fixed !important;
-    right: 24px !important;
-    bottom: 24px !important;
-    width: 72px !important;
-    height: 72px !important;
-    z-index: 9999 !important;
-  }
-  
-  /* Posiciona o popup no TOPO à DIREITA */
-  zapier-interfaces-chatbot-embed::part(popup) {
-    max-width: min(90vw, 400px) !important;
-    bottom: auto !important;
-    top: 24px !important;
-    right: 24px !important;
-    left: auto !important;
-    margin: 0 !important;
-    z-index: 10000 !important;
-  }
-  
-  /* Garante que o carrossel tenha prioridade */
-  .convenios-carousel {
-    z-index: 100 !important;
-    position: relative !important;
-  }
-  
-  /* Mobile */
-  @media (max-width: 767px) {
-    .chatbot-container,
-    zapier-interfaces-chatbot-embed {
-      right: 16px !important;
-      bottom: 16px !important;
-      width: 64px !important;
-      height: 64px !important;
-    }
+  .swiper-slide {
+    @apply w-auto px-[15px] transition-transform duration-300;
     
-    zapier-interfaces-chatbot-embed::part(popup) {
-      top: 16px !important;
-      right: 16px !important;
+    &:hover {
+      @apply scale-[1.05];
     }
   }
+
+  .swiper-pagination {
+    @apply !-bottom-[30px];
+    
+    &-bullet {
+      @apply !bg-white !opacity-50;
+      
+      &-active {
+        @apply !opacity-100;
+      }
+    }
+  }
+}
+
+/* Container dos Botões Motion */
+.motion-button-container {
+  @apply relative z-[110] flex justify-center gap-8;
+  margin-top: -40px;
+  padding-bottom: 60px;
+  
+  motion-button {
+    @apply relative transition-all duration-300;
+    
+    &:hover {
+      @apply -translate-y-[5px];
+      filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+    }
+  }
+}
+
+/* ============== */
+/* Chatbot IA */
+/* ============== */
+.chatbot-container {
+  @apply fixed z-[9999];
+  right: var(--chatbot-spacing-mobile);
+  bottom: var(--chatbot-spacing-mobile);
+  width: var(--chatbot-size-mobile);
+  height: var(--chatbot-size-mobile);
+}
+
+zapier-interfaces-chatbot-embed {
+  @apply !fixed !z-[9999] !block;
+  all: initial !important;
+  width: var(--chatbot-size-mobile) !important;
+  height: var(--chatbot-size-mobile) !important;
+  right: var(--chatbot-spacing-mobile) !important;
+  bottom: var(--chatbot-spacing-mobile) !important;
+  
+  &::part(popup) {
+    @apply !max-w-[min(90vw,400px)] !z-[10000];
+    bottom: calc(100% + 10px) !important;
+    right: 0 !important;
+    left: auto !important;
+  }
+}
+
+/* ============== */
+/* Breakpoints Responsivos */
+/* ============== */
+@media (min-width: 768px) {
+  .chatbot-container,
+  zapier-interfaces-chatbot-embed {
+    right: var(--chatbot-spacing-desktop) !important;
+    bottom: var(--chatbot-spacing-desktop) !important;
+    width: var(--chatbot-size-desktop) !important;
+    height: var(--chatbot-size-desktop) !important;
+  }
+  
+  .convenios-carousel {
+    max-width: 85vw;
+    padding-bottom: calc(var(--carrossel-spacing) + 80px);
+    
+    .swiper-slide {
+      @apply px-[25px];
+    }
+  }
+  
+  .motion-button-container {
+    @apply gap-10;
+    padding-bottom: 80px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .convenios-carousel {
+    max-width: 80vw;
+    padding-bottom: calc(var(--carrossel-spacing) + 100px);
+  }
+  
+  .motion-button-container {
+    padding-bottom: 100px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .convenios-carousel {
+    max-width: 1440px;
+  }
+}
