@@ -8,7 +8,7 @@ import { GallerySection } from './components/GalelerySection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { SobreNosModal, ProdutosModal, DetalhesServicoModal } from './components/Modals';
-import { SmartChatbot } from './components/SmartChatbot'
+import whatsappLogo from '@/assets/img/logos/logo_whatsapp.svg';
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -29,6 +29,10 @@ function App() {
   const openServiceDetailsModal = (title: string, items: string[]) => {
     setSelectedService({ title, items });
     openDetalhesServicoModal();
+  };
+
+  const handleWhatsAppClick = () => {
+    window.open('https://wa.me/5511963551131', '_blank');
   };
 
   return (
@@ -53,7 +57,17 @@ function App() {
         title={selectedService?.title || ''}
         items={selectedService?.items || []}
       />
-      <SmartChatbot />
+      
+      <div
+        className="whatsapp-fixed"
+        onClick={handleWhatsAppClick}
+      >
+        <img
+          src={whatsappLogo}
+          alt="WhatsApp"
+          className="whatsapp-icon"
+        />
+      </div>
     </div>
   );
 }

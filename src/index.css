@@ -4,21 +4,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ==================== */
-/* Variáveis Globais */
-/* ==================== */
+/* ==================== VARIÁVEIS GLOBAIS ==================== */
 :root {
   --primary: #3b82f6;
   --secondary: #10b981;
-  --chatbot-size-sm: 64px;
-  --chatbot-size-lg: 80px;
-  --chatbot-spacing-sm: 16px;
-  --chatbot-spacing-lg: 24px;
 }
 
-/* ============== */
-/* Estilos Base */
-/* ============== */
+/* ==================== ESTILOS BASE ==================== */
 html {
   scroll-behavior: smooth;
   @apply bg-white;
@@ -31,19 +23,14 @@ body {
   @apply text-gray-800;
 }
 
-/* ================== */
-/* Elementos Interativos */
-/* ================== */
+/* Elementos interativos */
 button, a, [role="button"] {
   @apply cursor-pointer transition-all duration-200;
 }
 
-/* ============== */
-/* Seção Hero - Layout Principal */
-/* ============== */
+/* ==================== SEÇÃO HERO ==================== */
 .hero-section {
-  @apply flex flex-col min-h-[100dvh] relative overflow-hidden bg-cover bg-center;
-  padding-bottom: 120px;
+  @apply flex flex-col min-h-[100dvh] relative overflow-hidden bg-cover bg-center pb-[120px];
 }
 
 .hero-overlay {
@@ -51,41 +38,26 @@ button, a, [role="button"] {
 }
 
 .hero-container {
-  @apply container mx-auto px-4 py-12 md:py-24 lg:py-32 relative z-10 flex-1;
-  display: flex;
-  flex-direction: column;
+  @apply container mx-auto px-4 py-12 md:py-24 lg:py-32 relative z-10 flex-1 flex flex-col;
 }
 
 .hero-content-wrapper {
-  @apply flex flex-col justify-center h-full w-full;
-  flex-grow: 1;
+  @apply flex flex-col justify-center h-full w-full flex-grow;
 }
 
-/* ============== */
-/* Carrossel de Convênios */
-/* ============== */
+/* ==================== CARROSSEL ==================== */
 .convenios-wrapper {
-  @apply relative z-20 w-full;
-  margin-top: auto;
-  padding-top: 2rem;
+  @apply relative z-20 w-full mt-auto pt-8;
 }
 
 .convenios-container {
-  @apply bg-[rgba(0,43,61,0.15)] backdrop-blur-[4px] w-full;
-  padding: 1rem 0;
+  @apply bg-[rgba(0,43,61,0.15)] backdrop-blur-[4px] w-full py-4;
 }
 
-/* ============== */
-/* Botões de Ação */
-/* ============== */
 .motion-button-container {
-  @apply relative z-30 flex flex-col sm:flex-row justify-center gap-4;
-  margin: 2rem 0;
+  @apply relative z-30 flex flex-col sm:flex-row justify-center gap-8 my-8;
 }
 
-/* ============== */
-/* Estilos do Carrossel */
-/* ============== */
 .convenios-carousel-container {
   @apply relative max-w-[95vw] mx-auto;
 }
@@ -99,112 +71,134 @@ button, a, [role="button"] {
 }
 
 .convenios-carousel {
-  @apply mx-auto;
-  max-width: 95vw;
-  padding-bottom: 1.5rem;
+  @apply mx-auto pb-6 max-w-[95vw];
 
   .swiper-wrapper {
     @apply items-center py-1;
   }
 
   .swiper-slide {
-    @apply w-auto px-2;
-    transition: transform 0.2s ease;
-
-    &:hover {
-      transform: scale(1.03);
-    }
+    @apply w-auto px-2 transition-transform duration-200 ease-in-out hover:scale-[1.03];
   }
 
   .swiper-pagination {
-    bottom: 0.25rem !important;
+    @apply bottom-1;
   }
 
   .swiper-pagination-bullet {
-    @apply !bg-white !opacity-50;
-    width: 6px !important;
-    height: 6px !important;
-    margin: 0 3px !important;
+    @apply bg-white opacity-50 w-1.5 h-1.5 mx-[3px];
   }
 
   .swiper-pagination-bullet-active {
-    @apply !opacity-100;
+    @apply opacity-100;
   }
 }
 
-/* ============== */
-/* Chatbot */
-/* ============== */
-.chatbot-container {
-  @apply fixed z-[9999];
-  right: var(--chatbot-spacing-sm);
-  bottom: var(--chatbot-spacing-sm);
-  width: var(--chatbot-size-sm);
-  height: var(--chatbot-size-sm);
+/* ===== BOTÃO WHATSAPP COM DESTAQUE PROGRESSIVO ===== */
+.whatsapp-fixed {
+  position: fixed;
+  z-index: 9999;
+  cursor: pointer;
+  right: 20px;
+  bottom: 20px;
 }
 
-zapier-interfaces-chatbot-embed {
-  @apply !fixed !z-[9999] !block;
-  all: initial !important;
-  width: var(--chatbot-size-sm) !important;
-  height: var(--chatbot-size-sm) !important;
-  right: var(--chatbot-spacing-sm) !important;
-  bottom: var(--chatbot-spacing-sm) !important;
+.whatsapp-icon {
+  /* Tamanho base maior para desktop */
+  width: clamp(64px, 7vw, 120px);
+  height: clamp(64px, 7vw, 120px);
+  
+  /* Efeitos visuais aprimorados */
+  transition: all 0.3s ease;
+  animation: pulse 2s infinite;
+  filter: 
+    drop-shadow(0 4px 8px rgba(0,0,0,0.3))
+    brightness(1.05); /* Destaque extra */
+}
 
-  &::part(popup) {
-    @apply !max-w-[min(90vw,400px)] !z-[10000];
-    bottom: calc(100% + 10px) !important;
-    right: 0 !important;
-    left: auto !important;
+/* Efeito hover mais pronunciado */
+.whatsapp-icon:hover {
+  transform: scale(1.15);
+  filter: 
+    drop-shadow(0 6px 12px rgba(0,0,0,0.4))
+    brightness(1.1);
+}
+
+/* Animação mais chamativa */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+/* Ajuste fino para DESKTOP (acima de 1024px) */
+@media (min-width: 1024px) {
+  .whatsapp-icon {
+    filter: 
+      drop-shadow(0 6px 12px rgba(0,0,0,0.4))
+      brightness(1.1); /* Mais contraste no desktop */
   }
 }
 
-/* ============== */
-/* Breakpoints Responsivos */
-/* ============== */
+/* ==================== RESPONSIVIDADE ==================== */
 
-/* Telas Pequenas (Mobile) */
+/* Dispositivos móveis (pequenos) */
 @media (max-width: 640px) {
   .hero-section {
-    padding-bottom: 100px;
+    @apply pb-[100px];
   }
   
   .convenios-slide {
     @apply h-20;
   }
+
+  .whatsapp-float {
+    width: 60px;
+    height: 60px;
+    right: 20px;
+    bottom: 20px;
+  }
 }
 
-/* Orientação Landscape */
+/* Modo paisagem (mobile) */
 @media (orientation: landscape) and (max-height: 600px) {
   .hero-section {
-    padding-bottom: 80px;
+    @apply pb-[80px];
   }
   
   .hero-container {
-    padding-top: 4rem;
-    padding-bottom: 4rem;
+    @apply py-16;
   }
   
   .convenios-wrapper {
-    padding-top: 1rem;
+    @apply pt-4;
+  }
+
+  .whatsapp-float {
+    width: 50px;
+    height: 50px;
   }
 }
 
 /* Tablets */
 @media (min-width: 768px) {
   .hero-section {
-    padding-bottom: 140px;
+    @apply pb-[140px];
   }
   
   .convenios-container {
-    padding: 1rem 0 2rem;
+    @apply py-8;
+  }
+
+  .whatsapp-float {
+    width: 70px;
+    height: 70px;
   }
 }
 
 /* Desktop */
 @media (min-width: 1024px) {
   .hero-section {
-    padding-bottom: 0;
+    @apply pb-0;
   }
   
   .hero-content-wrapper {
@@ -212,41 +206,42 @@ zapier-interfaces-chatbot-embed {
   }
   
   .convenios-wrapper {
-    @apply absolute bottom-0 left-0 right-0;
-    padding-top: 0;
+    @apply absolute bottom-0 left-0 right-0 pt-0;
   }
   
   .convenios-container {
-    padding: 1rem 0 3rem;
+    @apply py-12;
+  }
+
+  .whatsapp-float {
+    width: 80px;
+    height: 80px;
+    right: 32px;
+    bottom: 32px;
   }
 }
 
-/* Telas Grandes */
+/* Telas grandes */
 @media (min-width: 1280px) {
   .convenios-carousel {
-    max-width: 90vw;
+    @apply max-w-[90vw];
   }
 }
 
-/* Casos Específicos Problemáticos */
-@media (max-width: 932px) and (max-height: 430px) {
-  .hero-section {
-    min-height: 430px;
-    padding-bottom: 60px;
-  }
-  
-  .hero-container {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-  }
-}
-
+/* Casos específicos (telas muito pequenas) */
 @media (max-width: 375px) {
   .hero-section {
-    padding-bottom: 80px;
+    @apply pb-[80px];
   }
   
   .convenios-slide {
     @apply h-16;
+  }
+
+  .whatsapp-float {
+    width: 50px;
+    height: 50px;
+    right: 15px;
+    bottom: 15px;
   }
 }
