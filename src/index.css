@@ -8,6 +8,7 @@
 :root {
   --primary: #3b82f6;
   --secondary: #10b981;
+  --vh: 1vh;
 }
 
 /* ==================== ESTILOS BASE ==================== */
@@ -29,7 +30,8 @@ button, a, [role="button"] {
 
 /* ==================== SEÇÃO HERO ==================== */
 .hero-section {
-  @apply flex flex-col min-h-[100dvh] relative overflow-hidden bg-cover bg-center pb-[120px];
+  min-height: calc(var(--vh, 1vh) * 100);
+  @apply flex flex-col relative overflow-hidden bg-cover bg-center pb-[120px];
   background-position: center 40%;
 }
 
@@ -153,8 +155,12 @@ button, a, [role="button"] {
 /* ==================== RESPONSIVIDADE ==================== */
 @media (max-width: 640px) {
   .hero-section {
-    @apply pb-[100px];
+    @apply pt-[72px] pb-[100px]; /* compensando header fixa */
     background-position: center 45%;
+  }
+
+  .hero-container {
+    @apply pt-4 pb-12;
   }
 
   .convenios-slide {
