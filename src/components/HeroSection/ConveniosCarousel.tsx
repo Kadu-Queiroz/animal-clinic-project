@@ -14,9 +14,15 @@ export function ConveniosCarousel({ convenios }: ConveniosCarouselProps) {
   return (
     <div className="convenios-wrapper">
       <div className="convenios-container">
-        <h3 className="convenios-title">Convênios Aceitos</h3>
         
+        {/* TÍTULO CENTRALIZADO COM ANIMAÇÃO */}
+        <h3 className="convenios-title">
+          Convênios Aceitos
+        </h3>
+
         <div className="convenios-carousel-container">
+          
+          {/* BOTÃO ANTERIOR */}
           <button 
             className="convenios-button convenios-prev -left-12"
             aria-label="Slide anterior"
@@ -24,6 +30,7 @@ export function ConveniosCarousel({ convenios }: ConveniosCarouselProps) {
             <ChevronLeft className="w-6 h-6 text-[#002B3D]" />
           </button>
 
+          {/* SWIPER */}
           <Swiper
             modules={[Autoplay, Pagination, Navigation]}
             spaceBetween={24}
@@ -63,6 +70,7 @@ export function ConveniosCarousel({ convenios }: ConveniosCarouselProps) {
             ))}
           </Swiper>
 
+          {/* BOTÃO PRÓXIMO */}
           <button 
             className="convenios-button convenios-next -right-12"
             aria-label="Próximo slide"

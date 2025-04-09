@@ -28,7 +28,7 @@ export function HeroSection() {
 
   return (
     <section id="inicio" className="hero-section" style={{ 
-      backgroundImage: "url('https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def')" 
+      backgroundImage: "url('https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def')", 
     }}>
       <div className="hero-overlay"></div>
       <div className="hero-container">

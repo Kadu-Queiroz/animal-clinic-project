@@ -23,7 +23,6 @@ body {
   @apply text-gray-800;
 }
 
-/* Elementos interativos */
 button, a, [role="button"] {
   @apply cursor-pointer transition-all duration-200;
 }
@@ -31,6 +30,7 @@ button, a, [role="button"] {
 /* ==================== SEÇÃO HERO ==================== */
 .hero-section {
   @apply flex flex-col min-h-[100dvh] relative overflow-hidden bg-cover bg-center pb-[120px];
+  background-position: center 40%;
 }
 
 .hero-overlay {
@@ -43,6 +43,23 @@ button, a, [role="button"] {
 
 .hero-content-wrapper {
   @apply flex flex-col justify-center h-full w-full flex-grow;
+}
+
+/* ==================== TÍTULO CONVÊNIOS ==================== */
+.convenios-title {
+  @apply text-2xl sm:text-3xl font-bold text-center text-gray-900 mb-6 relative z-30;
+  animation: fadeInUp 0.6s ease-in-out both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ==================== CARROSSEL ==================== */
@@ -94,7 +111,7 @@ button, a, [role="button"] {
   }
 }
 
-/* ===== BOTÃO WHATSAPP COM DESTAQUE PROGRESSIVO ===== */
+/* ==================== WHATSAPP FLOAT ==================== */
 .whatsapp-fixed {
   position: fixed;
   z-index: 9999;
@@ -104,19 +121,15 @@ button, a, [role="button"] {
 }
 
 .whatsapp-icon {
-  /* Tamanho base maior para desktop */
   width: clamp(64px, 7vw, 120px);
   height: clamp(64px, 7vw, 120px);
-  
-  /* Efeitos visuais aprimorados */
   transition: all 0.3s ease;
   animation: pulse 2s infinite;
   filter: 
     drop-shadow(0 4px 8px rgba(0,0,0,0.3))
-    brightness(1.05); /* Destaque extra */
+    brightness(1.05);
 }
 
-/* Efeito hover mais pronunciado */
 .whatsapp-icon:hover {
   transform: scale(1.15);
   filter: 
@@ -124,29 +137,26 @@ button, a, [role="button"] {
     brightness(1.1);
 }
 
-/* Animação mais chamativa */
 @keyframes pulse {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.15); }
 }
 
-/* Ajuste fino para DESKTOP (acima de 1024px) */
 @media (min-width: 1024px) {
   .whatsapp-icon {
     filter: 
       drop-shadow(0 6px 12px rgba(0,0,0,0.4))
-      brightness(1.1); /* Mais contraste no desktop */
+      brightness(1.1);
   }
 }
 
 /* ==================== RESPONSIVIDADE ==================== */
-
-/* Dispositivos móveis (pequenos) */
 @media (max-width: 640px) {
   .hero-section {
     @apply pb-[100px];
+    background-position: center 45%;
   }
-  
+
   .convenios-slide {
     @apply h-20;
   }
@@ -159,16 +169,16 @@ button, a, [role="button"] {
   }
 }
 
-/* Modo paisagem (mobile) */
 @media (orientation: landscape) and (max-height: 600px) {
   .hero-section {
     @apply pb-[80px];
+    background-position: center 50%;
   }
-  
+
   .hero-container {
     @apply py-16;
   }
-  
+
   .convenios-wrapper {
     @apply pt-4;
   }
@@ -179,12 +189,12 @@ button, a, [role="button"] {
   }
 }
 
-/* Tablets */
 @media (min-width: 768px) {
   .hero-section {
     @apply pb-[140px];
+    background-position: center 40%;
   }
-  
+
   .convenios-container {
     @apply py-8;
   }
@@ -195,20 +205,20 @@ button, a, [role="button"] {
   }
 }
 
-/* Desktop */
 @media (min-width: 1024px) {
   .hero-section {
     @apply pb-0;
+    background-position: center 35%;
   }
-  
+
   .hero-content-wrapper {
     @apply grid lg:grid-cols-2 gap-12 items-center;
   }
-  
+
   .convenios-wrapper {
     @apply absolute bottom-0 left-0 right-0 pt-0;
   }
-  
+
   .convenios-container {
     @apply py-12;
   }
@@ -221,19 +231,18 @@ button, a, [role="button"] {
   }
 }
 
-/* Telas grandes */
 @media (min-width: 1280px) {
   .convenios-carousel {
     @apply max-w-[90vw];
   }
 }
 
-/* Casos específicos (telas muito pequenas) */
 @media (max-width: 375px) {
   .hero-section {
     @apply pb-[80px];
+    background-position: center 50%;
   }
-  
+
   .convenios-slide {
     @apply h-16;
   }
