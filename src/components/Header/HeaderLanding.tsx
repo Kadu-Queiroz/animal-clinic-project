@@ -1,68 +1,62 @@
+import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useModalStore } from '@/hooks/useModalStore';
-import logoPrincipalColorido from '@/assets/img/logos/logo_principal_colorido.png';
+import logoPrincipalColorido from '@assets/img/logos/logo_principal_colorido.png';
 
-interface HeaderProps {
-  isMenuOpen: boolean;
-  setIsMenuOpen: (isOpen: boolean) => void;
+interface HeaderLandingProps {
   scrollToServicos: () => void;
 }
 
-export function Header({ isMenuOpen, setIsMenuOpen, scrollToServicos }: HeaderProps) {
+export function HeaderLanding({ scrollToServicos }: HeaderLandingProps) {
   const { openModal } = useModalStore();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <header className="fixed w-full bg-white z-50 shadow-sm">
-      {/* Header Principal */}
       <div className="container mx-auto px-4 xl:px-6 py-3 lg:py-4">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <div className="flex items-center">
-            <a href="#" className="focus:outline-none">
-              <img
-                src={logoPrincipalColorido}
-                alt="Toka dos Pets"
-                className="h-12 md:h-14 lg:h-16 xl:h-20 2xl:h-24 transition-all duration-300"
-              />
-            </a>
-          </div>
+          <a href="#inicio" className="focus:outline-none">
+            <img
+              src={logoPrincipalColorido}
+              alt="Toka dos Pets"
+              className="h-12 md:h-14 lg:h-16 xl:h-20 2xl:h-24 transition-all duration-300"
+            />
+          </a>
 
           {/* Menu Desktop */}
           <nav className="hidden lg:flex items-center space-x-4 xl:space-x-6">
-            <div className="flex items-center space-x-4 xl:space-x-6">
-              <a href="#inicio" className="text-[#002B3D] hover:text-[#D96E30] transition text-sm xl:text-base font-semibold whitespace-nowrap">
-                Início
-              </a>
-              <button
-                onClick={() => openModal('sobreNos')}
-                className="text-[#002B3D] hover:text-[#D96E30] transition text-sm xl:text-base font-semibold whitespace-nowrap"
-              >
-                Sobre Nós
-              </button>
-              <button
-                onClick={scrollToServicos}
-                className="text-[#002B3D] hover:text-[#D96E30] transition text-sm xl:text-base font-semibold whitespace-nowrap"
-              >
-                Serviços
-              </button>
-              <a href="#galeria" className="text-[#002B3D] hover:text-[#D96E30] transition text-sm xl:text-base font-semibold whitespace-nowrap">
-                Galeria
-              </a>
-              <a href="#contato" className="text-[#002B3D] hover:text-[#D96E30] transition text-sm xl:text-base font-semibold whitespace-nowrap">
-                Contato
-              </a>
-            </div>
-
+            <a href="#inicio" className="text-[#002B3D] hover:text-[#D96E30] transition text-sm xl:text-base font-semibold">
+              Início
+            </a>
             <button
-              className="bg-[#002B3D] text-white px-4 py-1.5 xl:px-5 xl:py-2 rounded-full hover:bg-[#D96E30] transition text-sm xl:text-base font-semibold whitespace-nowrap"
+              onClick={() => openModal('sobreNos')}
+              className="text-[#002B3D] hover:text-[#D96E30] transition text-sm xl:text-base font-semibold"
+            >
+              Sobre Nós
+            </button>
+            <button
+              onClick={scrollToServicos}
+              className="text-[#002B3D] hover:text-[#D96E30] transition text-sm xl:text-base font-semibold"
+            >
+              Serviços
+            </button>
+            <a href="#galeria" className="text-[#002B3D] hover:text-[#D96E30] transition text-sm xl:text-base font-semibold">
+              Galeria
+            </a>
+            <a href="#contato" className="text-[#002B3D] hover:text-[#D96E30] transition text-sm xl:text-base font-semibold">
+              Contato
+            </a>
+            <button
               onClick={() => openModal('loginCliente')}
+              className="bg-[#002B3D] text-white px-4 py-2 rounded-full hover:bg-[#D96E30] transition text-sm xl:text-base font-semibold"
             >
               Área do Cliente
             </button>
           </nav>
 
-          {/* Menu Mobile Toggle */}
+          {/* Menu Toggle Mobile */}
           <button
             className="lg:hidden text-[#002B3D] p-1"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -73,7 +67,7 @@ export function Header({ isMenuOpen, setIsMenuOpen, scrollToServicos }: HeaderPr
         </div>
       </div>
 
-      {/* Linha inferior azul */}
+      {/* Linha azul inferior */}
       <div className="h-2 md:h-3 lg:h-4 bg-[#002B3D]"></div>
 
       {/* Menu Mobile */}

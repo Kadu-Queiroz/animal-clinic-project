@@ -1,49 +1,18 @@
-import { useState } from 'react';
-import { useScroll } from '@/hooks/useScroll';
-import { Header } from './components/Header';
-import { HeroSection } from './components/HeroSection';
-import { ServicesSection } from './components/ServiceSection';
-import { GallerySection } from './components/GalelerySection';
-import { ContactSection } from './components/ContactSection';
-import { Footer } from './components/Footer';
-import { GlobalModals } from './components/Modals/GlobalModals';
-import whatsappLogo from '@/assets/img/logos/logo_whatsapp.svg';
+import { Routes, Route } from 'react-router-dom';
+import LandingPage from '@/pages/LandingPage';
+import Dashboard from '@/pages/Cliente/Dashboard';
+import Historico from '@/pages/Cliente/Historico';
+import Exames from '@/pages/Cliente/Exames';
+import Agendar from '@/pages/Cliente/Agendar';
 
-function App() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const scrollToSection = useScroll();
-
-  const handleWhatsAppClick = () => {
-    window.open('https://wa.me/5511963551131', '_blank');
-  };
-
+export default function App() {
   return (
-    <div className="font-['Open_Sans']">
-      <Header
-        isMenuOpen={isMenuOpen}
-        setIsMenuOpen={setIsMenuOpen}
-        scrollToServicos={() => scrollToSection('servicos')}
-      />
-      <HeroSection />
-      <ServicesSection />
-      <GallerySection />
-      <ContactSection />
-      <Footer />
-
-      <GlobalModals />
-
-      <div
-        className="whatsapp-fixed"
-        onClick={handleWhatsAppClick}
-      >
-        <img
-          src={whatsappLogo}
-          alt="WhatsApp"
-          className="whatsapp-icon"
-        />
-      </div>
-    </div>
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/cliente/dashboard" element={<Dashboard />} />
+      <Route path="/cliente/historico" element={<Historico />} />
+      <Route path="/cliente/exames" element={<Exames />} />
+      <Route path="/cliente/agendar" element={<Agendar />} />
+    </Routes>
   );
 }
-
-export default App;

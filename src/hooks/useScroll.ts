@@ -1,17 +1,15 @@
 import { useCallback } from 'react';
 
 export function useScroll() {
-  const scrollToSection = useCallback((sectionId: string) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      const isMobile = window.innerWidth < 768;
+  return useCallback((sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (!element) return;
 
-      section.scrollIntoView({
-        behavior: 'smooth',
-        block: isMobile ? 'start' : 'center',
-      });
-    }
+    const prefersMobilePosition = window.innerWidth < 768;
+
+    element.scrollIntoView({
+      behavior: 'smooth',
+      block: prefersMobilePosition ? 'start' : 'center',
+    });
   }, []);
-
-  return scrollToSection;
 }
