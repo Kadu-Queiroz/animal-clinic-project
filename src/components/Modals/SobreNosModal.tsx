@@ -4,10 +4,9 @@ import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import "swiper/css";
 import "swiper/css/navigation";
 
-// Caminho relativo corrigido
+import { useModalStore } from "@/hooks/useModalStore";
 import imgGuilhermeCugini from "@/assets/img/institucional/Staff/DrGuilhermeCugini.webp";
 
-// Dados dos profissionais (exemplo)
 const professionals = [
   {
     name: "Dr. Guilherme Cugini",
@@ -17,22 +16,18 @@ const professionals = [
   {
     name: "Dra. Maria Oliveira",
     role: "Cirurgiã Veterinária",
-    image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2",
+    image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?fit=crop&w=300&h=300&q=80",
   },
   {
     name: "Dr. Pedro Souza",
     role: "Veterinário",
-    image: "https://images.unsplash.com/photo-1583512603805-3cc6b41f3edb",
+    image: "https://images.unsplash.com/photo-1583512603805-3cc6b41f3edb?fit=crop&w=300&h=300&q=80",
   },
 ];
 
-interface SobreNosModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-export function SobreNosModal({ isOpen, onClose }: SobreNosModalProps) {
-  if (!isOpen) return null;
+export function SobreNosModal() {
+  const { modal, closeModal } = useModalStore();
+  if (modal !== "sobreNos") return null;
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -40,10 +35,7 @@ export function SobreNosModal({ isOpen, onClose }: SobreNosModalProps) {
         {/* Cabeçalho do Modal */}
         <div className="flex justify-between items-center p-6 border-b">
           <h2 className="text-2xl font-bold text-[#002B3D]">Sobre Nós</h2>
-          <button
-            onClick={onClose}
-            className="text-gray-600 hover:text-[#002B3D] transition"
-          >
+          <button onClick={closeModal} className="text-gray-600 hover:text-[#002B3D] transition">
             <X size={24} />
           </button>
         </div>
@@ -51,13 +43,14 @@ export function SobreNosModal({ isOpen, onClose }: SobreNosModalProps) {
         {/* Conteúdo do Modal */}
         <div className="p-6">
           <p className="text-gray-600 mb-6">
-            Somos uma clínica veterinária dedicada ao cuidado e bem-estar dos seus animais de estimação. Nossa equipe de profissionais altamente qualificados está pronta para oferecer o melhor atendimento.
+            Somos uma clínica veterinária dedicada ao cuidado e bem-estar dos seus animais de estimação.
+            Nossa equipe de profissionais altamente qualificados está pronta para oferecer o melhor atendimento.
           </p>
 
           {/* Carrossel de Profissionais */}
           <div className="relative">
             <Swiper
-              modules={[Autoplay, Navigation]} // Adicione Navigation
+              modules={[Autoplay, Navigation]}
               spaceBetween={30}
               slidesPerView={1}
               autoplay={{ delay: 3000 }}
@@ -73,7 +66,7 @@ export function SobreNosModal({ isOpen, onClose }: SobreNosModalProps) {
                     <img
                       src={professional.image}
                       alt={professional.name}
-                      className="w-48 h-48 rounded-full object-cover mb-6" // Aumente o tamanho da imagem
+                      className="w-48 h-48 rounded-full object-cover mb-6"
                     />
                     <h3 className="text-2xl font-bold text-[#002B3D]">{professional.name}</h3>
                     <p className="text-gray-600 text-lg">{professional.role}</p>
@@ -95,7 +88,7 @@ export function SobreNosModal({ isOpen, onClose }: SobreNosModalProps) {
         {/* Rodapé do Modal */}
         <div className="p-6 border-t">
           <button
-            onClick={onClose}
+            onClick={closeModal}
             className="w-full bg-[#002B3D] text-white px-6 py-3 rounded-lg hover:bg-blue-900 transition"
           >
             Fechar

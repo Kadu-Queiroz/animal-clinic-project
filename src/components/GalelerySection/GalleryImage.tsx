@@ -1,15 +1,25 @@
+import { useModalStore } from '@/hooks/useModalStore';
+
 interface GalleryImageProps {
   url: string;
   title: string;
   category: string;
-  onClick: (title: string) => void;
 }
 
-export function GalleryImage({ url, title, category, onClick }: GalleryImageProps) {
+export function GalleryImage({ url, title, category }: GalleryImageProps) {
+  const { openModal } = useModalStore();
+
+  const handleClick = () => {
+    if (title === 'Farmácia') {
+      openModal('produtos');
+    }
+  
+  };
+
   return (
     <div
       className="relative group bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-transform duration-300 hover:shadow-lg hover:scale-[1.02]"
-      onClick={() => onClick(title)}
+      onClick={handleClick}
     >
       <img
         src={url}
