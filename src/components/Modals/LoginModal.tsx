@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/context/useAuth';
 import { useModalStore } from '@/hooks/useModalStore';
 
 export function LoginModal() {
   const { modal, closeModal } = useModalStore();
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [cpf, setCpf] = useState('');
   const [pet, setPet] = useState('');
@@ -12,11 +14,24 @@ export function LoginModal() {
 
   if (modal !== 'loginCliente') return null;
 
+  const formatarCpf = (valor: string) => {
+    const apenasNumeros = valor.replace(/\D/g, '').slice(0, 11);
+    return apenasNumeros
+      .replace(/^(\d{3})(\d)/, '$1.$2')
+      .replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3')
+      .replace(/\.(\d{3})(\d)/, '.$1-$2');
+  };
+
+  const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCpf(formatarCpf(e.target.value));
+  };
+
   const handleLogin = () => {
     const cpfValido = cpf.trim() === '123.456.789-00';
     const petValido = pet.trim().toLowerCase() === 'rex';
 
     if (cpfValido && petValido) {
+      login({ nome: 'Maria Silva', cpf });
       setErro('');
       closeModal();
       navigate('/cliente/dashboard');
@@ -25,41 +40,46 @@ export function LoginModal() {
     }
   };
 
-  return (
-    <div className="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center">
-      <div className="bg-white rounded-xl p-6 w-full max-w-md shadow-xl">
-        <h2 className="text-xl font-semibold mb-4 text-center">Área do Cliente</h2>
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleLogin();
+    }
+  };
 
-        <label className="block mb-2 font-medium">CPF do Tutor</label>
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
+      <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
+        <h2 className="mb-4 text-center text-xl font-semibold">Área do Cliente</h2>
+
+        <label className="mb-2 block font-medium">CPF do Tutor</label>
         <input
           type="text"
           value={cpf}
-          onChange={(e) => setCpf(e.target.value)}
+          onChange={handleCpfChange}
+          onKeyDown={handleKeyPress}
           placeholder="Ex: 123.456.789-00"
-          className="w-full p-2 mb-4 border rounded"
+          className="mb-4 w-full rounded border p-2"
+          inputMode="numeric"
         />
 
-        <label className="block mb-2 font-medium">Nome do Pet</label>
+        <label className="mb-2 block font-medium">Nome do Pet</label>
         <input
           type="text"
           value={pet}
-          onChange={(e) => setPet(e.target.value)}
+          onChange={e => setPet(e.target.value)}
+          onKeyDown={handleKeyPress}
           placeholder="Ex: Rex"
-          className="w-full p-2 mb-2 border rounded"
+          className="mb-2 w-full rounded border p-2"
         />
 
-        {erro && <p className="text-red-600 text-sm mb-4">{erro}</p>}
+        {erro && <p className="mb-4 text-sm text-red-600">{erro}</p>}
 
         <div className="flex justify-between">
-          <button
-            className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
-            onClick={closeModal}
-          >
+          <button className="rounded bg-gray-300 px-4 py-2 hover:bg-gray-400" onClick={closeModal}>
             Cancelar
           </button>
-
           <button
-            className="px-4 py-2 bg-[#002B3D] text-white rounded hover:bg-[#D96E30]"
+            className="rounded bg-[#002B3D] px-4 py-2 text-white hover:bg-[#D96E30]"
             onClick={handleLogin}
           >
             Entrar

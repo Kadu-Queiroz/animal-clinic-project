@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from '@pages/LandingPage';
 import Dashboard from '@pages/Cliente/Dashboard';
 import Exames from '@pages/Cliente/Exames';
-import Agendar from '@pages/Cliente/Agendar';
+import Agendar from '@/pages/Cliente/Agendar/Agendar';
 import Historico from '@pages/Cliente/Historico';
 import Mensagens from '@pages/Cliente/Mensagens';
 import { PrivateRoute } from '@routes/PrivateRoute';

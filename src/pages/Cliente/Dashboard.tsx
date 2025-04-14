@@ -34,7 +34,7 @@ export default function Dashboard() {
 
       <main className="container mx-auto px-4 py-8">
         <h1 className="font-montserrat mb-8 text-2xl font-bold text-[#05334D]">
-          Olá, {data.name}!
+          Olá, {data.nome}!
         </h1>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -48,8 +48,8 @@ export default function Dashboard() {
         <section className="mt-12">
           <h2 className="mb-6 text-xl font-semibold text-[#05334D]">Meus Pets</h2>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {data.pets.map((pet, i) => (
-              <PetCard key={i} {...pet} />
+            {data.pets.map(pet => (
+              <PetCard key={pet.id} {...pet} />
             ))}
           </div>
         </section>

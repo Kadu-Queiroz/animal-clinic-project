@@ -1,14 +1,19 @@
 import { useState, ReactNode } from 'react';
-import { TutorData, AuthContext } from './AuthContext';
+import { AuthContext } from './AuthContext';
+import type { TutorData } from './AuthContext';
 
-type AuthProviderProps = {
+interface AuthProviderProps {
   children: ReactNode;
-};
+}
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [tutor, setTutor] = useState<TutorData | null>(() => {
-    const saved = localStorage.getItem('tutor');
-    return saved ? JSON.parse(saved) : null;
+    try {
+      const saved = localStorage.getItem('tutor');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
   });
 
   const login = (tutor: TutorData) => {
