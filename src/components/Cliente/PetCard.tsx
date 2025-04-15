@@ -1,13 +1,4 @@
-interface PetCardProps {
-  nome: string;
-  especie: string;
-  raca: string;
-  sexo: string;
-  cor: string;
-  pelagem: string;
-  chip: string;
-  data_nascimento: string;
-}
+import type { PetData } from '@/types/dados-cliente';
 
 export function PetCard({
   nome,
@@ -18,12 +9,14 @@ export function PetCard({
   pelagem,
   chip,
   data_nascimento,
-}: PetCardProps) {
+}: PetData) {
+  const nascimentoFormatado = new Date(data_nascimento).toLocaleDateString('pt-BR');
+
   return (
     <div className="overflow-hidden rounded-lg bg-white shadow-md transition hover:shadow-lg">
-      {/* Como ainda não temos imagem no backend, podemos usar uma imagem genérica por enquanto */}
+      {/* Imagem temporária, substituir por avatar ou foto real no futuro */}
       <img
-        src={`https://placekitten.com/400/200`} // você pode trocar por avatar dinâmico no futuro
+        src="https://placekitten.com/400/200"
         alt={`Foto de ${nome}`}
         className="h-48 w-full object-cover"
       />
@@ -36,9 +29,7 @@ export function PetCard({
           {sexo} • {cor} • {pelagem}
         </p>
         <p className="mt-1 text-sm text-gray-400">Chip: {chip}</p>
-        <p className="mt-1 text-sm text-gray-400">
-          Nascimento: {new Date(data_nascimento).toLocaleDateString()}
-        </p>
+        <p className="mt-1 text-sm text-gray-400">Nascimento: {nascimentoFormatado}</p>
       </div>
     </div>
   );

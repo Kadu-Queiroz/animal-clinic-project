@@ -10,27 +10,35 @@ export type PetData = {
   data_nascimento: string;
 };
 
-export type AppointmentData = {
-  date: string;
-  time: string;
-  pet: string;
-  type: string;
+export type ConsultaData = {
+  id: number;
+  data_hora: string;
+  tipo: string;
+  status: string;
 };
 
-export type ReminderData = {
+export type LembreteData = {
+  id: number;
+  texto: string;
+};
+
+export type ExameData = {
   pet: string;
-  message: string;
+  tipo: string;
+  data: string;
+  status: 'Disponível' | 'Em análise' | 'Aguardando coleta';
+  anexo?: string;
 };
 
 export type ClienteData = {
-  id: number;
   nome: string;
-  cpf: string;
   telefone: string;
+  cpf: string;
   cep: string;
   numero_residencia: string;
   pets: PetData[];
-  nextAppointments: AppointmentData[];
-  pendingExams: number;
-  reminders: ReminderData[];
+  consultas: ConsultaData[];
+  lembretes: LembreteData[];
+  exames_pendentes: number;
+  exames: ExameData[]; // ← novo campo
 };
