@@ -5,12 +5,14 @@ import {
   ExamesResumoCard,
   LembreteCard,
   PetCard,
-  ExameCard,
 } from '@/components/Cliente';
 import { useClienteData } from '@/hooks/useClienteData';
+import { useExames } from '@/hooks/useExames';
+import { ExameCard } from '@/components/Cliente/ExameCard';
 
 export default function Dashboard() {
   const { dados, carregando } = useClienteData();
+  const { exames, loading: carregandoExames } = useExames();
 
   if (carregando) {
     return (
@@ -57,12 +59,12 @@ export default function Dashboard() {
           </div>
         </section>
 
-        {/* Exames (com condição de existência) */}
-        {dados.exames && dados.exames.length > 0 && (
+        {/* Exames (modularizado) */}
+        {!carregandoExames && exames.length > 0 && (
           <section className="mt-12">
             <h2 className="mb-6 text-xl font-semibold text-[#05334D]">Exames Recentes</h2>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {dados.exames.map((exame, i) => (
+              {exames.map((exame, i) => (
                 <ExameCard key={i} {...exame} />
               ))}
             </div>

@@ -1,4 +1,5 @@
 import type { PetData } from '@/types/dados-cliente';
+import { useEffect } from 'react';
 
 export function PetCard({
   nome,
@@ -9,17 +10,34 @@ export function PetCard({
   pelagem,
   chip,
   data_nascimento,
+  foto,
 }: PetData) {
   const nascimentoFormatado = new Date(data_nascimento).toLocaleDateString('pt-BR');
+  const imagemPet = foto ? `http://localhost:8000${foto}` : undefined;
+
+  // 🔎 Log diagnóstico
+  useEffect(() => {
+    console.log(`[PetCard] Renderizando pet: ${nome}`);
+    console.log(`[PetCard] Caminho da imagem:`, imagemPet);
+  }, [nome, imagemPet]);
 
   return (
     <div className="overflow-hidden rounded-lg bg-white shadow-md transition hover:shadow-lg">
-      {/* Imagem temporária, substituir por avatar ou foto real no futuro */}
-      <img
-        src="https://placekitten.com/400/200"
-        alt={`Foto de ${nome}`}
-        className="h-48 w-full object-cover"
-      />
+      {imagemPet ? (
+        <img
+          src={imagemPet}
+          alt={`Foto de ${nome}`}
+          className="h-48 w-full object-cover"
+          onError={() =>
+            console.error(`[PetCard] Erro ao carregar imagem de ${nome}: ${imagemPet}`)
+          }
+        />
+      ) : (
+        <div className="flex h-48 w-full items-center justify-center bg-red-100 text-sm text-red-700">
+          Imagem não definida
+        </div>
+      )}
+
       <div className="p-4">
         <h3 className="text-lg font-semibold text-[#05334D]">{nome}</h3>
         <p className="text-sm text-gray-500">

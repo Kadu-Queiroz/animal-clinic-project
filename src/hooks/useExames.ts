@@ -1,27 +1,27 @@
 import { useEffect, useState } from 'react';
-import { buscarExamesPorCpf } from '@/services/cliente';
-import { useAuth } from '@context/useAuth';
-import type { Exame } from '@/types/dados-exames';
+import type { ExameData } from '@/types/dados-cliente';
+import { buscarExamesDetalhadosPorCpf } from '@/services/cliente';
 
-
-export function useExames() {
-  const { tutor } = useAuth();
-  const [exames, setExames] = useState<Exame[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+export function useExames(cpf: string = '123.456.789-00') {
+  const [dados, setDados] = useState<ExameData[]>([]);
+  const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!tutor?.cpf) return;
+    async function fetchExames() {
+      try {
+        const resultado = await buscarExamesDetalhadosPorCpf(cpf);
+        setDados(resultado);
+      } catch (err) {
+        console.error('[useExames] Erro ao buscar exames:', err);
+        setErro('Não foi possível carregar os exames.');
+      } finally {
+        setCarregando(false);
+      }
+    }
 
-    setLoading(true);
-    buscarExamesPorCpf(tutor.cpf)
-      .then(setExames)
-      .catch((err) => {
-        console.error(err);
-        setError('Erro ao buscar exames');
-      })
-      .finally(() => setLoading(false));
-  }, [tutor?.cpf]);
+    fetchExames();
+  }, [cpf]);
 
-  return { exames, loading, error };
+  return { exames: dados, loading: carregando, error: erro };
 }

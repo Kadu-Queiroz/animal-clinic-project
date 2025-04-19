@@ -1,3 +1,5 @@
+import { FileText } from 'lucide-react';
+
 interface ExameCardProps {
   pet: string;
   tipo: string;
@@ -7,44 +9,50 @@ interface ExameCardProps {
 }
 
 export function ExameCard({ pet, tipo, data, status, anexo }: ExameCardProps) {
-  const statusLabels: Record<ExameCardProps['status'], string> = {
+  const statusClasses: Record<ExameCardProps['status'], string> = {
     Disponível: 'text-green-600',
     'Em análise': 'text-yellow-600',
     'Aguardando coleta': 'text-gray-500',
   };
 
-  const statusColor = statusLabels[status] || 'text-gray-400';
   const dataFormatada = new Date(data).toLocaleDateString('pt-BR');
+  const urlCompleta = anexo ? `http://localhost:8000${anexo}` : null;
+  const isImagem = anexo?.match(/\.(jpe?g|png|gif|webp)$/i);
 
   return (
     <div className="overflow-hidden rounded-lg bg-white shadow-md transition hover:shadow-lg">
-      <img
-        src="https://source.unsplash.com/600x300/?veterinary,medical"
-        alt={`Imagem ilustrativa do exame ${tipo}`}
-        className="h-40 w-full object-cover"
-      />
+      {urlCompleta && isImagem ? (
+        <img
+          src={urlCompleta}
+          alt={`Imagem do exame ${tipo}`}
+          className="h-40 w-full object-cover"
+        />
+      ) : (
+        <div className="flex h-40 w-full items-center justify-center bg-gray-100">
+          <FileText size={48} className="text-[#8B947F]" />
+        </div>
+      )}
+
       <div className="p-6">
         <h2 className="mb-2 text-lg font-semibold text-[#05334D]">{tipo}</h2>
         <p className="mb-1 text-sm text-gray-500">{pet}</p>
         <p className="mb-1 text-sm text-gray-600">Realizado em {dataFormatada}</p>
+        <p className={`mb-6 text-sm font-medium ${statusClasses[status]}`}>{status}</p>
 
-        <p className={`mb-4 text-sm font-medium ${statusColor}`}>
-          {status || 'Status não disponível'}
-        </p>
-
-        <div className="flex justify-between gap-2">
-          <button
-            className="flex-1 rounded bg-[#05334D] px-4 py-2 text-white transition hover:bg-[#042736]"
-            disabled={!anexo}
+        <div className="flex justify-center">
+          <a
+            href={urlCompleta || '#'}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`w-full rounded px-4 py-2 text-center text-white transition ${
+              urlCompleta
+                ? 'bg-[#05334D] hover:bg-[#042736]'
+                : 'pointer-events-none bg-gray-400 opacity-50'
+            }`}
+            title={!urlCompleta ? 'Exame ainda não disponível' : 'Visualizar exame'}
           >
             Visualizar
-          </button>
-          <button
-            className="flex-1 rounded bg-[#CC6E28] px-4 py-2 text-white transition hover:bg-[#b55f22]"
-            disabled={!anexo}
-          >
-            Baixar PDF
-          </button>
+          </a>
         </div>
       </div>
     </div>

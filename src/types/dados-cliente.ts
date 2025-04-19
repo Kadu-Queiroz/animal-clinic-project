@@ -8,6 +8,7 @@ export type PetData = {
   pelagem: string;
   chip: string;
   data_nascimento: string;
+  foto?: string;
 };
 
 export type ConsultaData = {
@@ -15,6 +16,7 @@ export type ConsultaData = {
   data_hora: string;
   tipo: string;
   status: string;
+  veterinario_nome: string;
 };
 
 export type LembreteData = {
@@ -40,5 +42,5 @@ export type ClienteData = {
   consultas: ConsultaData[];
   lembretes: LembreteData[];
   exames_pendentes: number;
-  exames: ExameData[]; // ← novo campo
+  exames: ExameData[];
 };

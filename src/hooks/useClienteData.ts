@@ -1,25 +1,23 @@
 import { useEffect, useState } from 'react';
-import { ClienteData } from '@/types/dados-cliente';
-import { buscarDadosDoCliente, buscarExamesDetalhadosPorCpf } from '@/services/cliente';
+import type { ClienteData } from '@/types/dados-cliente';
+import { buscarDadosDoCliente } from '@/services/cliente';
 
 export function useClienteData(cpf: string = '123.456.789-00') {
   const [dados, setDados] = useState<ClienteData | null>(null);
   const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState<string | null>(null);
 
   useEffect(() => {
     async function carregarDados() {
+      console.log('[useClienteData] Iniciando busca para CPF:', cpf);
       try {
-        const [cliente, exames] = await Promise.all([
-          buscarDadosDoCliente(cpf),
-          buscarExamesDetalhadosPorCpf(cpf),
-        ]);
+        const cliente = await buscarDadosDoCliente(cpf);
+        console.log('[useClienteData] Dados recebidos:', cliente);
 
-        setDados({
-          ...cliente,
-          exames,
-        });
-      } catch (error) {
-        console.error('Erro ao carregar dados do cliente:', error);
+        setDados(cliente);
+      } catch (err) {
+        console.error('[useClienteData] Erro ao carregar dados:', err);
+        setErro('Erro ao carregar dados do cliente.');
       } finally {
         setCarregando(false);
       }
@@ -28,5 +26,5 @@ export function useClienteData(cpf: string = '123.456.789-00') {
     carregarDados();
   }, [cpf]);
 
-  return { dados, carregando };
+  return { dados, carregando, erro };
 }
