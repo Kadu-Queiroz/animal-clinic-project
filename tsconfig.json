@@ -22,7 +22,7 @@
       "@services/*": ["src/services/*"],
       "@pages/*": ["src/pages/*"]
     },
-    "typeRoots": ["node_modules/@types", "src/types"],
+    "typeRoots": ["node_modules/@types"],
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,

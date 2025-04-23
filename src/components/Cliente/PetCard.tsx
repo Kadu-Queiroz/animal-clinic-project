@@ -1,4 +1,4 @@
-import type { PetData } from '@/types/dados-cliente';
+import type { PetData } from '@/types/cliente';
 import { useEffect } from 'react';
 
 export function PetCard({

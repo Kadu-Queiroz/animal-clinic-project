@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   HeaderCliente,
   NavTabs,
@@ -9,10 +10,13 @@ import {
 import { useClienteData } from '@/hooks/useClienteData';
 import { useExames } from '@/hooks/useExames';
 import { ExameCard } from '@/components/Cliente/ExameCard';
+import { IAAvatarButton } from '@/components/Cliente/IA/IAAvatarButton';
+import { PromptIA } from '@/components/Cliente/IA/PromptIA';
 
 export default function Dashboard() {
   const { dados, carregando } = useClienteData();
   const { exames, loading: carregandoExames } = useExames();
+  const [chatAberto, setChatAberto] = useState(false);
 
   if (carregando) {
     return (
@@ -31,7 +35,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="relative min-h-screen bg-gray-50">
       <HeaderCliente />
       <NavTabs active="dashboard" />
 
@@ -59,7 +63,7 @@ export default function Dashboard() {
           </div>
         </section>
 
-        {/* Exames (modularizado) */}
+        {/* Exames */}
         {!carregandoExames && exames.length > 0 && (
           <section className="mt-12">
             <h2 className="mb-6 text-xl font-semibold text-[#05334D]">Exames Recentes</h2>
@@ -71,6 +75,18 @@ export default function Dashboard() {
           </section>
         )}
       </main>
+
+      {/* 🧠 Botão da IA */}
+      <IAAvatarButton onClick={() => setChatAberto(true)} />
+
+      {/* 💬 Prompt da IA */}
+      {chatAberto && (
+        <div className="fixed inset-0 z-50 flex items-end justify-end bg-black/20 p-4 backdrop-blur-sm">
+          <div className="w-full max-w-md">
+            <PromptIA onClose={() => setChatAberto(false)} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

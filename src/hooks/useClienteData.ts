@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import type { ClienteData } from '@/types/dados-cliente';
+import type { ClienteData } from '@/types/cliente';
 import { buscarDadosDoCliente } from '@/services/cliente';
 
 export function useClienteData(cpf: string = '123.456.789-00') {

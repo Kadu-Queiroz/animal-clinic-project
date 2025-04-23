@@ -1,16 +1,9 @@
-
 interface CalendarioInterativoProps {
   selectedDate: string;
   onSelectDate: (date: string) => void;
 }
 
-const diasDisponiveis = [
-  '2024-04-18',
-  '2024-04-19',
-  '2024-04-22',
-  '2024-04-25',
-  '2024-04-26'
-];
+const diasDisponiveis = ['2024-04-18', '2024-04-19', '2024-04-22', '2024-04-25', '2024-04-26'];
 
 export function CalendarioInterativo({ selectedDate, onSelectDate }: CalendarioInterativoProps) {
   //const [dataAtual] = useState(new Date()); pode ser usado para mostrar a data atual no calendário, se necessário
@@ -22,18 +15,18 @@ export function CalendarioInterativo({ selectedDate, onSelectDate }: CalendarioI
 
   return (
     <div className="grid grid-cols-3 gap-4">
-      {diasDisponiveis.map((data) => {
+      {diasDisponiveis.map(data => {
         const isSelected = selectedDate === data;
 
         return (
           <button
             key={data}
             onClick={() => onSelectDate(data)}
-            className={`p-4 rounded-lg border font-medium transition text-sm
-              ${isSelected
-                ? 'bg-[#CC6E28] text-white border-transparent'
-                : 'bg-white text-[#05334D] border-[#8B947F] hover:bg-[#8B947F]/10'
-              }`}
+            className={`rounded-lg border p-4 text-sm font-medium transition ${
+              isSelected
+                ? 'border-transparent bg-[#CC6E28] text-white'
+                : 'border-[#8B947F] bg-white text-[#05334D] hover:bg-[#8B947F]/10'
+            }`}
           >
             {getLabel(data)}
           </button>

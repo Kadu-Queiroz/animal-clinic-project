@@ -44,3 +44,27 @@ export type ClienteData = {
   exames_pendentes: number;
   exames: ExameData[];
 };
+
+export type AgendamentoData = {
+  id?: number;
+  pet: string;
+  servico: string;
+  tipo?: string;
+  data: string;
+  hora: string;
+};
+
+export type EventoHistorico = {
+  data: string;
+  tipo: 'consulta' | 'vacina';
+  descricao: string;
+  anexo?: string;
+};
+
+export type RespostaIA = {
+  resposta: string;
+  acao_executada?: string;
+  sucesso?: boolean;
+  dados?: AgendamentoData | null;
+};
+
