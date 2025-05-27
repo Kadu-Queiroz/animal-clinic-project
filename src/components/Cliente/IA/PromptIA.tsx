@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useAuth } from '@/context/useAuth';
 import { IAModalCalendario } from '@/components/Cliente/Calendario/IAModalCalendario';
-import type { RespostaIA, AgendamentoData } from '@/types/cliente';
-import axios from 'axios';
+import type { RespostaIA, AgendamentoData } from '@/types/tutor';
+import api from '@/services/api';
 import { EventInput } from '@fullcalendar/core';
 
 interface MensagemIA {
@@ -27,27 +27,19 @@ export function PromptIA({ onClose }: PromptIAProps) {
     if (!mensagem && !confirmar) return;
 
     const corpo = {
-      mensagem,
+      mensagem: confirmar ? (historico.at(-1)?.texto ?? '') : mensagem,
       confirmar,
     };
 
     try {
-      const { data } = await axios.post<RespostaIA>(
-        'http://localhost:8000/ia/prompt',
-        confirmar ? { ...corpo, mensagem: historico.at(-1)?.texto } : corpo,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-        },
-      );
+      const { data } = await api.post<RespostaIA>('/ia/prompt', corpo);
 
       if (!confirmar) {
         setHistorico(h => [...h, { id: h.length, origem: 'cliente', texto: mensagem }]);
       }
 
-      const respostaComNome = data.resposta.replace('cliente', tutor?.nome || 'cliente');
-      setHistorico(h => [...h, { id: h.length + 1, origem: 'ia', texto: respostaComNome }]);
+      const respostaFormatada = data.resposta.replace('cliente', tutor?.nome || 'cliente');
+      setHistorico(h => [...h, { id: h.length + 1, origem: 'ia', texto: respostaFormatada }]);
 
       if (data.dados?.data && data.dados?.hora) {
         setDadosPendentes(data.dados);
@@ -55,7 +47,7 @@ export function PromptIA({ onClose }: PromptIAProps) {
 
       if (confirmar && data.sucesso && data.dados?.data) {
         const evento: EventInput = {
-          title: `${data.dados?.tipo || 'Consulta'} (${data.dados?.pet})`,
+          title: `${data.dados.tipo || 'Consulta'} (${data.dados.pet})`,
           start: `${data.dados.data}T${data.dados.hora}`,
         };
         setEventosIA([evento]);
@@ -72,9 +64,8 @@ export function PromptIA({ onClose }: PromptIAProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
       <div className="relative w-full max-w-3xl rounded-2xl border border-[#D96E30] bg-[#FDFDFD]/90 p-6 text-[#002B3D] shadow-xl dark:bg-[#002B3D] dark:text-white">
-        <h2 className="mb-4 text-2xl font-bold">IA Toka dos Pets </h2>
+        <h2 className="mb-4 text-2xl font-bold">IA Toka dos Pets</h2>
 
-        {/* Histórico */}
         <div className="mb-4 h-72 overflow-y-auto rounded border border-[#8B947F]/30 bg-[#F9F9F9] p-3 dark:bg-zinc-800">
           {historico.map(msg => (
             <div
@@ -90,7 +81,6 @@ export function PromptIA({ onClose }: PromptIAProps) {
           ))}
         </div>
 
-        {/* Campo de entrada */}
         <div className="flex gap-2">
           <input
             type="text"
@@ -107,7 +97,6 @@ export function PromptIA({ onClose }: PromptIAProps) {
           </button>
         </div>
 
-        {/* Confirmação visual */}
         {dadosPendentes && (
           <div className="mt-4 rounded-md border border-[#D96E30] bg-[#FFF8EC] p-4 text-sm shadow-sm">
             <p className="mb-1 font-semibold">A IA encontrou um horário disponível:</p>
@@ -123,14 +112,12 @@ export function PromptIA({ onClose }: PromptIAProps) {
           </div>
         )}
 
-        {/* Calendário */}
         <IAModalCalendario
           aberto={modalAberto}
           aoFechar={() => setModalAberto(false)}
           eventos={eventosIA}
         />
 
-        {/* Fechar */}
         {onClose && (
           <button
             onClick={onClose}

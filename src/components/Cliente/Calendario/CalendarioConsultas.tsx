@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/context/useAuth';
-import { buscarConsultasDoCliente } from '@/services/cliente';
-import type { ConsultaData } from '@/types/cliente';
+import { buscarConsultasDoTutor } from '@/services/tutor';
+import type { ConsultaData } from '@/types/tutor';
 import type { EventInput } from '@fullcalendar/core';
 
 interface CalendarioConsultasProps {
@@ -16,7 +16,7 @@ export function CalendarioConsultas({ onSelecionarConsulta }: CalendarioConsulta
 
   useEffect(() => {
     if (tutor?.cpf) {
-      buscarConsultasDoCliente(tutor.cpf).then(setConsultas).catch(console.error);
+      buscarConsultasDoTutor(tutor.cpf).then(setConsultas).catch(console.error);
     }
   }, [tutor?.cpf]);
 

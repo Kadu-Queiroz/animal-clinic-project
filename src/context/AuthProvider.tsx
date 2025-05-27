@@ -1,6 +1,6 @@
 import { useState, ReactNode } from 'react';
 import { AuthContext } from './AuthContext';
-import type { TutorData } from './AuthContext';
+import type { TutorData } from '@/types/tutor/auth';
 
 interface AuthProviderProps {
   children: ReactNode;

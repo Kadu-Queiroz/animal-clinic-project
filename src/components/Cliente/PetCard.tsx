@@ -1,4 +1,4 @@
-import type { PetData } from '@/types/cliente';
+import type { PetData } from '@/types/tutor';
 import { useEffect } from 'react';
 
 export function PetCard({

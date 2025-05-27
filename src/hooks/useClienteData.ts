@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import type { ClienteData } from '@/types/cliente';
-import { buscarDadosDoCliente } from '@/services/cliente';
+import type { TutorData } from '@/types/tutor';
+import { buscarDadosDoTutor } from '@/services/tutor';
 
 export function useClienteData(cpf: string = '123.456.789-00') {
-  const [dados, setDados] = useState<ClienteData | null>(null);
+  const [dados, setDados] = useState<TutorData | null>(null);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState<string | null>(null);
 
@@ -11,7 +11,7 @@ export function useClienteData(cpf: string = '123.456.789-00') {
     async function carregarDados() {
       console.log('[useClienteData] Iniciando busca para CPF:', cpf);
       try {
-        const cliente = await buscarDadosDoCliente(cpf);
+        const cliente = await buscarDadosDoTutor(cpf);
         console.log('[useClienteData] Dados recebidos:', cliente);
 
         setDados(cliente);

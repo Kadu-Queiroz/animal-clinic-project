@@ -1,9 +1,5 @@
 import { createContext } from 'react';
-
-export type TutorData = {
-  nome: string;
-  cpf: string;
-};
+import type { TutorData } from '@/types/tutor/auth';
 
 export type AuthContextType = {
   tutor: TutorData | null;
