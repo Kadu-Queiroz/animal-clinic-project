@@ -4,7 +4,7 @@ import { buscarExamesDetalhados } from '@/services/tutor-service';
 import type { ExameData } from '@/types/tutor';
 
 /**
- * Hook para buscar os exames do tutor autenticado.
+ * Hook para buscar os exames detalhados do tutor autenticado.
  */
 export function useExames() {
   const { user, token } = useAuth();
@@ -16,22 +16,31 @@ export function useExames() {
   useEffect(() => {
     if (!user?.cpf || !token) return;
 
-    const fetchExames = async () => {
+    let cancelado = false;
+
+    const carregarExames = async () => {
       setLoading(true);
       setError(null);
 
       try {
         const data = await buscarExamesDetalhados(user.cpf, token);
-        setExames(data);
+        if (!cancelado) setExames(data);
       } catch (err) {
         console.error('[useExames] Erro ao buscar exames:', err);
-        setError(err instanceof Error ? err.message : 'Erro desconhecido.');
+        if (!cancelado) {
+          setError(err instanceof Error ? err.message : 'Erro desconhecido ao buscar exames.');
+          setExames([]);
+        }
       } finally {
-        setLoading(false);
+        if (!cancelado) setLoading(false);
       }
     };
 
-    fetchExames();
+    carregarExames();
+
+    return () => {
+      cancelado = true;
+    };
   }, [user?.cpf, token]);
 
   return { exames, loading, error };

@@ -6,10 +6,10 @@ interface Lembrete {
 }
 
 interface LembreteCardProps {
-  lembretes: Lembrete[];
+  lembretes?: Lembrete[];
 }
 
-export function LembreteCard({ lembretes }: LembreteCardProps) {
+export function LembreteCard({ lembretes = [] }: LembreteCardProps) {
   return (
     <div className="rounded-lg bg-white p-6 shadow-md">
       <h2 className="mb-4 text-lg font-semibold text-[#05334D]">Lembretes</h2>

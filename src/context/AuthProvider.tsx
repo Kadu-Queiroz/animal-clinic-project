@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback, ReactNode } from 'react';
 import { AuthContext } from './AuthContext';
-import type { UsuarioAutenticado } from '@/types/common/user';
 import { loginTutor } from '@/services/tutor-service';
 import { NovaSenhaModal } from '@/components/Modals/NovaSenhaModal';
+import type { UsuarioAutenticado } from '@/types/common/user';
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -11,14 +11,16 @@ interface AuthProviderProps {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<UsuarioAutenticado | null>(null);
   const [token, setToken] = useState<string | null>(null);
-  const [mostrarModalSenha, setMostrarModalSenha] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [mostrarModalSenha, setMostrarModalSenha] = useState(false);
 
-  const persistAuthData = useCallback((user: UsuarioAutenticado, token: string) => {
-    localStorage.setItem('user', JSON.stringify(user));
+  // Salva dados no localStorage
+  const persistAuthData = useCallback((usuario: UsuarioAutenticado, token: string) => {
+    localStorage.setItem('user', JSON.stringify(usuario));
     localStorage.setItem('token', token);
   }, []);
 
+  // Limpa tudo
   const clearAuthData = useCallback(() => {
     setUser(null);
     setToken(null);
@@ -27,13 +29,18 @@ export function AuthProvider({ children }: AuthProviderProps) {
     localStorage.removeItem('token');
   }, []);
 
+  // Realiza login
   const login = async ({ cpf, password }: { cpf: string; password: string }) => {
     try {
       const { access_token, user } = await loginTutor(cpf, password);
       setUser(user);
       setToken(access_token);
       persistAuthData(user, access_token);
-      if (user.senha_provisoria) setMostrarModalSenha(true);
+
+      if (user.senha_provisoria) {
+        setMostrarModalSenha(true);
+      }
+
       return user;
     } catch (error) {
       clearAuthData();
@@ -43,35 +50,51 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   };
 
+  // Logout manual
   const logout = useCallback(() => {
     clearAuthData();
   }, [clearAuthData]);
 
+  // Carrega dados do localStorage na inicialização
   useEffect(() => {
-    try {
-      const savedUser = localStorage.getItem('user');
-      const savedToken = localStorage.getItem('token');
-      if (savedUser && savedToken) {
-        const parsedUser = JSON.parse(savedUser) as UsuarioAutenticado;
-        setUser(parsedUser);
-        setToken(savedToken);
-        if (parsedUser.senha_provisoria) setMostrarModalSenha(true);
+    const carregarDadosPersistidos = () => {
+      try {
+        const savedUser = localStorage.getItem('user');
+        const savedToken = localStorage.getItem('token');
+
+        if (savedUser && savedToken) {
+          const parsedUser = JSON.parse(savedUser) as UsuarioAutenticado;
+          setUser(parsedUser);
+          setToken(savedToken);
+
+          if (parsedUser.senha_provisoria) {
+            setMostrarModalSenha(true);
+          }
+        }
+      } catch (err) {
+        console.warn('⚠️ Erro ao carregar dados do localStorage:', err);
+        clearAuthData();
+      } finally {
+        setLoading(false);
       }
-    } catch {
-      clearAuthData();
-    } finally {
-      setLoading(false);
-    }
+    };
+
+    carregarDadosPersistidos();
   }, [clearAuthData]);
 
+  // Sincronização entre abas (logout em outra aba)
   useEffect(() => {
     const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'token' && !e.newValue) clearAuthData();
+      if (e.key === 'token' && !e.newValue) {
+        clearAuthData();
+      }
     };
+
     window.addEventListener('storage', handleStorageChange);
     return () => window.removeEventListener('storage', handleStorageChange);
   }, [clearAuthData]);
 
+  // Encerra o modal quando a senha for atualizada
   const handleFinalizarSenha = () => {
     if (user && !user.senha_provisoria) {
       setMostrarModalSenha(false);
@@ -83,7 +106,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       value={{
         user,
         token,
-        isAuthenticated: !!user,
+        isAuthenticated: !!user && !!token,
         loading,
         login,
         logout,

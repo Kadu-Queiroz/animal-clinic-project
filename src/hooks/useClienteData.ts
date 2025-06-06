@@ -3,6 +3,9 @@ import { useAuth } from '@/context/useAuth';
 import { buscarDadosDoTutor } from '@/services/tutor-service';
 import type { TutorDashboardData } from '@/types/tutor';
 
+/**
+ * Hook para buscar os dados principais do tutor autenticado.
+ */
 export function useClienteData() {
   const { user, token } = useAuth();
 
@@ -11,22 +14,38 @@ export function useClienteData() {
   const [erro, setErro] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!user?.cpf || !token) return;
+
+    let cancelado = false;
+
     const carregarDados = async () => {
-      if (!user?.cpf || !token) return;
+      setCarregando(true);
+      setErro(null);
 
       try {
         const cliente = await buscarDadosDoTutor(user.cpf, token);
-        setDados(cliente);
+        if (!cancelado) {
+          setDados(cliente);
+        }
       } catch (err) {
         console.error('[useClienteData] Erro ao carregar dados:', err);
-        setErro(err instanceof Error ? err.message : 'Erro desconhecido.');
+        if (!cancelado) {
+          setErro(err instanceof Error ? err.message : 'Erro desconhecido ao carregar dados.');
+          setDados(null);
+        }
       } finally {
-        setCarregando(false);
+        if (!cancelado) {
+          setCarregando(false);
+        }
       }
     };
 
     carregarDados();
-  }, [user, token]);
+
+    return () => {
+      cancelado = true;
+    };
+  }, [user?.cpf, token]);
 
   return { dados, carregando, erro };
 }

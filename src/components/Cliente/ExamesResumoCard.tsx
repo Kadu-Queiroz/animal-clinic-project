@@ -1,15 +1,15 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 
 interface ExamesResumoCardProps {
-  count: number;
+  count?: number;
 }
 
-export function ExamesResumoCard({ count }: ExamesResumoCardProps) {
+export function ExamesResumoCard({ count = 0 }: ExamesResumoCardProps) {
   const navigate = useNavigate();
   const location = useLocation();
-  const texto = count === 1 ? '1 exame' : `${count} exames`;
 
   const estaNaPaginaDeExames = location.pathname.includes('/cliente/exames');
+  const texto = count === 1 ? '1 exame' : `${count} exames`;
 
   return (
     <div className="overflow-hidden rounded-lg bg-white shadow-md transition hover:shadow-lg">

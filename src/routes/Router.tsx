@@ -5,6 +5,7 @@ import Exames from '@pages/Cliente/Exames';
 import Agendar from '@/pages/Cliente/Agendar/Agendar';
 import Historico from '@pages/Cliente/Historico';
 import Mensagens from '@pages/Cliente/Mensagens';
+import Pets from '@pages/Cliente/Pets';
 import { PrivateRoute } from '@routes/PrivateRoute';
 
 export function AppRouter() {
@@ -24,7 +25,7 @@ export function AppRouter() {
           }
         />
         <Route
-          path="/cliente/exames"
+          path="/cliente/exame"
           element={
             <PrivateRoute>
               <Exames />
@@ -52,6 +53,14 @@ export function AppRouter() {
           element={
             <PrivateRoute>
               <Mensagens />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/cliente/pets"
+          element={
+            <PrivateRoute>
+              <Pets />
             </PrivateRoute>
           }
         />

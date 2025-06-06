@@ -1,14 +1,30 @@
 interface ConsultaCardProps {
-  data_hora: string;
-  tipo: string;
-  status: string;
+  data_hora?: string;
+  tipo?: string;
+  status?: string;
   veterinario_nome?: string;
 }
 
-export function ConsultaCard({ data_hora, tipo, status, veterinario_nome }: ConsultaCardProps) {
-  const dataObj = new Date(data_hora);
-  const data = dataObj.toLocaleDateString('pt-BR');
-  const hora = dataObj.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+export function ConsultaCard({
+  data_hora = '',
+  tipo = 'Consulta',
+  status = 'agendada',
+  veterinario_nome,
+}: ConsultaCardProps) {
+  let data = 'Data inválida';
+  let hora = '--:--';
+
+  try {
+    if (data_hora) {
+      const dataObj = new Date(data_hora);
+      if (!isNaN(dataObj.getTime())) {
+        data = dataObj.toLocaleDateString('pt-BR');
+        hora = dataObj.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+      }
+    }
+  } catch {
+    // silenciosamente ignora e usa os valores padrão
+  }
 
   return (
     <div className="rounded-lg border-l-4 border-[#CC6E28] bg-white p-6 shadow-md">

@@ -1,28 +1,44 @@
 import { FileText } from 'lucide-react';
 
 interface ExameCardProps {
-  pet: string;
-  tipo: string;
-  data: string;
-  status: 'disponivel' | 'analise' | 'coleta';
+  pet?: string;
+  tipo?: string;
+  data?: string;
+  status?: 'disponivel' | 'analise' | 'coleta';
   anexo?: string;
 }
 
-export function ExameCard({ pet, tipo, data, status, anexo }: ExameCardProps) {
-  const statusClasses: Record<ExameCardProps['status'], string> = {
+export function ExameCard({
+  pet = 'Pet não identificado',
+  tipo = 'Exame',
+  data = '',
+  status = 'analise',
+  anexo,
+}: ExameCardProps) {
+  const statusClasses: Record<NonNullable<ExameCardProps['status']>, string> = {
     disponivel: 'text-green-600',
     analise: 'text-yellow-600',
     coleta: 'text-gray-500',
   };
 
-  const statusLabels: Record<ExameCardProps['status'], string> = {
+  const statusLabels: Record<NonNullable<ExameCardProps['status']>, string> = {
     disponivel: 'Disponível',
     analise: 'Em análise',
     coleta: 'Aguardando coleta',
   };
 
-  const dataFormatada = new Date(data).toLocaleDateString('pt-BR');
-  const urlCompleta = anexo ? `http://localhost:8000${anexo}` : null;
+  let dataFormatada = 'Data não informada';
+  try {
+    const dataObj = new Date(data);
+    if (!isNaN(dataObj.getTime())) {
+      dataFormatada = dataObj.toLocaleDateString('pt-BR');
+    }
+  } catch {
+    // fallback já está aplicado
+  }
+
+  const urlCompleta = anexo ? `http://localhost:8000/uploads/${anexo}` : null;
+
   const isImagem = anexo?.match(/\.(jpe?g|png|gif|webp)$/i);
 
   return (
