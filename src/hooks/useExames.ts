@@ -1,31 +1,38 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/context/useAuth';
+import { buscarExamesDetalhados } from '@/services/tutor-service';
 import type { ExameData } from '@/types/tutor';
-import { buscarExamesDetalhados } from '@/services/tutor';
 
+/**
+ * Hook para buscar os exames do tutor autenticado.
+ */
 export function useExames() {
-  const { tutor } = useAuth();
+  const { user, token } = useAuth();
+
   const [exames, setExames] = useState<ExameData[]>([]);
-  const [carregando, setCarregando] = useState(true);
-  const [erro, setErro] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function carregarExames() {
-      if (!tutor?.cpf) return;
+    if (!user?.cpf || !token) return;
+
+    const fetchExames = async () => {
+      setLoading(true);
+      setError(null);
 
       try {
-        const resultado = await buscarExamesDetalhados(tutor.cpf);
-        setExames(resultado);
+        const data = await buscarExamesDetalhados(user.cpf, token);
+        setExames(data);
       } catch (err) {
         console.error('[useExames] Erro ao buscar exames:', err);
-        setErro('Não foi possível carregar os exames.');
+        setError(err instanceof Error ? err.message : 'Erro desconhecido.');
       } finally {
-        setCarregando(false);
+        setLoading(false);
       }
-    }
+    };
 
-    carregarExames();
-  }, [tutor?.cpf]);
+    fetchExames();
+  }, [user?.cpf, token]);
 
-  return { exames, loading: carregando, error: erro };
+  return { exames, loading, error };
 }

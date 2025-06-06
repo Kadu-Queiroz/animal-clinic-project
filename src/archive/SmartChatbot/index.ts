@@ -1,1 +1,0 @@
-export { SmartChatbot } from './SmartChatbot'

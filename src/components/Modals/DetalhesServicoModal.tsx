@@ -1,33 +1,40 @@
 import { X } from 'lucide-react';
-import { useModalStore } from '@/hooks/useModalStore';
+import { useModal } from '@/hooks/useModal';
 
 export function DetalhesServicoModal() {
-  const { modal, modalData, closeModal } = useModalStore();
+  const { modal, modalData, closeModal } = useModal();
+
   if (modal !== 'detalhesServico') return null;
 
-  const { title = 'Detalhes', items = [] } = modalData;
+  const title = typeof modalData?.title === 'string' ? modalData.title : 'Detalhes';
+  const items = Array.isArray(modalData?.items) ? modalData.items : [];
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg shadow-lg w-full max-w-md overflow-hidden">
-        <div className="flex justify-between items-center p-6 border-b">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
+      <div className="w-full max-w-md overflow-hidden rounded-lg bg-white shadow-lg">
+        <div className="flex items-center justify-between border-b p-6">
           <h2 className="text-2xl font-bold text-[#002B3D]">{title}</h2>
-          <button onClick={closeModal} className="text-gray-600 hover:text-[#002B3D] transition">
+          <button onClick={closeModal} className="text-gray-600 transition hover:text-[#002B3D]">
             <X size={24} />
           </button>
         </div>
+
         <div className="p-6">
           <ul className="space-y-3">
-            {items.map((item: string, index: number) => (
-              <li key={index} className="flex items-center">
-                <div className="w-2 h-2 bg-[#002B3D] rounded-full mr-3"></div>
-                <span className="text-gray-700">{item}</span>
+            {items.map((item, index) => (
+              <li key={index} className="flex items-center text-gray-700">
+                <span className="mr-3 h-2 w-2 rounded-full bg-[#002B3D]" />
+                {item}
               </li>
             ))}
           </ul>
         </div>
-        <div className="p-6 border-t">
-          <button onClick={closeModal} className="w-full bg-[#002B3D] text-white px-6 py-3 rounded-lg hover:bg-blue-900 transition">
+
+        <div className="border-t p-6">
+          <button
+            onClick={closeModal}
+            className="w-full rounded-lg bg-[#002B3D] px-6 py-3 text-white transition hover:bg-blue-900"
+          >
             Fechar
           </button>
         </div>

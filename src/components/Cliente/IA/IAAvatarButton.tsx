@@ -2,22 +2,31 @@ import { useState } from 'react';
 import { PromptIA } from './PromptIA';
 import IAIcon from '/IAIconTransparente.png';
 
-export function IAAvatarButton() {
-  const [aberto, setAberto] = useState(false);
+interface IAAvatarButtonProps {
+  onClick?: () => void;
+}
+
+export function IAAvatarButton({ onClick }: IAAvatarButtonProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleClick = () => {
+    setIsOpen(true);
+    if (onClick) onClick();
+  };
 
   return (
     <>
-      {/* Botão Flutuante */}
+      {/* Floating Button */}
       <div
         role="button"
-        aria-label="Abrir assistente virtual"
-        onClick={() => setAberto(true)}
+        aria-label="Open virtual assistant"
+        onClick={handleClick}
         className="group fixed bottom-6 right-6 z-50 flex cursor-pointer flex-col items-center transition-all"
       >
-        {/* Balão de fala animado */}
+        {/* Speech Bubble */}
         <div className="relative mb-2">
           <div className="absolute -left-4 -top-8 w-max rounded-xl bg-[#D96E30] px-3 py-2 text-sm font-semibold text-white opacity-0 shadow-lg transition duration-300 before:absolute before:-bottom-2 before:left-4 before:border-8 before:border-transparent before:border-t-[#D96E30] group-hover:opacity-100">
-            Sou a assitente virtual! 🐾
+            Sou a assistente virtual! 🐾
           </div>
         </div>
 
@@ -27,10 +36,10 @@ export function IAAvatarButton() {
         </div>
       </div>
 
-      {/* Modal do Prompt */}
-      {aberto && (
+      {/* Prompt Modal */}
+      {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm">
-          <PromptIA onClose={() => setAberto(false)} />
+          <PromptIA onClose={() => setIsOpen(false)} />
         </div>
       )}
     </>

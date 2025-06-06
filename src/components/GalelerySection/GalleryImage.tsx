@@ -1,4 +1,4 @@
-import { useModalStore } from '@/hooks/useModalStore';
+import { useModal } from '@/hooks/useModal';
 
 interface GalleryImageProps {
   url: string;
@@ -7,24 +7,23 @@ interface GalleryImageProps {
 }
 
 export function GalleryImage({ url, title, category }: GalleryImageProps) {
-  const { openModal } = useModalStore();
+  const { openModal } = useModal();
 
   const handleClick = () => {
     if (title === 'Farmácia') {
       openModal('produtos');
     }
-  
   };
 
   return (
     <div
-      className="relative group bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-transform duration-300 hover:shadow-lg hover:scale-[1.02]"
+      className="group relative cursor-pointer overflow-hidden rounded-lg bg-white shadow-md transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg"
       onClick={handleClick}
     >
       <img
         src={url}
         alt={title}
-        className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105"
+        className="h-48 w-full object-cover transition-transform duration-500 group-hover:scale-105"
         loading="lazy"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />

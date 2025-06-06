@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useAuth } from '@/context/useAuth';
 import { IAModalCalendario } from '@/components/Cliente/Calendario/IAModalCalendario';
 import type { RespostaIA, AgendamentoData } from '@/types/tutor';
-import api from '@/services/api';
+import api from '@/lib/api';
 import { EventInput } from '@fullcalendar/core';
 
 interface MensagemIA {

@@ -1,0 +1,133 @@
+├── App.tsx
+📁 archive/
+│   ├── PromptIAFlutuante.tsx
+│   📁 SmartChatbot/
+│   │   ├── SmartChatbot.tsx
+│   │   ├── index.ts
+📁 assets/
+│   📁 icons/
+│   📁 img/
+│   │   📁 convenios/
+│   │   📁 institucional/
+│   │   │   📁 Staff/
+│   │   │   📁 galeria/
+│   │   │   │   📁 produtos/
+│   │   📁 logos/
+📁 components/
+│   📁 Cliente/
+│   │   📁 Agendamento/
+│   │   │   ├── AgendamentoManual.tsx
+│   │   📁 Calendario/
+│   │   │   ├── CalendarioConsultas.tsx
+│   │   │   ├── CalendarioSelecaoData.tsx
+│   │   │   ├── IAModalCalendario.tsx
+│   │   │   ├── ModalConfirmarAgendamento.tsx
+│   │   ├── ConsultaCard.tsx
+│   │   ├── ExameCard.tsx
+│   │   ├── ExamesResumoCard.tsx
+│   │   📁 IA/
+│   │   │   ├── IAAvatarButton.tsx
+│   │   │   ├── PromptIA.tsx
+│   │   ├── LembreteCard.tsx
+│   │   ├── NavTabs.tsx
+│   │   ├── PetCard.tsx
+│   │   ├── TimelineHistorico.tsx
+│   │   ├── index.ts
+│   📁 ContactSection/
+│   │   ├── ContactForm.tsx
+│   │   ├── ContactInfo.tsx
+│   │   ├── ContactSection.tsx
+│   │   ├── index.ts
+│   📁 Footer/
+│   │   ├── Footer.tsx
+│   │   ├── FooterContact.tsx
+│   │   ├── FooterLinks.tsx
+│   │   ├── FooterSocial.tsx
+│   │   ├── index.ts
+│   📁 GalelerySection/
+│   │   ├── GalleryGrid.tsx
+│   │   ├── GalleryImage.tsx
+│   │   ├── GallerySection.tsx
+│   │   ├── index.ts
+│   📁 Header/
+│   │   ├── HeaderCliente.tsx
+│   │   ├── HeaderLanding.tsx
+│   │   ├── index.ts
+│   📁 HeroSection/
+│   │   ├── ConveniosCarousel.tsx
+│   │   ├── HeroContent.tsx
+│   │   ├── HeroSection.tsx
+│   │   ├── index.ts
+│   📁 Modals/
+│   │   ├── DetalhesServicoModal.tsx
+│   │   ├── GlobalModals.tsx
+│   │   ├── LoginModal.tsx
+│   │   ├── ProdutosModal.tsx
+│   │   ├── SobreNosModal.tsx
+│   │   ├── index.ts
+│   📁 ServiceSection/
+│   │   ├── ServiceCard.tsx
+│   │   ├── ServicesGrid.tsx
+│   │   ├── ServicesSection.tsx
+│   │   ├── index.tsx
+│   ├── index.ts
+│   📁 shared/
+│   │   ├── VoltarButton.tsx
+📁 config/
+│   ├── env.ts
+📁 context/
+│   ├── AuthContext.ts
+│   ├── AuthProvider.tsx
+│   ├── useAuth.ts
+📁 hooks/
+│   ├── ModalProvider.tsx
+│   ├── useClienteData.ts
+│   ├── useConsultasFuturas.ts
+│   ├── useExames.ts
+│   ├── useModalStore.ts
+│   ├── useScroll.ts
+├── main.tsx
+📁 pages/
+│   📁 Cliente/
+│   │   📁 Agendar/
+│   │   │   ├── Agendar.tsx
+│   │   │   📁 components/
+│   │   │   │   ├── EtapaConfirmacao.tsx
+│   │   │   │   ├── EtapaDataHora.tsx
+│   │   │   │   ├── EtapaPet.tsx
+│   │   │   │   ├── EtapaServico.tsx
+│   │   │   │   ├── FormularioAgendamento.tsx
+│   │   │   │   ├── ResumoAgendamento.tsx
+│   │   │   ├── schema.ts
+│   │   ├── Consultas.tsx
+│   │   ├── Dashboard.tsx
+│   │   ├── Exames.tsx
+│   │   ├── Historico.tsx
+│   │   ├── Mensagens.tsx
+│   │   ├── Pets.tsx
+│   ├── LandingPage.tsx
+📁 routes/
+│   ├── PrivateRoute.tsx
+│   ├── Router.tsx
+📁 scripts/
+│   ├── gerar-estrutura.ts
+📁 services/
+│   ├── api.ts
+│   ├── tutor.ts
+📁 types/
+│   ├── global.d.ts
+│   📁 tutor/
+│   │   ├── agendamento.ts
+│   │   ├── auth.ts
+│   │   ├── consulta.ts
+│   │   ├── dashboard.ts
+│   │   ├── exame.ts
+│   │   ├── index.ts
+│   │   ├── lembrete.ts
+│   │   ├── pet.ts
+📁 utils/
+│   📁 consultas/
+│   │   ├── mapConsultasParaEventos.ts
+├── vite-env.d.ts
+
+✅ Estrutura gerada com sucesso.

@@ -1,3 +1,4 @@
+// Consulta agendada ou realizada associada ao tutor
 export type ConsultaData = {
   id: number;
   data_hora: string;
@@ -6,6 +7,7 @@ export type ConsultaData = {
   veterinario_nome: string;
 };
 
+// Evento histórico na linha do tempo do animal
 export type EventoHistorico = {
   data: string;
   tipo: 'consulta' | 'vacina';

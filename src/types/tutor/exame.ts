@@ -2,6 +2,6 @@ export type ExameData = {
   pet: string;
   tipo: string;
   data: string;
-  status: 'Disponível' | 'Em análise' | 'Aguardando coleta';
+  status: 'disponivel' | 'analise' | 'coleta';
   anexo?: string;
 };

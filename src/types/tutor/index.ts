@@ -1,4 +1,4 @@
-export * from './agendamento';
+export * from './auth';
 export * from './consulta';
 export * from './dashboard';
 export * from './exame';

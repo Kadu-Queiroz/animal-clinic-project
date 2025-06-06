@@ -1,3 +1,4 @@
+// Dados de um agendamento criado pelo tutor
 export type AgendamentoData = {
   id?: number;
   pet: string;
@@ -7,6 +8,7 @@ export type AgendamentoData = {
   hora: string;
 };
 
+// Resposta padrão das interações da IA com o agendamento
 export type RespostaIA = {
   resposta: string;
   acao_executada?: string;

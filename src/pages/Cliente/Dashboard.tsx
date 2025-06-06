@@ -6,12 +6,13 @@ import {
   ExamesResumoCard,
   LembreteCard,
   PetCard,
+  ExameCard,
 } from '@/components/Cliente';
-import { useClienteData } from '@/hooks/useClienteData';
-import { useExames } from '@/hooks/useExames';
-import { ExameCard } from '@/components/Cliente/ExameCard';
 import { IAAvatarButton } from '@/components/Cliente/IA/IAAvatarButton';
 import { PromptIA } from '@/components/Cliente/IA/PromptIA';
+
+import { useClienteData } from '@/hooks/useClienteData';
+import { useExames } from '@/hooks/useExames';
 
 export default function Dashboard() {
   const { dados, carregando } = useClienteData();
@@ -44,7 +45,7 @@ export default function Dashboard() {
           Olá, {dados.nome}!
         </h1>
 
-        {/* Seção de destaques */}
+        {/* Destaques do dia */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {dados.consultas.map((consulta, i) => (
             <ConsultaCard key={i} {...consulta} />
@@ -53,7 +54,7 @@ export default function Dashboard() {
           <LembreteCard lembretes={dados.lembretes} />
         </div>
 
-        {/* Pets */}
+        {/* Pets do tutor */}
         <section className="mt-12">
           <h2 className="mb-6 text-xl font-semibold text-[#05334D]">Meus Pets</h2>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -63,7 +64,7 @@ export default function Dashboard() {
           </div>
         </section>
 
-        {/* Exames */}
+        {/* Exames recentes */}
         {!carregandoExames && exames.length > 0 && (
           <section className="mt-12">
             <h2 className="mb-6 text-xl font-semibold text-[#05334D]">Exames Recentes</h2>
@@ -76,10 +77,9 @@ export default function Dashboard() {
         )}
       </main>
 
-      {/* 🧠 Botão da IA */}
+      {/* IA flutuante */}
       <IAAvatarButton onClick={() => setChatAberto(true)} />
 
-      {/* 💬 Prompt da IA */}
       {chatAberto && (
         <div className="fixed inset-0 z-50 flex items-end justify-end bg-black/20 p-4 backdrop-blur-sm">
           <div className="w-full max-w-md">

@@ -1,30 +1,32 @@
 import { useEffect, useState } from 'react';
-import type { TutorData } from '@/types/tutor';
-import { buscarDadosDoTutor } from '@/services/tutor';
+import { useAuth } from '@/context/useAuth';
+import { buscarDadosDoTutor } from '@/services/tutor-service';
+import type { TutorDashboardData } from '@/types/tutor';
 
-export function useClienteData(cpf: string = '123.456.789-00') {
-  const [dados, setDados] = useState<TutorData | null>(null);
+export function useClienteData() {
+  const { user, token } = useAuth();
+
+  const [dados, setDados] = useState<TutorDashboardData | null>(null);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState<string | null>(null);
 
   useEffect(() => {
-    async function carregarDados() {
-      console.log('[useClienteData] Iniciando busca para CPF:', cpf);
-      try {
-        const cliente = await buscarDadosDoTutor(cpf);
-        console.log('[useClienteData] Dados recebidos:', cliente);
+    const carregarDados = async () => {
+      if (!user?.cpf || !token) return;
 
+      try {
+        const cliente = await buscarDadosDoTutor(user.cpf, token);
         setDados(cliente);
       } catch (err) {
         console.error('[useClienteData] Erro ao carregar dados:', err);
-        setErro('Erro ao carregar dados do cliente.');
+        setErro(err instanceof Error ? err.message : 'Erro desconhecido.');
       } finally {
         setCarregando(false);
       }
-    }
+    };
 
     carregarDados();
-  }, [cpf]);
+  }, [user, token]);
 
   return { dados, carregando, erro };
 }

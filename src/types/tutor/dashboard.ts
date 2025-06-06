@@ -3,7 +3,8 @@ import { ConsultaData } from './consulta';
 import { LembreteData } from './lembrete';
 import { ExameData } from './exame';
 
-export type TutorData = {
+// Dados consolidados do tutor para exibição no dashboard
+export type TutorDashboardData = {
   nome: string;
   telefone: string;
   cpf: string;

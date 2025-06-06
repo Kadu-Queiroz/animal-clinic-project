@@ -4,15 +4,21 @@ interface ExameCardProps {
   pet: string;
   tipo: string;
   data: string;
-  status: 'Disponível' | 'Em análise' | 'Aguardando coleta';
+  status: 'disponivel' | 'analise' | 'coleta';
   anexo?: string;
 }
 
 export function ExameCard({ pet, tipo, data, status, anexo }: ExameCardProps) {
   const statusClasses: Record<ExameCardProps['status'], string> = {
-    Disponível: 'text-green-600',
-    'Em análise': 'text-yellow-600',
-    'Aguardando coleta': 'text-gray-500',
+    disponivel: 'text-green-600',
+    analise: 'text-yellow-600',
+    coleta: 'text-gray-500',
+  };
+
+  const statusLabels: Record<ExameCardProps['status'], string> = {
+    disponivel: 'Disponível',
+    analise: 'Em análise',
+    coleta: 'Aguardando coleta',
   };
 
   const dataFormatada = new Date(data).toLocaleDateString('pt-BR');
@@ -37,7 +43,9 @@ export function ExameCard({ pet, tipo, data, status, anexo }: ExameCardProps) {
         <h2 className="mb-2 text-lg font-semibold text-[#05334D]">{tipo}</h2>
         <p className="mb-1 text-sm text-gray-500">{pet}</p>
         <p className="mb-1 text-sm text-gray-600">Realizado em {dataFormatada}</p>
-        <p className={`mb-6 text-sm font-medium ${statusClasses[status]}`}>{status}</p>
+        <p className={`mb-6 text-sm font-medium ${statusClasses[status]}`}>
+          {statusLabels[status]}
+        </p>
 
         <div className="flex justify-center">
           <a

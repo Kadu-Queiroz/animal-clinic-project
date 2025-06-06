@@ -1,30 +1,38 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/context/useAuth';
-import { buscarConsultasDoTutor } from '@/services/tutor';
+import { buscarConsultasDoTutor } from '@/services/tutor-service';
 import type { ConsultaData } from '@/types/tutor';
 import type { EventInput } from '@fullcalendar/core';
 
 interface CalendarioConsultasProps {
   onSelecionarConsulta?: (consulta: ConsultaData) => void;
-  eventos?: EventInput[];
+  eventos?: EventInput[]; // futuro uso com fullcalendar
 }
 
 export function CalendarioConsultas({ onSelecionarConsulta }: CalendarioConsultasProps) {
-  const { tutor } = useAuth();
+  const { user, token } = useAuth();
   const [consultas, setConsultas] = useState<ConsultaData[]>([]);
   const [dataSelecionada, setDataSelecionada] = useState<string>('');
 
   useEffect(() => {
-    if (tutor?.cpf) {
-      buscarConsultasDoTutor(tutor.cpf).then(setConsultas).catch(console.error);
-    }
-  }, [tutor?.cpf]);
+    const carregarConsultas = async () => {
+      try {
+        if (!user?.cpf || !token) return;
+        const lista = await buscarConsultasDoTutor(user.cpf, token);
+        setConsultas(lista);
+      } catch (error) {
+        console.error('[CalendarioConsultas] Erro ao buscar consultas:', error);
+      }
+    };
+
+    carregarConsultas();
+  }, [user?.cpf, token]);
 
   const diasComConsulta = consultas.map(
     consulta => new Date(consulta.data_hora).toISOString().split('T')[0],
   );
 
-  const getLabel = (dataStr: string) => {
+  const getLabel = (dataStr: string): string => {
     const date = new Date(dataStr);
     return date.toLocaleDateString('pt-BR', {
       weekday: 'short',
@@ -46,7 +54,9 @@ export function CalendarioConsultas({ onSelecionarConsulta }: CalendarioConsulta
             key={data}
             onClick={() => {
               setDataSelecionada(data);
-              if (consulta && onSelecionarConsulta) onSelecionarConsulta(consulta);
+              if (consulta && onSelecionarConsulta) {
+                onSelecionarConsulta(consulta);
+              }
             }}
             className={`rounded-lg border p-4 text-sm font-medium transition ${
               isSelected

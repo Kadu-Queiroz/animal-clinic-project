@@ -1,5 +1,3 @@
-export type TutorData = {
-  nome: string;
-  cpf: string;
-  token: string; // JWT
-};
+import type { TutorAuthData } from '@/types/common/user';
+
+export type { TutorAuthData };

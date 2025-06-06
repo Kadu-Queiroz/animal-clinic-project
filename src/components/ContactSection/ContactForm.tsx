@@ -34,58 +34,59 @@ export function ContactForm() {
         alert('Erro ao enviar mensagem.');
       }
     } catch (error) {
-      alert('Erro ao enviar mensagem.');
+      console.error('Erro ao enviar mensagem:', error);
+      alert('Erro ao enviar mensagem. Tente novamente mais tarde.');
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-8 rounded-xl shadow-lg space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6 rounded-xl bg-white p-8 shadow-lg">
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Nome</label>
+        <label className="mb-1 block text-sm font-medium text-gray-700">Nome</label>
         <input
           type="text"
           name="name"
           value={formData.name}
           onChange={handleChange}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#002B3D] focus:border-transparent transition"
+          className="w-full rounded-lg border border-gray-300 px-4 py-2 transition focus:border-transparent focus:ring-2 focus:ring-[#002B3D]"
         />
       </div>
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+        <label className="mb-1 block text-sm font-medium text-gray-700">E-mail</label>
         <input
           type="email"
           name="email"
           value={formData.email}
           onChange={handleChange}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#002B3D] focus:border-transparent transition"
+          className="w-full rounded-lg border border-gray-300 px-4 py-2 transition focus:border-transparent focus:ring-2 focus:ring-[#002B3D]"
         />
       </div>
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
+        <label className="mb-1 block text-sm font-medium text-gray-700">Telefone</label>
         <input
           type="tel"
           name="phone"
           value={formData.phone}
           onChange={handleChange}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#002B3D] focus:border-transparent transition"
+          className="w-full rounded-lg border border-gray-300 px-4 py-2 transition focus:border-transparent focus:ring-2 focus:ring-[#002B3D]"
         />
       </div>
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Mensagem</label>
+        <label className="mb-1 block text-sm font-medium text-gray-700">Mensagem</label>
         <textarea
           rows={4}
           name="message"
           value={formData.message}
           onChange={handleChange}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#002B3D] focus:border-transparent transition"
+          className="w-full rounded-lg border border-gray-300 px-4 py-2 transition focus:border-transparent focus:ring-2 focus:ring-[#002B3D]"
         ></textarea>
       </div>
       <button
         type="submit"
-        className="w-full bg-[#002B3D] text-white px-6 py-3 rounded-lg hover:bg-blue-900 transition flex items-center justify-center gap-2"
+        className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#002B3D] px-6 py-3 text-white transition hover:bg-blue-900"
       >
         <span>Enviar Mensagem</span>
-        <ChevronRight className="w-5 h-5" />
+        <ChevronRight className="h-5 w-5" />
       </button>
     </form>
   );

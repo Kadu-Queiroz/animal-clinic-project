@@ -1,41 +1,52 @@
 import { Stethoscope, Syringe, Microscope, Package } from 'lucide-react';
-import { useModalStore } from '@/hooks/useModalStore';
+import { useModal } from '@/hooks/useModal';
 
 export function ServicesSection() {
-  const { openModal } = useModalStore();
+  const { openModal } = useModal();
 
   const services = [
     {
       title: 'Consultas e Especialidades',
-      icon: <Stethoscope className="w-16 h-16 text-[#002B3D]" />,
+      icon: <Stethoscope className="h-16 w-16 text-[#002B3D]" />,
       items: [
-        'Oftamologia', 'Dermatologia', 'Ortopedia', 'Cardiologia',
-        'Nutrição', 'Gastroenterologia', 'Endocrinologia',
-        'Oncologia', 'Felinos', 'Silvestres e Exóticos',
+        'Oftamologia',
+        'Dermatologia',
+        'Ortopedia',
+        'Cardiologia',
+        'Nutrição',
+        'Gastroenterologia',
+        'Endocrinologia',
+        'Oncologia',
+        'Felinos',
+        'Silvestres e Exóticos',
       ],
     },
     {
       title: 'Cirurgias',
-      icon: <Syringe className="w-16 h-16 text-[#002B3D]" />,
+      icon: <Syringe className="h-16 w-16 text-[#002B3D]" />,
       items: [
-        'Cirurgias Gerais', 'Oftamologicas', 'Esplenectomia',
-        'Colecistectomia', 'Nodulectomia', 'Mastectomia',
+        'Cirurgias Gerais',
+        'Oftamologicas',
+        'Esplenectomia',
+        'Colecistectomia',
+        'Nodulectomia',
+        'Mastectomia',
       ],
     },
     {
       title: 'Exames Clínicos',
-      icon: <Microscope className="w-16 h-16 text-[#002B3D]" />,
+      icon: <Microscope className="h-16 w-16 text-[#002B3D]" />,
       items: [
         'Ultrassom abdominal, ocular e cervical',
-        'Ecodoplercardiograma', 'Eletrocardiograma', 'Radiografias',
+        'Ecodoplercardiograma',
+        'Eletrocardiograma',
+        'Radiografias',
       ],
     },
     {
       title: 'Demais Serviços',
-      icon: <Package className="w-16 h-16 text-[#002B3D]" />,
-      items: [
-        'Vendas de Produtos e Acessórios', 'Farmácia',
-      ],
+      icon: <Package className="h-16 w-16 text-[#002B3D]" />,
+      items: ['Vendas de Produtos e Acessórios', 'Farmácia'],
     },
   ];
 
@@ -46,16 +57,18 @@ export function ServicesSection() {
   return (
     <section id="servicos" className="py-20">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-16 text-[#002B3D]">Nossos Serviços</h2>
-        <div className="grid lg:grid-cols-4 gap-8">
+        <h2 className="mb-16 text-center text-4xl font-bold text-[#002B3D]">Nossos Serviços</h2>
+        <div className="grid gap-8 lg:grid-cols-4">
           {services.map((service, index) => (
             <div
               key={index}
-              className="bg-gradient-to-br from-white to-gray-50 p-8 rounded-xl shadow-md hover:shadow-lg transition cursor-pointer border border-[#002B3D]/10"
+              className="cursor-pointer rounded-xl border border-[#002B3D]/10 bg-gradient-to-br from-white to-gray-50 p-8 shadow-md transition hover:shadow-lg"
               onClick={() => handleClick(service.title, service.items)}
             >
-              <div className="flex justify-center mb-8">{service.icon}</div>
-              <h3 className="text-2xl font-bold text-center mb-6 text-[#002B3D]">{service.title}</h3>
+              <div className="mb-8 flex justify-center">{service.icon}</div>
+              <h3 className="mb-6 text-center text-2xl font-bold text-[#002B3D]">
+                {service.title}
+              </h3>
             </div>
           ))}
         </div>
