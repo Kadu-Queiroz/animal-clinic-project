@@ -1,40 +1,82 @@
-import { Link } from 'react-router-dom';
-import { Home, PawPrint, FileText, Calendar, MessageSquare } from 'lucide-react';
+import { useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Home, FileText, Clock, Calendar, LogOut } from 'lucide-react';
+import { useAuth } from '@/context/useAuth';
+import { AgendamentoModal } from '@/components/Cliente/Modals/AgendamentoModal';
 
-interface NavTabsProps {
-  active: string;
-}
+export function NavTabs() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { logout, user, isAuthenticated } = useAuth();
 
-export function NavTabs({ active }: NavTabsProps) {
+  const [agendamentoAberto, setAgendamentoAberto] = useState(false);
+
   const tabs = [
     { id: 'dashboard', label: 'Dashboard', icon: Home, href: '/cliente/dashboard' },
-    { id: 'pets', label: 'Pets', icon: PawPrint, href: '/cliente/pets' },
-    { id: 'exams', label: 'Exames', icon: FileText, href: '/cliente/exames' },
-    { id: 'agendar', label: 'Agendar', icon: Calendar, href: '/cliente/agendar' },
-    { id: 'mensagens', label: 'Mensagens', icon: MessageSquare, href: '/cliente/mensagens' },
+    { id: 'exames', label: 'Exames', icon: FileText, href: '/cliente/exames' },
+    { id: 'historico', label: 'Histórico', icon: Clock, href: '/cliente/historico' },
   ];
 
+  if (!isAuthenticated || !user) return null;
+
+  const activeTab = tabs.find(tab => location.pathname.startsWith(tab.href))?.id;
+
   return (
-    <nav className="bg-[#05334D] text-white">
-      <div className="container mx-auto px-4">
-        <ul className="flex space-x-6 border-b border-[#8B947F]/30">
-          {tabs.map(tab => (
-            <li key={tab.id}>
-              <Link
-                to={tab.href}
-                className={`flex items-center space-x-2 px-4 py-3 font-semibold ${
-                  active === tab.id
-                    ? 'border-b-2 border-[#CC6E28] text-[#CC6E28]'
-                    : 'text-white/80 hover:text-white'
-                }`}
+    <>
+      <nav className="sticky top-0 z-40 bg-[#05334D] text-white">
+        <div className="container mx-auto px-4">
+          <ul className="flex items-center justify-between border-b border-[#8B947F]/30 py-2">
+            {/* Navegação principal */}
+            <div className="flex space-x-6">
+              {tabs.map(tab => (
+                <li key={tab.id}>
+                  <Link
+                    to={tab.href}
+                    className={`flex items-center space-x-2 px-4 py-2 font-semibold transition-colors ${
+                      activeTab === tab.id
+                        ? 'border-b-2 border-[#CC6E28] text-[#CC6E28]'
+                        : 'text-white/80 hover:text-white'
+                    }`}
+                  >
+                    <tab.icon size={18} />
+                    <span className="text-sm">{tab.label}</span>
+                  </Link>
+                </li>
+              ))}
+
+              {/* Botão de agendamento via modal */}
+              <li>
+                <button
+                  type="button"
+                  onClick={() => setAgendamentoAberto(true)}
+                  className="flex items-center space-x-2 px-4 py-2 text-white/80 transition-colors hover:text-white focus:outline-none focus:ring-2 focus:ring-[#CC6E28]"
+                >
+                  <Calendar size={18} />
+                  <span className="text-sm">Agendar</span>
+                </button>
+              </li>
+            </div>
+
+            {/* Logout */}
+            <li>
+              <button
+                type="button"
+                onClick={() => {
+                  logout();
+                  navigate('/');
+                }}
+                className="flex items-center space-x-1 px-3 text-white/80 transition-colors hover:text-red-400 focus:outline-none focus:ring-2 focus:ring-red-400"
               >
-                <tab.icon size={18} />
-                <span className="text-sm">{tab.label}</span>
-              </Link>
+                <LogOut size={18} />
+                <span className="text-sm">Sair</span>
+              </button>
             </li>
-          ))}
-        </ul>
-      </div>
-    </nav>
+          </ul>
+        </div>
+      </nav>
+
+      {/* Modal de Agendamento */}
+      <AgendamentoModal aberto={agendamentoAberto} onClose={() => setAgendamentoAberto(false)} />
+    </>
   );
 }

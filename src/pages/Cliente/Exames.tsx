@@ -1,4 +1,4 @@
-import { HeaderCliente, NavTabs, ExameCard } from '@/components/Cliente';
+import { ExameCard } from '@/components/Cliente';
 import { VoltarButton } from '@/components/shared/VoltarButton';
 import { useExames } from '@/hooks/useExames';
 
@@ -7,9 +7,7 @@ export default function Exames() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <HeaderCliente />
-      <NavTabs active="exames" />
-
+      {/* Conteúdo principal */}
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <h1 className="font-montserrat text-2xl font-bold text-[#05334D]">Meus Exames</h1>

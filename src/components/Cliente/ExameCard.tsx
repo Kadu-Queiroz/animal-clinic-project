@@ -1,4 +1,6 @@
 import { FileText } from 'lucide-react';
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale/pt-BR';
 
 interface ExameCardProps {
   pet?: string;
@@ -31,14 +33,13 @@ export function ExameCard({
   try {
     const dataObj = new Date(data);
     if (!isNaN(dataObj.getTime())) {
-      dataFormatada = dataObj.toLocaleDateString('pt-BR');
+      dataFormatada = format(dataObj, "dd 'de' MMMM 'de' yyyy", { locale: ptBR });
     }
   } catch {
-    // fallback já está aplicado
+    // Ignoring invalid date parsing errors
   }
 
   const urlCompleta = anexo ? `http://localhost:8000/uploads/${anexo}` : null;
-
   const isImagem = anexo?.match(/\.(jpe?g|png|gif|webp)$/i);
 
   return (
@@ -68,6 +69,7 @@ export function ExameCard({
             href={urlCompleta || '#'}
             target="_blank"
             rel="noopener noreferrer"
+            aria-disabled={!urlCompleta}
             className={`w-full rounded px-4 py-2 text-center text-white transition ${
               urlCompleta
                 ? 'bg-[#05334D] hover:bg-[#042736]'

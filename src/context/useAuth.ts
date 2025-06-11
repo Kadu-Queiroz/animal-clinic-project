@@ -11,10 +11,10 @@ export function useAuth() {
 
   const { user, ...rest } = context;
 
-  const is = (role: UserRole): boolean => user?.role === role;
+  const is = (role: UserRole): boolean => user?.funcao === role;
 
   const hasRole = (...roles: UserRole[]): boolean =>
-    user?.role ? roles.includes(user.role) : false;
+    user?.funcao ? roles.includes(user.funcao) : false;
 
   return {
     user,

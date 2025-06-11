@@ -2,9 +2,10 @@
 export type ConsultaData = {
   id: number;
   data_hora: string;
-  tipo: string;
+  tipo?: string;
   status: string;
   veterinario_nome: string;
+  pet?: string;
 };
 
 // Evento histórico na linha do tempo do animal

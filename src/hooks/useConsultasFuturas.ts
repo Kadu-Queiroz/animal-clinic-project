@@ -1,39 +1,59 @@
-import { useEffect, useState } from "react";
-import axios, { isAxiosError } from "axios";
+import { useEffect, useState } from 'react';
+import { useAuth } from '@/context/useAuth';
+import api from '@/lib/api';
+import type { ConsultaData } from '@/types/tutor/';
 
-export interface ConsultaFutura {
-  id: number;
-  pet: string;
-  data_hora: string;
-  status: string;
-  veterinario_nome: string;
-}
+export function useConsultasFuturas() {
+  const { token, isAuthenticated, user } = useAuth();
 
-export function useConsultasFuturas(cpf: string) {
-  const [consultas, setConsultas] = useState<ConsultaFutura[]>([]);
+  const [consultas, setConsultas] = useState<ConsultaData[]>([]);
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!cpf) return;
+    if (!token || !isAuthenticated || !user?.cpf) {
+      setConsultas([]);
+      setErro(null);
+      setLoading(false);
+      return;
+    }
+
+    let cancelado = false;
 
     const carregar = async () => {
+      setLoading(true);
+      setErro(null);
+
       try {
-        const res = await axios.get<ConsultaFutura[]>(`/cliente/consultas?cpf=${cpf}`);
-        setConsultas(res.data);
+        const res = await api.get<ConsultaData[]>(`/cliente/consultas?cpf=${user.cpf}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (!cancelado) {
+          setConsultas(res.data);
+        }
       } catch (err: unknown) {
-        if (isAxiosError(err) && err.response) {
-          setErro(err.response.data?.detail || "Erro na API.");
-        } else {
-          setErro("Erro inesperado ao buscar consultas.");
+        if (!cancelado) {
+          if (err instanceof Error) {
+            setErro(err.message);
+          } else {
+            setErro('Erro ao carregar consultas futuras.');
+          }
+          setConsultas([]);
         }
       } finally {
-        setLoading(false);
+        if (!cancelado) {
+          setLoading(false);
+        }
       }
     };
 
     carregar();
-  }, [cpf]);
+
+    return () => {
+      cancelado = true;
+    };
+  }, [token, isAuthenticated, user?.cpf]);
 
   return { consultas, loading, erro };
 }

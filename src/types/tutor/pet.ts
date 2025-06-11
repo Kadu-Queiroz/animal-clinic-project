@@ -1,6 +1,8 @@
 export type PetData = {
   id: number;
   nome: string;
+  idade?: number;
+  peso?: number;
   especie: string;
   raca: string;
   cor: string;

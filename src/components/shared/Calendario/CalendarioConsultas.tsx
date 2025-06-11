@@ -4,21 +4,30 @@ import { buscarConsultasDoTutor } from '@/services/tutor-service';
 import type { ConsultaData } from '@/types/tutor';
 import type { EventInput } from '@fullcalendar/core';
 
-interface CalendarioConsultasProps {
+export interface CalendarioConsultasProps {
+  cpf?: string;
+  token?: string;
   onSelecionarConsulta?: (consulta: ConsultaData) => void;
-  eventos?: EventInput[]; // futuro uso com fullcalendar
+  eventos?: EventInput[]; // reservado para visualização com FullCalendar no futuro
 }
 
-export function CalendarioConsultas({ onSelecionarConsulta }: CalendarioConsultasProps) {
-  const { user, token } = useAuth();
+export function CalendarioConsultas({
+  cpf,
+  token,
+  onSelecionarConsulta,
+}: CalendarioConsultasProps) {
+  const auth = useAuth();
+  const finalCpf = cpf ?? auth.user?.cpf;
+  const finalToken = token ?? auth.token;
+
   const [consultas, setConsultas] = useState<ConsultaData[]>([]);
   const [dataSelecionada, setDataSelecionada] = useState<string>('');
 
   useEffect(() => {
     const carregarConsultas = async () => {
       try {
-        if (!user?.cpf || !token) return;
-        const lista = await buscarConsultasDoTutor(user.cpf, token);
+        if (!finalCpf || !finalToken) return;
+        const lista = await buscarConsultasDoTutor(finalCpf, finalToken);
         setConsultas(lista);
       } catch (error) {
         console.error('[CalendarioConsultas] Erro ao buscar consultas:', error);
@@ -26,7 +35,7 @@ export function CalendarioConsultas({ onSelecionarConsulta }: CalendarioConsulta
     };
 
     carregarConsultas();
-  }, [user?.cpf, token]);
+  }, [finalCpf, finalToken]);
 
   const diasComConsulta = consultas.map(
     consulta => new Date(consulta.data_hora).toISOString().split('T')[0],

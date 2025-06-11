@@ -3,18 +3,15 @@ import { useAuth } from '@/context/useAuth';
 import { buscarExamesDetalhados } from '@/services/tutor-service';
 import type { ExameData } from '@/types/tutor';
 
-/**
- * Hook para buscar os exames detalhados do tutor autenticado.
- */
 export function useExames() {
-  const { user, token } = useAuth();
+  const { user, token, isAuthenticated } = useAuth();
 
   const [exames, setExames] = useState<ExameData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!user?.cpf || !token) return;
+    if (!user?.cpf || !token || !isAuthenticated) return;
 
     let cancelado = false;
 
@@ -41,7 +38,7 @@ export function useExames() {
     return () => {
       cancelado = true;
     };
-  }, [user?.cpf, token]);
+  }, [user?.cpf, token, isAuthenticated]);
 
   return { exames, loading, error };
 }

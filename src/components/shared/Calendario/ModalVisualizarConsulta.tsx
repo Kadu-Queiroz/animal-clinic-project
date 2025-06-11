@@ -1,14 +1,27 @@
 import { Dialog } from '@headlessui/react';
-import { CalendarioConsultas } from '@components/Cliente/Calendario/CalendarioConsultas';
-import { EventInput } from '@fullcalendar/core';
+import { CalendarioConsultas } from './CalendarioConsultas';
+import type { EventInput } from '@fullcalendar/core';
+import type { ConsultaData } from '@/types/tutor';
 
-interface IAModalCalendarioProps {
+interface ModalVisualizarConsultaProps {
   aberto: boolean;
   aoFechar: () => void;
-  eventos: EventInput[];
+  titulo?: string;
+  eventos?: EventInput[]; // reservado para futuro uso com FullCalendar
+  cpf?: string;
+  token?: string;
+  onSelecionarConsulta?: (consulta: ConsultaData) => void;
 }
 
-export function IAModalCalendario({ aberto, aoFechar, eventos }: IAModalCalendarioProps) {
+export function ModalVisualizarConsulta({
+  aberto,
+  aoFechar,
+  titulo = 'Consultas Agendadas',
+  eventos = [],
+  cpf,
+  token,
+  onSelecionarConsulta,
+}: ModalVisualizarConsultaProps) {
   return (
     <Dialog
       open={aberto}
@@ -18,9 +31,14 @@ export function IAModalCalendario({ aberto, aoFechar, eventos }: IAModalCalendar
       <div className="fixed inset-0 bg-black bg-opacity-50" aria-hidden="true" />
       <div className="z-50 w-full max-w-4xl rounded-xl bg-white p-6 shadow-lg dark:bg-zinc-900">
         <Dialog.Title className="mb-4 text-xl font-semibold text-gray-800 dark:text-white">
-          Consulta Confirmada ✅
+          {titulo}
         </Dialog.Title>
-        <CalendarioConsultas eventos={eventos} />
+        <CalendarioConsultas
+          eventos={eventos}
+          cpf={cpf}
+          token={token}
+          onSelecionarConsulta={onSelecionarConsulta}
+        />
         <div className="mt-4 text-right">
           <button
             onClick={aoFechar}

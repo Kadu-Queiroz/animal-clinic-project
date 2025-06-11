@@ -7,14 +7,19 @@ import type { TutorDashboardData } from '@/types/tutor';
  * Hook para buscar os dados principais do tutor autenticado.
  */
 export function useClienteData() {
-  const { user, token } = useAuth();
+  const { user, token, isAuthenticated } = useAuth();
 
   const [dados, setDados] = useState<TutorDashboardData | null>(null);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!user?.cpf || !token) return;
+    if (!user?.cpf || !token || !isAuthenticated) {
+      setDados(null);
+      setErro(null);
+      setCarregando(false);
+      return;
+    }
 
     let cancelado = false;
 
@@ -45,7 +50,7 @@ export function useClienteData() {
     return () => {
       cancelado = true;
     };
-  }, [user?.cpf, token]);
+  }, [user?.cpf, token, isAuthenticated]);
 
   return { dados, carregando, erro };
 }

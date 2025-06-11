@@ -37,18 +37,14 @@ export function NovaSenhaModal({ onFinalizar }: NovaSenhaModalProps) {
       setErro('');
       await alterarSenha(novaSenha, token);
 
-      setUser({ ...user!, senha_provisoria: false });
-      setSucesso('Senha alterada com sucesso!');
-
-      setTimeout(() => {
-        onFinalizar();
-      }, 1200);
-    } catch (err) {
-      if (err instanceof Error) {
-        setErro(err.message);
-      } else {
-        setErro('Erro desconhecido ao alterar senha.');
+      if (user) {
+        setUser({ ...user, senha_provisoria: false });
       }
+
+      setSucesso('Senha alterada com sucesso!');
+      setTimeout(onFinalizar, 1200);
+    } catch (err) {
+      setErro(err instanceof Error ? err.message : 'Erro desconhecido ao alterar senha.');
     } finally {
       setCarregando(false);
     }

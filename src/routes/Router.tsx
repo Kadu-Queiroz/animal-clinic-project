@@ -2,10 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from '@pages/LandingPage';
 import Dashboard from '@pages/Cliente/Dashboard';
 import Exames from '@pages/Cliente/Exames';
-import Agendar from '@/pages/Cliente/Agendar/Agendar';
 import Historico from '@pages/Cliente/Historico';
-import Mensagens from '@pages/Cliente/Mensagens';
-import Pets from '@pages/Cliente/Pets';
+import LayoutCliente from '@pages/Cliente/Layout';
 import { PrivateRoute } from '@routes/PrivateRoute';
 
 export function AppRouter() {
@@ -15,55 +13,19 @@ export function AppRouter() {
         {/* Página pública */}
         <Route path="/" element={<LandingPage />} />
 
-        {/* Áreas protegidas */}
+        {/* Área do cliente protegida */}
         <Route
-          path="/cliente/dashboard"
+          path="/cliente"
           element={
             <PrivateRoute>
-              <Dashboard />
+              <LayoutCliente />
             </PrivateRoute>
           }
-        />
-        <Route
-          path="/cliente/exame"
-          element={
-            <PrivateRoute>
-              <Exames />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/cliente/agendar"
-          element={
-            <PrivateRoute>
-              <Agendar />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/cliente/historico"
-          element={
-            <PrivateRoute>
-              <Historico />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/cliente/mensagens"
-          element={
-            <PrivateRoute>
-              <Mensagens />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/cliente/pets"
-          element={
-            <PrivateRoute>
-              <Pets />
-            </PrivateRoute>
-          }
-        />
+        >
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="exames" element={<Exames />} />
+          <Route path="historico" element={<Historico />} />
+        </Route>
       </Routes>
     </Router>
   );

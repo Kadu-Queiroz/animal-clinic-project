@@ -4,4 +4,5 @@ export type ExameData = {
   data: string;
   status: 'disponivel' | 'analise' | 'coleta';
   anexo?: string;
+  lido?: boolean;
 };

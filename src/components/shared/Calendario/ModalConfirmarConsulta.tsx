@@ -1,4 +1,4 @@
-interface ModalConfirmarAgendamentoProps {
+interface ModalConfirmarConsultaProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
@@ -8,7 +8,7 @@ interface ModalConfirmarAgendamentoProps {
   tipo: string;
 }
 
-export function ModalConfirmarAgendamento({
+export function ModalConfirmarConsulta({
   isOpen,
   onClose,
   onConfirm,
@@ -16,15 +16,17 @@ export function ModalConfirmarAgendamento({
   servico,
   data,
   tipo,
-}: ModalConfirmarAgendamentoProps) {
+}: ModalConfirmarConsultaProps) {
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4 backdrop-blur-sm">
-      <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
-        <h2 className="mb-4 text-xl font-bold text-[#05334D]">Confirmar Agendamento</h2>
+      <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl dark:bg-zinc-900">
+        <h2 className="mb-4 text-xl font-bold text-[#05334D] dark:text-white">
+          Confirmar Agendamento
+        </h2>
 
-        <div className="space-y-2 text-sm text-gray-700">
+        <div className="space-y-2 text-sm text-gray-700 dark:text-gray-100">
           <p>
             <strong>Pet:</strong> {pet}
           </p>
@@ -48,7 +50,7 @@ export function ModalConfirmarAgendamento({
         <div className="mt-6 flex justify-between gap-4">
           <button
             onClick={onClose}
-            className="w-1/2 rounded bg-gray-300 px-4 py-2 text-[#05334D] transition hover:bg-gray-400"
+            className="w-1/2 rounded bg-gray-300 px-4 py-2 text-[#05334D] transition hover:bg-gray-400 dark:bg-zinc-700 dark:text-white dark:hover:bg-zinc-600"
           >
             Cancelar
           </button>

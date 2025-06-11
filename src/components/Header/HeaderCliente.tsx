@@ -1,40 +1,34 @@
-import { Bell, User } from 'lucide-react';
 import logoAreaClienteColorido from '@assets/img/logos/logo_letras_coloridas.webp';
 
 export function HeaderCliente() {
   return (
-    <header className="bg-[#05334D] text-white shadow relative">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        {/* Logo */}
-        <div className="flex items-center">
-          <img
-            src={logoAreaClienteColorido}
-            alt="Logo Toka dos Pets"
-            className="h-12 md:h-14 lg:h-16 xl:h-20"
-          />
-        </div>
+    <header className="bg-[#05334D] text-white shadow-lg">
+      {/* Container principal */}
+      <div className="container mx-auto px-4 py-3 md:py-4">
+        <div className="flex items-center justify-between">
+          {/* Logo - lado esquerdo */}
+          <div className="flex-shrink-0">
+            <img
+              src={logoAreaClienteColorido}
+              alt="Logo Toka dos Pets"
+              className="h-10 transition-all duration-300 hover:opacity-90 md:h-12 lg:h-14"
+            />
+          </div>
 
-        {/* Título central sobreposto */}
-        <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
-          <span className="text-white text-base sm:text-lg md:text-xl font-semibold tracking-wide opacity-90">
-            Área do Cliente
-          </span>
-        </div>
+          {/* Título central - mais destacado */}
+          <div className="absolute left-1/2 -translate-x-1/2 transform">
+            <h1 className="bg-gradient-to-r from-[#8B947F] to-[#C1D0B5] bg-clip-text text-xl font-bold tracking-wider text-transparent drop-shadow-md md:text-2xl lg:text-3xl">
+              ÁREA DO TUTOR
+            </h1>
+          </div>
 
-        {/* Ações */}
-        <div className="flex items-center space-x-4">
-          <button className="hover:text-[#CC6E28] transition">
-            <Bell size={22} />
-          </button>
-          <button className="hover:text-[#CC6E28] transition flex items-center space-x-1">
-            <User size={22} />
-            <span className="text-sm">Perfil</span>
-          </button>
+          {/* Espaço reservado para balanceamento (opcional) */}
+          <div className="w-10 md:w-12 lg:w-14"></div>
         </div>
       </div>
 
-      {/* Linha separadora */}
-      <div className="h-1 bg-[#8B947F]" />
+      {/* Linha decorativa */}
+      <div className="h-1.5 bg-gradient-to-r from-[#05334D] via-[#8B947F] to-[#05334D] opacity-90" />
     </header>
   );
 }
