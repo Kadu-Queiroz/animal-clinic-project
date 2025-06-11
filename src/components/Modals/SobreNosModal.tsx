@@ -4,7 +4,7 @@ import { Autoplay, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
-import { useModal } from '@/hooks/useModal';
+import { useModal } from '@/hooks/shared/useModal';
 import imgGuilhermeCugini from '@/assets/img/institucional/Staff/DrGuilhermeCugini.webp';
 
 const professionals = [

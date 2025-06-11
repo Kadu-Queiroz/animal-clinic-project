@@ -1,17 +1,15 @@
+import type { BaseConsulta } from '@/types/shared/consulta';
+
 // Consulta agendada ou realizada associada ao tutor
-export type ConsultaData = {
-  id: number;
-  data_hora: string;
-  tipo?: string;
-  status: string;
+export interface ConsultaResumoTutor extends BaseConsulta {
   veterinario_nome: string;
   pet?: string;
-};
+}
 
 // Evento histórico na linha do tempo do animal
-export type EventoHistorico = {
+export interface EventoHistorico {
   data: string;
   tipo: 'consulta' | 'vacina';
   descricao: string;
   anexo?: string;
-};
+}

@@ -1,7 +1,7 @@
 import { Dialog } from '@headlessui/react';
 import { CalendarioConsultas } from './CalendarioConsultas';
 import type { EventInput } from '@fullcalendar/core';
-import type { ConsultaData } from '@/types/tutor';
+import type { ConsultaResumoTutor } from '@/types/tutor';
 
 interface ModalVisualizarConsultaProps {
   aberto: boolean;
@@ -10,7 +10,7 @@ interface ModalVisualizarConsultaProps {
   eventos?: EventInput[]; // reservado para futuro uso com FullCalendar
   cpf?: string;
   token?: string;
-  onSelecionarConsulta?: (consulta: ConsultaData) => void;
+  onSelecionarConsulta?: (consulta: ConsultaResumoTutor) => void;
 }
 
 export function ModalVisualizarConsulta({

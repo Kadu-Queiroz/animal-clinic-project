@@ -1,6 +1,6 @@
 import { ExameCard } from '@/components/Cliente';
 import { VoltarButton } from '@/components/shared/VoltarButton';
-import { useExames } from '@/hooks/useExames';
+import { useExames } from '@/hooks/Cliente/useExames';
 
 export default function Exames() {
   const { exames, loading, error } = useExames();

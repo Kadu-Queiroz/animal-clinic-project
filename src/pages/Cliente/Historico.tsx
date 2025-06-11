@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useExames } from '@/hooks/useExames';
+import { useExames } from '@/hooks/Cliente/useExames';
 import { ExameCard } from '@/components/Cliente';
 import type { ExameData } from '@/types/tutor';
 import { format } from 'date-fns';

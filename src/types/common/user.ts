@@ -1,16 +1,10 @@
 export type UserRole = 'TUTOR' | 'VETERINARIO' | 'RECEPCAO' | 'ADMIN' | 'SYSADMIN';
 
-export interface BaseUser {
+export interface UsuarioAutenticado {
   id: number;
   nome: string;
   email?: string;
-  funcao: UserRole;
-}
-
-export interface TutorAuthData extends BaseUser {
   cpf: string;
+  funcao: UserRole;
   senha_provisoria: boolean;
-  funcao: 'TUTOR';
 }
-
-export type UsuarioAutenticado = TutorAuthData;

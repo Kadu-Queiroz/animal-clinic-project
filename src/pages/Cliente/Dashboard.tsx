@@ -5,7 +5,7 @@ import {
   PetCard,
   ExameCard,
 } from '@/components/Cliente';
-import { useDashboard } from '@/hooks/useDashboard';
+import { useDashboard } from '@/hooks/Cliente/useDashboard';
 
 export default function Dashboard() {
   const { dados, carregando, erro } = useDashboard();

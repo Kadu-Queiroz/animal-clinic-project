@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { buscarAnimaisDoTutor } from '@/lib/api-animais';
+import { buscarAnimaisDoTutor } from '@/lib/Cliente/api-animais';
 import { useAuth } from '@/context/useAuth';
 import type { PetData } from '@/types/tutor';
 

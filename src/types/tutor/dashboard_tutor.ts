@@ -1,7 +1,7 @@
-import { PetData } from './pet';
-import { ConsultaData } from './consulta';
-import { LembreteData } from './lembrete';
-import { ExameData } from './exame';
+import { PetData } from './pet_tutor';
+import { ConsultaResumoTutor } from './consulta_tutor';
+import { LembreteData } from './lembrete_tutor';
+import { ExameData } from './exame_tutor';
 
 // Dados consolidados do tutor para exibição no dashboard
 export type TutorDashboardData = {
@@ -11,7 +11,7 @@ export type TutorDashboardData = {
   cep: string;
   numero_residencia: string;
   pets: PetData[];
-  consultas: ConsultaData[];
+  consultas: ConsultaResumoTutor[];
   lembretes: LembreteData[];
   exames_pendentes: number;
   exames: ExameData[];

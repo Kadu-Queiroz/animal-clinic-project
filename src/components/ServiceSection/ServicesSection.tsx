@@ -1,5 +1,5 @@
 import { Stethoscope, Syringe, Microscope, Package } from 'lucide-react';
-import { useModal } from '@/hooks/useModal';
+import { useModal } from '@/hooks/shared/useModal';
 
 export function ServicesSection() {
   const { openModal } = useModal();

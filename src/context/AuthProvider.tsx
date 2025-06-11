@@ -1,7 +1,9 @@
+// src/context/AuthProvider.tsx
+
 import { useState, useEffect, useCallback, ReactNode } from 'react';
 import { AuthContext } from './AuthContext';
-import { loginTutor } from '@/services/tutor-service';
-import { NovaSenhaModal } from '@/components/Modals/NovaSenhaModal';
+import { login as loginRequest } from '@/services/auth/auth-service';
+import { NovaSenhaModal } from '@/components/shared/Modals/NovaSenhaModal';
 import type { UsuarioAutenticado } from '@/types/common/user';
 
 interface AuthProviderProps {
@@ -14,13 +16,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [loading, setLoading] = useState(true);
   const [mostrarModalSenha, setMostrarModalSenha] = useState(false);
 
-  // Salva dados no localStorage
   const persistAuthData = useCallback((usuario: UsuarioAutenticado, token: string) => {
     localStorage.setItem('user', JSON.stringify(usuario));
     localStorage.setItem('token', token);
   }, []);
 
-  // Limpa tudo
   const clearAuthData = useCallback(() => {
     setUser(null);
     setToken(null);
@@ -29,10 +29,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
     localStorage.removeItem('token');
   }, []);
 
-  // Realiza login
   const login = async ({ cpf, password }: { cpf: string; password: string }) => {
     try {
-      const { access_token, user } = await loginTutor(cpf, password);
+      const { access_token, user } = await loginRequest(cpf, password);
       setUser(user);
       setToken(access_token);
       persistAuthData(user, access_token);
@@ -50,12 +49,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   };
 
-  // Logout manual
   const logout = useCallback(() => {
     clearAuthData();
   }, [clearAuthData]);
 
-  // Carrega dados do localStorage na inicialização
   useEffect(() => {
     const carregarDadosPersistidos = () => {
       try {
@@ -82,7 +79,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     carregarDadosPersistidos();
   }, [clearAuthData]);
 
-  // Sincronização entre abas (logout em outra aba)
   useEffect(() => {
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === 'token' && !e.newValue) {
@@ -94,7 +90,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     return () => window.removeEventListener('storage', handleStorageChange);
   }, [clearAuthData]);
 
-  // Encerra o modal quando a senha for atualizada
   const handleFinalizarSenha = () => {
     if (user && !user.senha_provisoria) {
       setMostrarModalSenha(false);

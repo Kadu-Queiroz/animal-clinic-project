@@ -1,3 +1,3 @@
-import type { TutorAuthData } from '@/types/common/user';
+import type { UsuarioAutenticado } from '@/types/common/user';
 
-export type { TutorAuthData };
+export type { UsuarioAutenticado };

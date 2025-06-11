@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { X } from 'lucide-react';
 
 import { useAuth } from '@/context/useAuth';
-import { useModal } from '@/hooks/useModal';
-import { NovaSenhaModal } from '@/components/Modals/NovaSenhaModal';
+import { useModal } from '@/hooks/shared/useModal';
+import { NovaSenhaModal } from '@/components/shared/Modals/NovaSenhaModal';
 
 export function LoginModal() {
   const { modal, closeModal } = useModal();

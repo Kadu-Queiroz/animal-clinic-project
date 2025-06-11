@@ -1,5 +1,5 @@
 import { X } from 'lucide-react';
-import { useModal } from '@/hooks/useModal';
+import { useModal } from '@/hooks/shared/useModal';
 
 const produtos = [
   {

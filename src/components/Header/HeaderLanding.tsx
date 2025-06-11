@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useModal } from '@/hooks/useModal';
+import { useModal } from '@/hooks/shared/useModal';
 import logoPrincipalColorido from '@assets/img/logos/logo_principal_colorido.png';
 
 interface HeaderLandingProps {

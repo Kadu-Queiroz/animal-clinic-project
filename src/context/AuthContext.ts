@@ -7,7 +7,7 @@ export interface AuthContextType {
   isAuthenticated: boolean;
   loading: boolean;
 
-  // Realiza login do usuário (atualmente tutor)
+  // Realiza login do usuário (tutor ou funcionário)
   login: (params: { cpf: string; password: string }) => Promise<UsuarioAutenticado>;
 
   // Encerra a sessão do usuário

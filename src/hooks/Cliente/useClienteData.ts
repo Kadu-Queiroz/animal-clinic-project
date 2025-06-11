@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/context/useAuth';
-import { buscarDadosDoTutor } from '@/services/tutor-service';
+import { buscarDadosDoTutor } from '@/services/Cliente/tutor-service';
 import type { TutorDashboardData } from '@/types/tutor';
 
 /**

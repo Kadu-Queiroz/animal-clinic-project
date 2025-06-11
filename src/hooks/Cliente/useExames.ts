@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/context/useAuth';
-import { buscarExamesDetalhados } from '@/services/tutor-service';
+import { buscarExamesDetalhados } from '@/services/Cliente/tutor-service';
 import type { ExameData } from '@/types/tutor';
 
 export function useExames() {

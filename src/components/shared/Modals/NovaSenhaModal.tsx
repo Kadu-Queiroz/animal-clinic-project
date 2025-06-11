@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { alterarSenha } from '@/services/tutor-service';
+import { alterarSenha } from '@/services/auth/auth-service';
 import { useAuth } from '@/context/useAuth';
 
 interface NovaSenhaModalProps {

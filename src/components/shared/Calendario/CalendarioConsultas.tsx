@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/context/useAuth';
-import { buscarConsultasDoTutor } from '@/services/tutor-service';
-import type { ConsultaData } from '@/types/tutor';
+import { buscarConsultasDoTutor } from '@/services/Cliente/tutor-service';
+import type { ConsultaResumoTutor } from '@/types/tutor';
 import type { EventInput } from '@fullcalendar/core';
 
 export interface CalendarioConsultasProps {
   cpf?: string;
   token?: string;
-  onSelecionarConsulta?: (consulta: ConsultaData) => void;
+  onSelecionarConsulta?: (consulta: ConsultaResumoTutor) => void;
   eventos?: EventInput[]; // reservado para visualização com FullCalendar no futuro
 }
 
@@ -20,7 +20,7 @@ export function CalendarioConsultas({
   const finalCpf = cpf ?? auth.user?.cpf;
   const finalToken = token ?? auth.token;
 
-  const [consultas, setConsultas] = useState<ConsultaData[]>([]);
+  const [consultas, setConsultas] = useState<ConsultaResumoTutor[]>([]);
   const [dataSelecionada, setDataSelecionada] = useState<string>('');
 
   useEffect(() => {

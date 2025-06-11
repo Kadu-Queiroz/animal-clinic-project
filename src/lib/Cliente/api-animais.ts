@@ -1,6 +1,6 @@
 import api from '@/lib/api';
 import { getAuthHeaders } from '@/lib/auth-headers';
-import type { PetData } from '@/types/tutor/pet';
+import type { PetData } from '@/types/tutor/pet_tutor';
 
 /**
  * Busca a lista de animais cadastrados pelo tutor autenticado.

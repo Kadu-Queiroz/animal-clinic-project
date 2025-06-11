@@ -1,7 +1,7 @@
 import { X } from 'lucide-react';
 import { PetData } from '@/types/tutor';
 import { ModalBase } from '@/components/shared/Modals/ModalBase';
-import { calcularIdadePet } from '@/utils/calcularIdadePet';
+import { calcularIdadePet } from '@/utils/Cliente/calcularIdadePet';
 
 interface PetModalProps {
   pet: PetData | null;

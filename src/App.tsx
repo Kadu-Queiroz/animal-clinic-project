@@ -1,4 +1,4 @@
-import { AppRouter } from '@routes/Router';
+import { AppRouter } from '@/routes/AppRouter';
 import { AuthProvider } from '@context/AuthProvider';
 import { ModalProvider } from '@context/ModalProvider';
 

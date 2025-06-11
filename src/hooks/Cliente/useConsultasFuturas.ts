@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/context/useAuth';
 import api from '@/lib/api';
-import type { ConsultaData } from '@/types/tutor/';
+import type { ConsultaResumoTutor } from '@/types/tutor/';
 
 export function useConsultasFuturas() {
   const { token, isAuthenticated, user } = useAuth();
 
-  const [consultas, setConsultas] = useState<ConsultaData[]>([]);
+  const [consultas, setConsultas] = useState<ConsultaResumoTutor[]>([]);
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState<string | null>(null);
 
@@ -25,7 +25,7 @@ export function useConsultasFuturas() {
       setErro(null);
 
       try {
-        const res = await api.get<ConsultaData[]>(`/cliente/consultas?cpf=${user.cpf}`, {
+        const res = await api.get<ConsultaResumoTutor[]>(`/cliente/consultas?cpf=${user.cpf}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
