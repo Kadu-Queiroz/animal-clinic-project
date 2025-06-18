@@ -1,11 +1,7 @@
+import type { BasePaciente } from '@/types/shared/paciente';
 import type { TutorInfoResumido } from '@/types/shared/consulta';
 
-export interface PacienteVet {
-  id: number;
-  nome: string;
-  especie: string;
-  raca?: string;
-  sexo?: string;
-  idade_aproximada?: string;
+export interface PacienteVet extends BasePaciente {
   tutor: TutorInfoResumido;
+  observacoes?: string;
 }

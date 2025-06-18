@@ -1,8 +1,7 @@
-export type ExameData = {
+import type { BaseExame } from '@/types/shared/exame';
+
+export type ExameData = Pick<BaseExame, 'tipo' | 'arquivo' | 'lido_tutor'> & {
   pet: string;
-  tipo: string;
   data: string;
-  status: 'disponivel' | 'analise' | 'coleta';
-  anexo?: string;
-  lido?: boolean;
+  status: 'disponivel' | 'analise' | 'coleta'; //(frontend-only)
 };

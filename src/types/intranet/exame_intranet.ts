@@ -1,10 +1,3 @@
-import type { AnimalInfoResumido } from '@/types/shared/consulta';
+import type { BaseExame } from '@/types/shared/exame';
 
-export interface ExameVet {
-  id: number;
-  tipo: string;
-  status: 'pendente' | 'em_analise' | 'concluido';
-  data_solicitacao: string;
-  anexo?: string;
-  animal: AnimalInfoResumido;
-}
+export type ExameVet = BaseExame;

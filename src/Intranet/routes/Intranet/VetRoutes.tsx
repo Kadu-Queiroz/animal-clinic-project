@@ -1,9 +1,9 @@
 import { Route } from 'react-router-dom';
 import { LayoutVet } from '@/Intranet/layouts/LayoutVet';
-import { DashboardVet } from '@/Intranet/Vet/pages/DashboardVet';
-import { ConsultasVet } from '@/Intranet/Vet/pages/ConsultasVet';
-import ExamesVet from '@/pages/Intranet/Veterinario/ExamesVet';
-import PacientesVet from '@/pages/Intranet/Veterinario/PacientesVet';
+import { DashboardVet } from '@/Intranet/veterinario/pages/DashboardVet';
+import { ConsultasVet } from '@/Intranet/veterinario/pages/ConsultasVet';
+import { ExamesVet } from '@/Intranet/veterinario/pages/ExamesVet';
+import { PacientesVet } from '@/Intranet/veterinario/pages/PacientesVet';
 
 export const veterinarioRoutes = (
   <Route path="/intranet/veterinario" element={<LayoutVet />}>

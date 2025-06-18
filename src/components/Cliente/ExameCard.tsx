@@ -1,29 +1,22 @@
 import { FileText } from 'lucide-react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale/pt-BR';
-
-interface ExameCardProps {
-  pet?: string;
-  tipo?: string;
-  data?: string;
-  status?: 'disponivel' | 'analise' | 'coleta';
-  anexo?: string;
-}
+import type { ExameData } from '@/types/tutor/exame_tutor';
 
 export function ExameCard({
   pet = 'Pet não identificado',
   tipo = 'Exame',
   data = '',
   status = 'analise',
-  anexo,
-}: ExameCardProps) {
-  const statusClasses: Record<NonNullable<ExameCardProps['status']>, string> = {
+  arquivo,
+}: ExameData) {
+  const statusClasses = {
     disponivel: 'text-green-600',
     analise: 'text-yellow-600',
     coleta: 'text-gray-500',
   };
 
-  const statusLabels: Record<NonNullable<ExameCardProps['status']>, string> = {
+  const statusLabels = {
     disponivel: 'Disponível',
     analise: 'Em análise',
     coleta: 'Aguardando coleta',
@@ -36,11 +29,11 @@ export function ExameCard({
       dataFormatada = format(dataObj, "dd 'de' MMMM 'de' yyyy", { locale: ptBR });
     }
   } catch {
-    // Ignoring invalid date parsing errors
+    // Não faz nada
   }
 
-  const urlCompleta = anexo ? `http://localhost:8000/uploads/${anexo}` : null;
-  const isImagem = anexo?.match(/\.(jpe?g|png|gif|webp)$/i);
+  const urlCompleta = arquivo ? `http://localhost:8000/uploads/${arquivo}` : null;
+  const isImagem = arquivo?.match(/\.(jpe?g|png|gif|webp)$/i);
 
   return (
     <div className="overflow-hidden rounded-lg bg-white shadow-md transition hover:shadow-lg">
