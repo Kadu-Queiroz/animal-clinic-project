@@ -1,3 +1,14 @@
-import type { BasePaciente } from '@/types/shared/paciente';
-
-export type PetData = BasePaciente;
+export type PetData = {
+  id: number;
+  nome: string;
+  especie: string;
+  raca?: string;
+  sexo?: string;
+  data_nascimento?: string;
+  idade?: number;
+  peso?: number;
+  cor?: string;
+  pelagem?: string;
+  chip?: string;
+  foto?: string;
+};

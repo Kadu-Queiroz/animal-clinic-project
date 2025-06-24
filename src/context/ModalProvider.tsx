@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { ModalContext, ModalType, ModalData } from './ModalContext';
+import { ModalContext } from './ModalContext';
+import type { ModalType, ModalData } from './ModalContext';
 
 export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
   const [modal, setModal] = useState<ModalType>(null);
