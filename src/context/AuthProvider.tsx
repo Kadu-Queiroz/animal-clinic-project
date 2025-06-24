@@ -1,6 +1,5 @@
-// src/context/AuthProvider.tsx
-
-import { useState, useEffect, useCallback, ReactNode } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import type { ReactNode } from 'react';
 import { AuthContext } from './AuthContext';
 import { login as loginRequest } from '@/services/auth/auth-service';
 import { NovaSenhaModal } from '@/components/shared/Modals/NovaSenhaModal';
