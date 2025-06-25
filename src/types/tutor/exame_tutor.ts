@@ -1,23 +1,18 @@
-// Base de dados original de exame do tutor (refatorada)
-export type BaseExame = {
+export type ExameData = {
   id: number;
   tipo: string;
-  status: 'pendente' | 'em_analise' | 'concluido';
+  status: 'pendente' | 'em_analise' | 'concluido'; // raw do backend
   data_solicitacao: string;
   data_realizacao?: string;
   texto_ocr?: string;
   arquivo?: string;
 
-  // Flags de leitura
+  // Flags
   lido_tutor?: boolean;
-  lido_vet?: boolean;
 
-  // Animal foi removido porque só era usado na intranet
-};
+  // Campos específicos da UI
 
-// Exame com campos adaptados à UI do tutor
-export type ExameData = Pick<BaseExame, 'tipo' | 'arquivo' | 'lido_tutor'> & {
   pet: string;
-  data: string;
-  status: 'disponivel' | 'analise' | 'coleta'; // frontend-only
+  data: string; // derivado de data_realizacao || data_solicitacao
+  status_legivel: 'disponivel' | 'analise' | 'coleta'; // frontend-only
 };

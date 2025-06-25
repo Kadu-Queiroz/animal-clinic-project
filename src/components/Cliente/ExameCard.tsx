@@ -3,37 +3,26 @@ import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale/pt-BR';
 import type { ExameData } from '@/types/tutor/exame_tutor';
 
-export function ExameCard({
-  pet = 'Pet não identificado',
-  tipo = 'Exame',
-  data = '',
-  status = 'analise',
-  arquivo,
-}: ExameData) {
-  const statusClasses = {
+export function ExameCard({ pet, tipo, data, arquivo, status_legivel }: ExameData) {
+  const STATUS_CLASSES: Record<ExameData['status_legivel'], string> = {
     disponivel: 'text-green-600',
     analise: 'text-yellow-600',
     coleta: 'text-gray-500',
   };
 
-  const statusLabels = {
-    disponivel: 'Disponível',
-    analise: 'Em análise',
-    coleta: 'Aguardando coleta',
-  };
-
-  let dataFormatada = 'Data não informada';
-  try {
-    const dataObj = new Date(data);
-    if (!isNaN(dataObj.getTime())) {
-      dataFormatada = format(dataObj, "dd 'de' MMMM 'de' yyyy", { locale: ptBR });
-    }
-  } catch {
-    // Não faz nada
-  }
-
+  const isImagem = arquivo?.match(/\.(jpe?g|png|gif|webp)$/i) != null;
   const urlCompleta = arquivo ? `http://localhost:8000/uploads/${arquivo}` : null;
-  const isImagem = arquivo?.match(/\.(jpe?g|png|gif|webp)$/i);
+
+  const dataFormatada = (() => {
+    try {
+      const d = new Date(data);
+      return !isNaN(d.getTime())
+        ? format(d, "dd 'de' MMMM 'de' yyyy", { locale: ptBR })
+        : 'Data não informada';
+    } catch {
+      return 'Data não informada';
+    }
+  })();
 
   return (
     <div className="overflow-hidden rounded-lg bg-white shadow-md transition hover:shadow-lg">
@@ -53,8 +42,12 @@ export function ExameCard({
         <h2 className="mb-2 text-lg font-semibold text-[#05334D]">{tipo}</h2>
         <p className="mb-1 text-sm text-gray-500">{pet}</p>
         <p className="mb-1 text-sm text-gray-600">Realizado em {dataFormatada}</p>
-        <p className={`mb-6 text-sm font-medium ${statusClasses[status]}`}>
-          {statusLabels[status]}
+        <p className={`mb-6 text-sm font-medium ${STATUS_CLASSES[status_legivel]}`}>
+          {status_legivel === 'disponivel'
+            ? 'Disponível'
+            : status_legivel === 'analise'
+              ? 'Em análise'
+              : 'Aguardando coleta'}
         </p>
 
         <div className="flex justify-center">
