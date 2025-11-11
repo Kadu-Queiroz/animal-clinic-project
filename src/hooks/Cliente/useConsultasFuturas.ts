@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/context/useAuth';
-import api from '@/lib/api';
+import { buscarConsultasDoTutor } from '@/services/Cliente/tutor-service';
 import type { ConsultaResumoTutor } from '@/types/tutor/';
 
 export function useConsultasFuturas() {
-  const { token, isAuthenticated, user } = useAuth();
+  const { token, isAuthenticated } = useAuth();
 
   const [consultas, setConsultas] = useState<ConsultaResumoTutor[]>([]);
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!token || !isAuthenticated || !user?.cpf) {
+    if (!token || !isAuthenticated) {
       setConsultas([]);
       setErro(null);
       setLoading(false);
@@ -25,14 +25,12 @@ export function useConsultasFuturas() {
       setErro(null);
 
       try {
-        const res = await api.get<ConsultaResumoTutor[]>(`/cliente/consultas?cpf=${user.cpf}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
+        const data = await buscarConsultasDoTutor(token); // só token
         if (!cancelado) {
-          setConsultas(res.data);
+          setConsultas(data);
         }
       } catch (err: unknown) {
+        console.error('[useConsultasFuturas] Erro ao carregar consultas futuras:', err);
         if (!cancelado) {
           if (err instanceof Error) {
             setErro(err.message);
@@ -53,7 +51,7 @@ export function useConsultasFuturas() {
     return () => {
       cancelado = true;
     };
-  }, [token, isAuthenticated, user?.cpf]);
+  }, [token, isAuthenticated]);
 
   return { consultas, loading, erro };
 }

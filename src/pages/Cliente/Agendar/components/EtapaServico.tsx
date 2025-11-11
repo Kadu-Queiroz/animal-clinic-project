@@ -1,4 +1,5 @@
 import { useFormContext } from 'react-hook-form';
+import type { AgendamentoData } from '@/pages/Cliente/Agendar/schema';
 
 interface EtapaServicoProps {
   onNext: () => void;
@@ -10,16 +11,21 @@ export function EtapaServico({ onNext, onBack }: EtapaServicoProps) {
     register,
     formState: { errors },
     watch,
-  } = useFormContext();
-
+    trigger,
+  } = useFormContext<AgendamentoData>();
   const servicoSelecionado = watch('servico');
+
+  const handleNext = async () => {
+    const ok = await trigger('servico');
+    if (ok) onNext();
+  };
 
   return (
     <div className="rounded bg-white p-6 shadow-md">
       <h2 className="mb-4 text-xl font-semibold text-[#05334D]">Escolha o Serviço</h2>
 
       <select
-        {...register('servico')}
+        {...register('servico', { required: 'Selecione um serviço.' })}
         defaultValue=""
         className="w-full rounded border border-gray-300 p-2"
       >
@@ -46,7 +52,7 @@ export function EtapaServico({ onNext, onBack }: EtapaServicoProps) {
         </button>
         <button
           type="button"
-          onClick={onNext}
+          onClick={handleNext}
           disabled={!servicoSelecionado}
           className="rounded bg-[#CC6E28] px-6 py-2 text-white transition hover:bg-[#b55f22]"
         >

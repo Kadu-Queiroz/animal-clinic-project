@@ -7,4 +7,5 @@ export interface UsuarioAutenticado {
   cpf: string;
   funcao: UserRole;
   senha_provisoria: boolean;
+  tutor_id: number;
 }

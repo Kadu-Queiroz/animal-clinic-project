@@ -6,12 +6,6 @@ export type ConsultaResumoTutor = {
   status: string;
   veterinario_nome: string;
   pet?: string;
-};
-
-// Evento histórico na linha do tempo do animal
-export type EventoHistorico = {
-  data: string;
-  tipo: 'consulta' | 'vacina';
-  descricao: string;
-  anexo?: string;
+  animal_id?: string | number;
+  veterinario_id?: string | number;
 };

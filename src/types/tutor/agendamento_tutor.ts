@@ -1,3 +1,6 @@
+// @deprecated: a UI do tutor consome Consulta direta.
+// Mantido para compat com fluxos de IA/legado que ainda falam "agendamento".
+
 // Dados de um agendamento criado pelo tutor
 export type AgendamentoData = {
   id?: number;

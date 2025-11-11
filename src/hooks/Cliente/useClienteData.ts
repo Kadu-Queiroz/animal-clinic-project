@@ -14,7 +14,8 @@ export function useClienteData() {
   const [erro, setErro] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!user?.cpf || !token || !isAuthenticated) {
+    // ainda usamos tutor_id só pra saber se esse usuário tem vínculo de tutor
+    if (!user?.tutor_id || !token || !isAuthenticated) {
       setDados(null);
       setErro(null);
       setCarregando(false);
@@ -28,7 +29,8 @@ export function useClienteData() {
       setErro(null);
 
       try {
-        const cliente = await buscarDadosDoTutor(user.cpf, token);
+        // 🔹 agora o backend resolve o tutor via token (get_current_tutor)
+        const cliente = await buscarDadosDoTutor(token);
         if (!cancelado) {
           setDados(cliente);
         }
@@ -50,7 +52,7 @@ export function useClienteData() {
     return () => {
       cancelado = true;
     };
-  }, [user?.cpf, token, isAuthenticated]);
+  }, [user?.tutor_id, token, isAuthenticated]);
 
   return { dados, carregando, erro };
 }

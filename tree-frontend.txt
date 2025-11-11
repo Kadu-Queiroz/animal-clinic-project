@@ -1,0 +1,157 @@
+# Project Tree (Vite Frontend)
+# Root: D:\Arquivos_de_Projetos\LandPageTokaDosPets
+# Focus: src
+# Max Depth: 20
+# Gerado em: 2025-11-10T23:28:31.814Z
+src
+├── assets
+│   ├── icons
+│   ├── img
+│   │   ├── convenios
+│   │   ├── institucional
+│   │   │   ├── equipe
+│   │   │   ├── galeria
+│   │   │   │   ├── consultas
+│   │   │   │   ├── exames
+│   │   │   │   ├── felinos
+│   │   │   │   └── produtos
+│   │   │   └── Staff
+│   │   └── logos
+│   └── Intranet
+├── components
+│   ├── Cliente
+│   │   ├── IA
+│   │   │   ├── IAAvatarButton.tsx
+│   │   │   └── PromptIA.tsx
+│   │   ├── Modals
+│   │   │   ├── AgendamentoModal.tsx
+│   │   │   └── PetModal.tsx
+│   │   ├── ConsultaCard.tsx
+│   │   ├── ExameCard.tsx
+│   │   ├── ExamesResumoCard.tsx
+│   │   ├── index.ts
+│   │   ├── LembreteCard.tsx
+│   │   ├── NavTabs.tsx
+│   │   ├── PetCard.tsx
+│   │   └── TimelineHistorico.tsx
+│   ├── ContactSection
+│   │   ├── ContactForm.tsx
+│   │   ├── ContactInfo.tsx
+│   │   ├── ContactSection.tsx
+│   │   └── index.ts
+│   ├── Footer
+│   │   ├── Footer.tsx
+│   │   ├── FooterContact.tsx
+│   │   ├── FooterLinks.tsx
+│   │   ├── FooterSocial.tsx
+│   │   └── index.ts
+│   ├── GalelerySection
+│   │   ├── GalleryGrid.tsx
+│   │   ├── GalleryImage.tsx
+│   │   ├── GallerySection.tsx
+│   │   └── index.ts
+│   ├── Header
+│   │   ├── HeaderCliente.tsx
+│   │   ├── HeaderLanding.tsx
+│   │   └── index.ts
+│   ├── HeroSection
+│   │   ├── ConveniosCarousel.tsx
+│   │   ├── HeroContent.tsx
+│   │   ├── HeroSection.tsx
+│   │   └── index.ts
+│   ├── Intranet
+│   ├── Modals
+│   │   ├── GaleriaModals
+│   │   │   └── ProdutosModal.tsx
+│   │   ├── DetalhesServicoModal.tsx
+│   │   ├── GlobalModals.tsx
+│   │   ├── index.ts
+│   │   ├── LoginModal.tsx
+│   │   └── SobreNosModal.tsx
+│   ├── ServiceSection
+│   │   ├── index.tsx
+│   │   ├── ServiceCard.tsx
+│   │   ├── ServicesGrid.tsx
+│   │   └── ServicesSection.tsx
+│   ├── shared
+│   │   ├── Calendario
+│   │   │   ├── CalendarioConsultas.tsx
+│   │   │   ├── ModalConfirmarConsulta.tsx
+│   │   │   ├── ModalVisualizarConsulta.tsx
+│   │   │   └── README.md
+│   │   ├── Modals
+│   │   │   ├── ModalBase.tsx
+│   │   │   └── NovaSenhaModal.tsx
+│   │   └── VoltarButton.tsx
+│   └── index.ts
+├── config
+│   └── env.ts
+├── context
+│   ├── AuthContext.ts
+│   ├── AuthProvider.tsx
+│   ├── ModalContext.tsx
+│   ├── ModalProvider.tsx
+│   ├── README.md
+│   └── useAuth.ts
+├── hooks
+│   ├── Cliente
+│   │   ├── useAnimaisDoTutor.ts
+│   │   ├── useClienteData.ts
+│   │   ├── useConsultasFuturas.ts
+│   │   ├── useDashboard.ts
+│   │   └── useExames.ts
+│   └── shared
+│       ├── useModal.ts
+│       └── useScroll.ts
+├── lib
+│   ├── Cliente
+│   │   └── api-animais.ts
+│   ├── api.ts
+│   └── auth-headers.ts
+├── pages
+│   ├── Cliente
+│   │   ├── Agendar
+│   │   │   ├── components
+│   │   │   │   ├── EtapaConfirmacao.tsx
+│   │   │   │   ├── EtapaDataHora.tsx
+│   │   │   │   ├── EtapaPet.tsx
+│   │   │   │   ├── EtapaServico.tsx
+│   │   │   │   ├── FormularioAgendamento.tsx
+│   │   │   │   └── ResumoAgendamento.tsx
+│   │   │   └── schema.ts
+│   │   ├── ClienteLayout.tsx
+│   │   ├── Consultas.tsx
+│   │   ├── Dashboard.tsx
+│   │   ├── Exames.tsx
+│   │   └── Historico.tsx
+│   └── LandingPage.tsx
+├── routes
+│   ├── Cliente
+│   │   ├── ClienteRoutes.tsx
+│   │   └── PrivateRouteCliente.tsx
+│   └── AppRouter.tsx
+├── scripts
+│   └── gerar-estrutura.ts
+├── services
+│   ├── auth
+│   │   └── auth-service.ts
+│   └── Cliente
+│       └── tutor-service.ts
+├── types
+│   ├── common
+│   │   └── user.ts
+│   ├── tutor
+│   │   ├── agendamento_tutor.ts
+│   │   ├── auth.ts
+│   │   ├── consulta_tutor.ts
+│   │   ├── dashboard_tutor.ts
+│   │   ├── exame_tutor.ts
+│   │   ├── index.ts
+│   │   ├── lembrete_tutor.ts
+│   │   └── pet_tutor.ts
+│   └── README.md
+└── utils
+    └── Cliente
+        ├── consultas
+        │   └── mapConsultasParaEventos.ts
+        └── calcularIdadePet.ts

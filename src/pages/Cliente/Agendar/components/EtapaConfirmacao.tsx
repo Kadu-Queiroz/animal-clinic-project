@@ -1,33 +1,27 @@
 import { useFormContext } from 'react-hook-form';
 import { ResumoAgendamento } from './ResumoAgendamento';
+import type { AgendamentoData } from '@/pages/Cliente/Agendar/schema';
 
 interface EtapaConfirmacaoProps {
   onBack: () => void;
-  onSubmit: () => void;
+  loading?: boolean;
 }
 
-export function EtapaConfirmacao({ onBack, onSubmit }: EtapaConfirmacaoProps) {
-  const { getValues } = useFormContext();
-  const { pet, servico, data, hora } = getValues();
+export function EtapaConfirmacao({ onBack, loading }: EtapaConfirmacaoProps) {
+  const { getValues } = useFormContext<AgendamentoData>();
+  const { pet = '', servico = '', data = '', hora = '' } = getValues();
 
   return (
     <div>
       <ResumoAgendamento pet={pet} servico={servico} data={data} hora={hora} onBack={onBack} />
 
-      <div className="mt-4 flex justify-between">
-        <button
-          type="button"
-          onClick={onBack}
-          className="rounded bg-gray-300 px-4 py-2 text-gray-800 transition hover:bg-gray-400"
-        >
-          Voltar
-        </button>
+      <div className="mt-4 flex justify-end">
         <button
           type="submit"
-          onClick={onSubmit}
-          className="rounded bg-[#CC6E28] px-4 py-2 text-white transition hover:bg-[#b55f22]"
+          disabled={loading}
+          className="rounded bg-[#CC6E28] px-4 py-2 font-semibold text-white transition hover:bg-[#b55f22] disabled:opacity-60"
         >
-          Confirmar Agendamento
+          {loading ? 'Agendando...' : 'Confirmar Agendamento'}
         </button>
       </div>
     </div>
