@@ -1,5 +1,5 @@
 import { useFormContext } from 'react-hook-form';
-import type { AgendamentoData } from '@/pages/Cliente/Agendar/schema';
+import type { AgendamentoData } from '@/pages/Tutor/Agendar/schema';
 
 interface EtapaServicoProps {
   onNext: () => void;

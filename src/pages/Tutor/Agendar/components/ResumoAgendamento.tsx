@@ -1,12 +1,27 @@
 interface ResumoAgendamentoProps {
   pet: string;
   servico: string;
-  data: string;
-  hora: string;
+  data: string; // YYYY-MM-DD
+  slotStartAt: string; // ISO
   onBack?: () => void;
 }
 
-export function ResumoAgendamento({ pet, servico, data, hora, onBack }: ResumoAgendamentoProps) {
+function formatHora(iso: string) {
+  if (!iso) return '';
+  try {
+    return new Date(iso).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  } catch {
+    return iso;
+  }
+}
+
+export function ResumoAgendamento({
+  pet,
+  servico,
+  data,
+  slotStartAt,
+  onBack,
+}: ResumoAgendamentoProps) {
   return (
     <div className="mb-6 rounded-lg bg-white p-4 shadow">
       <h3 className="mb-4 text-lg font-semibold text-[#05334D]">Resumo do Agendamento</h3>
@@ -21,7 +36,7 @@ export function ResumoAgendamento({ pet, servico, data, hora, onBack }: ResumoAg
           <strong>Data:</strong> {data}
         </li>
         <li>
-          <strong>Hora:</strong> {hora}
+          <strong>Hora:</strong> {formatHora(slotStartAt)}
         </li>
       </ul>
 

@@ -1,5 +1,6 @@
 import { useFormContext } from 'react-hook-form';
 import { useAnimaisDoTutor } from '@/hooks/Tutor/useAnimaisDoTutor';
+import type { AgendamentoData } from '@/pages/Tutor/Agendar/schema';
 
 interface EtapaPetProps {
   onNext: () => void;
@@ -10,8 +11,7 @@ export function EtapaPet({ onNext }: EtapaPetProps) {
     register,
     formState: { errors },
     watch,
-  } = useFormContext();
-
+  } = useFormContext<AgendamentoData>();
   const { animais, carregando, erro } = useAnimaisDoTutor();
   const petSelecionado = watch('pet');
 

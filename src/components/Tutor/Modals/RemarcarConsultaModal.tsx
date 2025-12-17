@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { EtapaDataHora } from '@/pages/Cliente/Agendar/components/EtapaDataHora';
+import { EtapaDataHora } from '@/pages/Tutor/Agendar/components/EtapaDataHora';
 import { useAuth } from '@/context/useAuth';
 import { buscarConsultasDoTutor, reagendarConsulta } from '@/services/Tutor/tutor-service';
 import type { ConsultaResumoTutor } from '@/types/tutor/consulta_tutor';

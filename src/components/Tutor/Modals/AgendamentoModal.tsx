@@ -20,20 +20,31 @@ export interface AgendamentoModalProps {
   modo?: ModoModal;
   consultaId?: number;
   animalId?: string | number;
-  dataHoraAtual?: string;
+  dataHoraAtual?: string; // ISO datetime
 }
 
-function splitISOToDateHour(iso?: string) {
-  if (!iso) return { data: '', hora: '' };
+function toISODate(iso?: string): string {
+  if (!iso) return '';
   const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return { data: '', hora: '' };
+  if (Number.isNaN(d.getTime())) return '';
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+}
+
+function addMinutesIso(iso: string, minutes: number): string {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return '';
+  d.setMinutes(d.getMinutes() + minutes);
+  // mantém ISO sem timezone (YYYY-MM-DDTHH:mm:ss)
   const yyyy = d.getFullYear();
   const mm = String(d.getMonth() + 1).padStart(2, '0');
   const dd = String(d.getDate()).padStart(2, '0');
   const hh = String(d.getHours()).padStart(2, '0');
   const mi = String(d.getMinutes()).padStart(2, '0');
   const ss = String(d.getSeconds()).padStart(2, '0');
-  return { data: `${yyyy}-${mm}-${dd}`, hora: `${hh}:${mi}:${ss}` };
+  return `${yyyy}-${mm}-${dd}T${hh}:${mi}:${ss}`;
 }
 
 export function AgendamentoModal({
@@ -46,25 +57,35 @@ export function AgendamentoModal({
   dataHoraAtual,
 }: AgendamentoModalProps) {
   const defaultValues = useMemo<AgendamentoData>(() => {
-    const { data, hora } = splitISOToDateHour(dataHoraAtual);
-    return { pet: animalId ? String(animalId) : '', servico: '', data, hora };
+    const start = dataHoraAtual ? addMinutesIso(dataHoraAtual, 0) : '';
+    const end = start ? addMinutesIso(start, 30) : '';
+    const data = dataHoraAtual ? toISODate(dataHoraAtual) : '';
+
+    return {
+      pet: animalId ? String(animalId) : '',
+      servico: '',
+      data,
+      slot_start_at: start,
+      slot_end_at: end,
+    };
   }, [animalId, dataHoraAtual]);
 
   const methods = useForm<AgendamentoData>({
     resolver: zodResolver(agendamentoSchema),
     mode: 'onChange',
     defaultValues,
+    shouldUnregister: false,
   });
 
   const [etapa, setEtapa] = useState(1);
   const [loading, setLoading] = useState(false);
-  const { handleSubmit, reset } = methods;
+
+  const { handleSubmit, reset, register } = methods;
 
   useEffect(() => {
-    if (aberto) {
-      reset(defaultValues, { keepDefaultValues: true });
-      setEtapa(1);
-    }
+    if (!aberto) return;
+    reset(defaultValues, { keepDefaultValues: true });
+    setEtapa(1);
   }, [aberto, defaultValues, reset]);
 
   const avancar = () => setEtapa(v => Math.min(v + 1, 4));
@@ -73,23 +94,39 @@ export function AgendamentoModal({
   const onSubmit = async (data: AgendamentoData) => {
     try {
       setLoading(true);
+
       const token = localStorage.getItem('token');
       if (!token) {
         alert('Sessão expirada. Faça login novamente.');
         return;
       }
 
+      const animal_id = Number(data.pet);
+      if (Number.isNaN(animal_id) || animal_id <= 0) {
+        alert('Pet inválido.');
+        return;
+      }
+
+      if (!data.slot_start_at || !data.slot_end_at) {
+        alert('Selecione um horário.');
+        return;
+      }
+
       if (modo === 'remarcar' && consultaId) {
-        const novaDataHora = `${data.data}T${data.hora}`;
-        await reagendarConsulta(consultaId, novaDataHora, null, token);
+        await reagendarConsulta(consultaId, data.slot_start_at, null, token);
         alert('Consulta remarcada com sucesso!');
       } else {
+        // TODO produção: vetId real (seleção / backend).
+        const veterinario_id = 1;
+
         await agendarConsultaTutor(token, {
-          animal_id: Number(data.pet),
-          data: data.data,
-          hora: data.hora,
-          servico: data.servico,
+          animal_id,
+          veterinario_id,
+          start_at: data.slot_start_at,
+          end_at: data.slot_end_at,
+          procedimento: data.servico,
         });
+
         alert('Consulta agendada com sucesso!');
       }
 
@@ -121,6 +158,13 @@ export function AgendamentoModal({
 
           <FormProvider {...methods}>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              {/* registra campos do wizard (evita undefined no submit) */}
+              <input type="hidden" {...register('pet')} />
+              <input type="hidden" {...register('servico')} />
+              <input type="hidden" {...register('data')} />
+              <input type="hidden" {...register('slot_start_at')} />
+              <input type="hidden" {...register('slot_end_at')} />
+
               {etapa === 1 && <EtapaPet onNext={avancar} />}
               {etapa === 2 && <EtapaServico onNext={avancar} onBack={voltar} />}
               {etapa === 3 && <EtapaDataHora onNext={avancar} onBack={voltar} />}

@@ -1,20 +1,33 @@
-// @deprecated: a UI do tutor consome Consulta direta.
-// Mantido para compat com fluxos de IA/legado que ainda falam "agendamento".
+export type ISODate = string; // YYYY-MM-DD
+export type ISODateTime = string; // YYYY-MM-DDTHH:mm:ss
 
-// Dados de um agendamento criado pelo tutor
-export type AgendamentoData = {
-  id?: number;
-  pet: string;
-  servico: string;
-  tipo?: string;
-  data: string;
-  hora: string;
+export type AgendaSlot = {
+  start_at: ISODateTime;
+  end_at: ISODateTime;
 };
 
-// Resposta padrão das interações da IA com o agendamento
-export type RespostaIA = {
-  resposta: string;
-  acao_executada?: string;
-  sucesso?: boolean;
-  dados?: AgendamentoData | null;
+export type FiltroAgendaSlots = {
+  veterinario_id: number;
+  date_from: ISODate;
+  date_to: ISODate;
+};
+
+/** Fonte de verdade do wizard */
+export type AgendamentoWizardState = {
+  animal_id?: number;
+  veterinario_id?: number;
+  slot?: AgendaSlot | null;
+  procedimento?: string; // default "consulta"
+  observacoes?: string | null;
+};
+
+/** Payload real do backend (derivado do wizard) */
+export type AgendarConsultaPayload = {
+  animal_id: number;
+  veterinario_id: number;
+  data_hora: ISODateTime;
+  duracao_min: number;
+  procedimento: string;
+  status?: 'agendada' | 'cancelada' | 'concluida' | string;
+  observacoes?: string | null;
 };

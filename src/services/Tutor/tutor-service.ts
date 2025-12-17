@@ -9,69 +9,110 @@ import type {
 
 const withAuth = (token: string) => getAuthHeaders(token);
 
-/* ========= Horários disponíveis ========= */
+/* ============================================================
+ * AGENDA (NOVO SISTEMA - slots calculados)
+ * ============================================================ */
 
-export interface HorarioDisponivelDTO {
-  id: number;
-  data: string; // YYYY-MM-DD
-  hora: string; // HH:MM:SS
-  ocupado: boolean;
-  funcionario_id: number | null;
+export interface AgendaSlotDTO {
+  start_at: string; // ISO datetime (YYYY-MM-DDTHH:mm:ss)
+  end_at: string; // ISO datetime (YYYY-MM-DDTHH:mm:ss)
 }
 
-export interface FiltroHorariosDisponiveis {
-  dias?: number;
-  data?: string; // YYYY-MM-DD
-  funcionario_id?: number;
-  limite?: number;
+export interface FiltroAgendaSlots {
+  veterinario_id: number;
+  date_from: string; // YYYY-MM-DD
+  date_to: string; // YYYY-MM-DD
 }
 
-export async function buscarHorariosDisponiveis(
-  token: string,
-  filtros: FiltroHorariosDisponiveis = {},
-): Promise<HorarioDisponivelDTO[]> {
-  const { data } = await api.get<HorarioDisponivelDTO[]>('/tutor/horarios/disponiveis', {
-    ...withAuth(token),
+export async function buscarSlotsDisponiveis(filtros: FiltroAgendaSlots): Promise<AgendaSlotDTO[]> {
+  const { data } = await api.get<AgendaSlotDTO[]>('/public/agenda/slots', {
     params: {
-      dias: filtros.dias ?? 30,
-      limite: filtros.limite ?? 500,
-      data: filtros.data,
-      funcionario_id: filtros.funcionario_id,
+      veterinario_id: filtros.veterinario_id,
+      date_from: filtros.date_from,
+      date_to: filtros.date_to,
     },
   });
-  return data;
+  return data ?? [];
 }
 
-/* ========= Consultas (tutor) ========= */
+/** Helper: duração em minutos (end-start) com fallback seguro */
+export function calcularDuracaoMin(startIso: string, endIso: string): number {
+  const start = new Date(startIso).getTime();
+  const end = new Date(endIso).getTime();
+  const mins = Math.round((end - start) / 60000);
+
+  // blindagem: evita NaN/negativo/0 virar 422 no back
+  if (!Number.isFinite(mins) || mins <= 0) return 30;
+  return mins;
+}
+
+/** Helper para listar consultas ativas */
+export function isConsultaAtiva(status?: string | null): boolean {
+  const st = (status || '').toLowerCase();
+  return st === 'agendada' || st === 'reagendada';
+}
+
+export function isConsultaFutura(dataHora?: string | null): boolean {
+  if (!dataHora) return false;
+  const t = new Date(dataHora).getTime();
+  return Number.isFinite(t) && t >= Date.now();
+}
+
+/** Lista consultas futuras + ativas (client-side filter). */
+export async function buscarConsultasAtivasDoTutor(token: string): Promise<ConsultaResumoTutor[]> {
+  const lista = await buscarConsultasDoTutor(token);
+  return (lista ?? []).filter(c => isConsultaAtiva(c.status) && isConsultaFutura(c.data_hora));
+}
+
+/* ============================================================
+ * AGENDAMENTO (NOVO - rota compartilhada /agendamento/)
+ * ============================================================ */
 
 export interface AgendarConsultaTutorData {
   animal_id: number;
-  data: string; // YYYY-MM-DD
-  hora: string; // HH:MM:SS
-  servico: string;
+  veterinario_id: number;
+  start_at: string; // ISO datetime (slot.start_at)
+  end_at?: string; // ISO datetime (slot.end_at)
+  procedimento?: string; // default "consulta"
+  observacoes?: string | null;
 }
 
+/**
+ * Agenda uma consulta usando o novo motor.
+ * Requer token (tutor logado).
+ */
 export async function agendarConsultaTutor(
   token: string,
   dados: AgendarConsultaTutorData,
 ): Promise<ConsultaResumoTutor> {
+  const duracao_min = dados.end_at ? calcularDuracaoMin(dados.start_at, dados.end_at) : 30;
+
   const payload = {
     animal_id: dados.animal_id,
-    data_hora: `${dados.data}T${dados.hora}`,
-    tipo: dados.servico,
-    origem: 'tutor',
+    veterinario_id: dados.veterinario_id,
+    data_hora: dados.start_at,
+    duracao_min,
+    procedimento: (dados.procedimento ?? 'consulta').trim(),
+    status: 'agendada',
+    observacoes: dados.observacoes ?? null,
   };
-  const { data } = await api.post<ConsultaResumoTutor>(
-    '/tutor/consultas',
-    payload,
-    withAuth(token),
-  );
+
+  // debug útil (some em prod)
+  if (import.meta.env.DEV) {
+    console.log('[POST /agendamento/] payload:', payload);
+  }
+
+  const { data } = await api.post<ConsultaResumoTutor>('/agendamento/', payload, withAuth(token));
   return data;
 }
 
+/* ============================================================
+ * CONSULTAS (tutor)
+ * ============================================================ */
+
 export async function buscarConsultasDoTutor(token: string): Promise<ConsultaResumoTutor[]> {
   const { data } = await api.get<ConsultaResumoTutor[]>('/tutor/consultas', withAuth(token));
-  return data;
+  return data ?? [];
 }
 
 export async function buscarConsultasHistoricasDoTutor(
@@ -89,13 +130,13 @@ export async function buscarConsultasHistoricasDoTutor(
       offset: params?.offset ?? 0,
     },
   });
-  return data;
+  return data ?? [];
 }
 
 /** Reagendar (rota compartilhada) */
 export async function reagendarConsulta(
   consultaId: number,
-  novaDataHora: string, // YYYY-MM-DDTHH:MM:SS
+  novaDataHora: string, // YYYY-MM-DDTHH:mm:ss
   observacoes: string | null,
   token: string,
 ): Promise<ConsultaResumoTutor> {
@@ -107,7 +148,14 @@ export async function reagendarConsulta(
   return data;
 }
 
-/* ========= Dashboard / Exames ========= */
+/** Cancelar consulta (rota compartilhada ?) */
+export async function cancelarConsulta(token: string, consultaId: number): Promise<void> {
+  await api.delete(`/agendamento/${consultaId}`, withAuth(token));
+}
+
+/* ============================================================
+ * DASHBOARD / EXAMES
+ * ============================================================ */
 
 export async function buscarDadosDoTutor(token: string): Promise<TutorDashboardData> {
   const { data } = await api.get<TutorDashboardData>('/tutor/dashboard', withAuth(token));
@@ -116,12 +164,14 @@ export async function buscarDadosDoTutor(token: string): Promise<TutorDashboardD
 
 export async function buscarExamesDetalhados(token: string): Promise<ExameData[]> {
   const { data } = await api.get<ExameData[]>('/tutor/exames', withAuth(token));
-  return data;
+  return data ?? [];
 }
 
-/* ========= Lembretes (tutor) ========= */
+/* ============================================================
+ * LEMBRETES (tutor)
+ * ============================================================ */
 
 export async function buscarLembretesDoTutor(token: string): Promise<LembreteData[]> {
   const { data } = await api.get<LembreteData[]>('/tutor/lembretes', withAuth(token));
-  return data;
+  return data ?? [];
 }
