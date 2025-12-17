@@ -1,2 +1,2 @@
 export { HeaderLanding } from './HeaderLanding';
-export { HeaderCliente } from './HeaderCliente';
+export { HeaderCliente } from './HeaderTutor';

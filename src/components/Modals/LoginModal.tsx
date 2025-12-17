@@ -41,7 +41,7 @@ export function LoginModal() {
       }
 
       closeModal();
-      navigate('/cliente/dashboard');
+      navigate('/tutor/dashboard');
     } catch (err) {
       setErro(err instanceof Error ? err.message : 'Erro desconhecido ao realizar login');
     } finally {
@@ -56,7 +56,7 @@ export function LoginModal() {
           onFinalizar={() => {
             setMostrarNovaSenhaModal(false);
             closeModal();
-            navigate('/cliente/dashboard');
+            navigate('/tutor/dashboard');
           }}
         />
       ) : (
@@ -69,9 +69,7 @@ export function LoginModal() {
               <X size={20} />
             </button>
 
-            <h2 className="mb-4 text-center text-xl font-semibold text-[#002B3D]">
-              Área do Cliente
-            </h2>
+            <h2 className="mb-4 text-center text-xl font-semibold text-[#002B3D]">Área do Tutor</h2>
 
             <form onSubmit={handleSubmit}>
               <label className="mb-2 block font-medium">CPF do Tutor</label>

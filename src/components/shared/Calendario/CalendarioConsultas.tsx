@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/context/useAuth';
-import { buscarConsultasDoTutor } from '@/services/Cliente/tutor-service';
+import { buscarConsultasDoTutor } from '@/services/Tutor/tutor-service';
 import type { ConsultaResumoTutor } from '@/types/tutor';
 import type { EventInput } from '@fullcalendar/core';
 
